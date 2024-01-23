@@ -1,9 +1,10 @@
 import Login from "./components/Login"
+import SendBP from "./components/SendBP"
 
 function App() {
 
   return (
-    <Login/>
+    <SendBP/>
   )
 }
 
