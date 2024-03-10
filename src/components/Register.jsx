@@ -72,12 +72,12 @@ function Register() {
     return (
         <div className="sm:contianer">
             <div className='w-[24.563rem] bg-[#F2F1EC] mx-auto min-h-[53.25rem]'>
-                {Object.keys(formErrors).length === 0 && isSubmit ? (<div className='ui massage success'>Register Success!</div>) : (<pre>{JSON.stringify(formValues, undefined, 2)}</pre>)}
                 <div className='w-[22.875rem] mx-auto'>
                     <div className='Logo'>
                         <img src={Logo} alt="Logo" />
                     </div>
                 </div>
+                {Object.keys(formErrors).length === 0 && isSubmit ? (<div className='ui massage success'>Register Success!</div>) : (<pre>{JSON.stringify(formValues, undefined, 2)}</pre>)}
                 <form onSubmit={handleSubmit}>
                     <div>
                         <div className='w-[16.125rem] mx-auto mt-[2rem]'>
