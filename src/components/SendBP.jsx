@@ -5,9 +5,11 @@ function SendBP() {
         <div className='sm:container'>
             <div className='w-[24.563rem] bg-[#F2F1EC] mx-auto min-h-[53.25rem]'>
 
-                <div className='w-[7.6rem] mx-auto'>
-                    <div className='Logo'>
-                        <img src={circleLogo} alt="Logo" />
+                <div className='navbar'>
+                    <div className='w-[7.6rem] mx-auto mt-3'>
+                        <div className='Logo'>
+                            <img src={circleLogo} alt="Logo" />
+                        </div>
                     </div>
                 </div>
 
@@ -16,7 +18,7 @@ function SendBP() {
                 <div className='w-[16.125rem] mx-auto mt-[4rem]'>
                     <label className="form-control w-full max-w-xs">
                         <div className="label">
-                            <span className="label-text text-gray-500">ค่าความดันขณะหัวใจบีบตัว (SYS)</span> 
+                            <span className="label-text text-gray-500">ค่าความดันขณะหัวใจบีบตัว (SYS)</span>
                         </div>
                         <input type="text" placeholder="120" className="input input-bordered w-full max-w-xs" />
                     </label>
@@ -25,7 +27,7 @@ function SendBP() {
                 <div className='w-[16.125rem] mx-auto mt-[4rem]'>
                     <label className="form-control w-full max-w-xs">
                         <div className="label">
-                            <span className="label-text text-gray-500">ค่าความดันขณะหัวใจคลายตัว (DIA)</span> 
+                            <span className="label-text text-gray-500">ค่าความดันขณะหัวใจคลายตัว (DIA)</span>
                         </div>
                         <input type="text" placeholder="80" className="input input-bordered w-full max-w-xs" />
                     </label>
@@ -34,7 +36,7 @@ function SendBP() {
                 <div className='w-[16.125rem] mx-auto mt-[4rem]'>
                     <label className="form-control w-full max-w-xs">
                         <div className="label">
-                            <span className="label-text text-gray-500">ชีพจร (PUL)</span> 
+                            <span className="label-text text-gray-500">ชีพจร (PUL)</span>
                         </div>
                         <input type="text" placeholder="75" className="input input-bordered w-full max-w-xs" />
                     </label>
