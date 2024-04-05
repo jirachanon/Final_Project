@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import Logo from '../assets/IMG/Logo.png'
 import person from '../assets/icons/person.svg'
-import eye from '../assets/icons/Eye.svg'
+import Eye from '../assets/icons/Eye.svg'
+import closeEye from '../assets/icons/closeEye.svg'
 import vector from '../assets/icons/Vector.svg'
 import phone from '../assets/icons/phone.svg'
+import liff from '@line/liff'
 
 function Register() {
 
     const initValues = {
         email: "",
-        password: "",
+        pws: "",
         HN: "",
         tel: "",
         name: "",
@@ -19,17 +21,68 @@ function Register() {
     const [formValues, setFormValues] = useState(initValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setisSubmit] = useState(false);
+    const [type, setType] = useState("password");
+    const [eyeIcon, setEyeIcon] = useState(closeEye)
+
+    const showPassword = () => {
+        if (type==="password") {
+            setType("text")
+            setEyeIcon(Eye)
+        } else {
+            setType("password")
+            setEyeIcon(closeEye)
+        }
+    }
 
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormValues({ ...formValues, [name]: value });
-        console.log(formValues);
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         setFormErrors(validation(formValues));
         setisSubmit(true);
+        liff
+            .init({
+                liffId: '2004489610-01vWBvVK',
+            })
+            .then(async () => {
+                if (!liff.isLoggedIn()) {
+                    liff.login();
+                }
+                const lifftoken = liff.getIDToken();
+                try {
+                    const myHeaders = new Headers();
+                    myHeaders.append("Content-Type", "application/json");
+                    myHeaders.append("Accept", "*/*");
+
+                    const raw = JSON.stringify({
+                        "email": formValues.email,
+                        "firstName": formValues.name,
+                        "hn": formValues.HN,
+                        "lastName": formValues.surname,
+                        "password": formValues.pws,
+                        "phone": formValues.tel,
+                        "requestId": "",
+                        "lineToken": lifftoken
+                    });
+
+                    const requestOptions = {
+                        method: "POST",
+                        headers: myHeaders,
+                        body: raw,
+                        redirect: "follow"
+                    };
+
+                    fetch("https://hpm-backend.onrender.com/v1/system/signUp", requestOptions)
+                        .then((response) => response.text())
+                        .then((result) => console.log(result))
+                        .catch((error) => console.error(error));
+                } catch (error) {
+                    alert("ไม่สามารถสมัครสมาชิกได้")
+                }
+            })
     }
 
     useEffect(() => {
@@ -47,17 +100,17 @@ function Register() {
         } else if (!regex.test(validate.email)) {
             error.email = "ข้อมูลที่กรอกไม่ใช่ ' อีเมล '!"
         }
-        if (!validate.password) {
-            error.password = "กรุณากรอก ' รหัสผ่าน ' ของท่าน!";
-        }else if (validate.password.length < 4) {
-            error.password = "รหัสผ่านสั้นเกินไป!"
+        if (!validate.pws) {
+            error.pws = "กรุณากรอก ' รหัสผ่าน ' ของท่าน!";
+        } else if (validate.pws.length < 4) {
+            error.pws = "รหัสผ่านสั้นเกินไป!"
         }
         if (!validate.HN) {
             error.HN = "กรุณากรอก ' หมายเลข ' ของท่าน!";
         }
         if (!validate.tel) {
             error.tel = "กรุณากรอก ' เบอร์โทร ' ของท่าน!";
-        }else if (validate.tel.length < 10) {
+        } else if (validate.tel.length < 10) {
             error.tel = "กรุณากรอก ' เบอร์โทร ' ให้ครบ!"
         }
         if (!validate.name) {
@@ -69,6 +122,8 @@ function Register() {
         return error;
     }
 
+
+
     return (
         <div className="sm:contianer">
             <div className='w-[24.563rem] bg-[#F2F1EC] mx-auto min-h-[53.25rem]'>
@@ -77,7 +132,6 @@ function Register() {
                         <img src={Logo} alt="Logo" />
                     </div>
                 </div>
-                {Object.keys(formErrors).length === 0 && isSubmit ? (<div className='ui massage success'>Register Success!</div>) : (<pre>{JSON.stringify(formValues, undefined, 2)}</pre>)}
                 <form onSubmit={handleSubmit}>
                     <div>
                         <div className='w-[16.125rem] mx-auto mt-[2rem]'>
@@ -101,11 +155,11 @@ function Register() {
                                     <span className='label-text text-gray-500'>รหัสผ่าน</span>
                                 </div>
                                 <div className='flex justify-end items-center relative'>
-                                    <input type="text" name='password' placeholder='รหัสผ่าน' className='input input-bordered w-full max-w-xs' value={formValues.password} onChange={handleChange} />
-                                    <img src={eye} className="absolute mr-2 w-[1.3rem]" alt="password" />
+                                    <input type={type} name='pws' placeholder='รหัสผ่าน' className='input input-bordered w-full max-w-xs' value={formValues.pws} onChange={handleChange} />
+                                    <img src={eyeIcon} onClick={showPassword} className="absolute mr-2 w-[1.6rem]" alt="password" />
                                 </div>
                                 <div className='label'>
-                                    <span className='label-text text-red-700'>{formErrors.password}</span>
+                                    <span className='label-text text-red-700'>{formErrors.pws}</span>
                                 </div>
                             </label>
                         </div>
@@ -170,7 +224,7 @@ function Register() {
                         </div>
                     </div>
                 </form>
-            </div>        
+            </div>
         </div>
 
     )
