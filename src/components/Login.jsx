@@ -61,10 +61,17 @@ function Login() {
             fetch("https://hpm-backend.onrender.com/v1/system/signIn", requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
-                    console.log(result)
-                    if (result) {
+                    if (result.token) {
                         Swal.fire({
-                            title: result.email,
+                            title: 'เข้าสู่ระบบสำเร็จ',
+                            text: 'สวัสดีคุณ ' + result.name,
+                            confirmButtonText: 'ตกลง'
+                        })
+                    }
+                    else {
+                        Swal.fire({
+                            title: 'เกิดข้อผิดพลาด',
+                            confirmButtonText: 'ตกลง'
                         })
                     }
                 })
@@ -102,7 +109,23 @@ function Login() {
 
                     fetch("https://hpm-backend.onrender.com/v1/system/signIn", requestOptions)
                         .then((response) => response.json())
-                        .then((result) => console.log(result))
+                        .then((result) => {
+                            console.log(result)
+                            if (result.token) {
+                                Swal.fire({
+                                    title: 'เข้าสู่ระบบสำเร็จ',
+                                    text: 'สวัสดีคุณ ' + result.name,
+                                    confirmButtonText: 'ตกลง'
+                                })
+                                liff.closeWindow();
+                            }
+                            else {
+                                Swal.fire({
+                                    title: 'เกิดข้อผิดพลาด',
+                                    confirmButtonText: 'ตกลง'
+                                })
+                            }
+                        })
                         .catch((error) => console.error(error));
                 
             })
