@@ -13,11 +13,11 @@ import SendBP from './components/SendBP.jsx';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/Home",
     element: <Home />,
   },
   {
-    path: "/Login",
+    path: "/",
     element: <Login />
   },
   {

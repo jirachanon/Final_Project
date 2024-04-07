@@ -5,7 +5,8 @@ import person from '../assets/icons/person.svg'
 import Eye from '../assets/icons/Eye.svg'
 import closeEye from "../assets/icons/closeEye.svg"
 import liff from '@line/liff'
-import Register from './Register'
+import Swal from 'sweetalert2'
+
 
 function Login() {
 
@@ -37,7 +38,7 @@ function Login() {
         event.preventDefault();
         setFormErrors(validation(formValues));
         setisSubmit(true);
-        try {
+
             const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
             myHeaders.append("Accept", "*/*");
@@ -58,12 +59,16 @@ function Login() {
             };
 
             fetch("https://hpm-backend.onrender.com/v1/system/signIn", requestOptions)
-                .then((response) => response.text())
-                .then((result) => console.log(result))
+                .then((response) => response.json())
+                .then((result) => {
+                    console.log(result)
+                    if (result) {
+                        Swal.fire({
+                            title: result.email,
+                        })
+                    }
+                })
                 .catch((error) => console.error(error));
-        } catch (error) {
-            alert("kuy")
-        }
     }
 
     const lineHandleSubmit = async (event) => {
@@ -77,7 +82,7 @@ function Login() {
                     liff.login();
                 }
                 const lifftoken = liff.getIDToken();
-                try {
+                
                     const myHeaders = new Headers();
                     myHeaders.append("Content-Type", "application/json");
                     myHeaders.append("Accept", "*/*");
@@ -96,12 +101,10 @@ function Login() {
                     };
 
                     fetch("https://hpm-backend.onrender.com/v1/system/signIn", requestOptions)
-                        .then((response) => response.text())
+                        .then((response) => response.json())
                         .then((result) => console.log(result))
                         .catch((error) => console.error(error));
-                } catch (error) {
-
-                }
+                
             })
     }
 
@@ -176,7 +179,7 @@ function Login() {
                 <div className='w-[13.563rem] mx-auto mt-[6.58rem]'>
                     <button className='btn btn-block bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px]'>เข้าสู่ระบบ</button>
                     <div className="label place-content-center">
-                        <a href={<Register />} className='label-text text-gray-500 underline'>สมัครสมาชิก</a>
+                        <a href="/Register" className='label-text text-gray-500 underline'>สมัครสมาชิก</a>
                     </div>
                 </div>
             </form>

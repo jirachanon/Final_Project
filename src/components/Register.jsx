@@ -219,7 +219,7 @@ function Register() {
                         <div className='w-[13.563rem] mx-auto mt-[2.33rem]'>
                             <button className='btn btn-block bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px]' >สมัครสมาชิก</button>
                             <div className="label place-content-center">
-                                <a href="#" className='label-text text-gray-500 underline'>เข้าสู่ระบบ</a>
+                                <a href="/" className='label-text text-gray-500 underline'>เข้าสู่ระบบ</a>
                             </div>
                         </div>
                     </div>
