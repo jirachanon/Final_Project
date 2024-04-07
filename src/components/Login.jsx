@@ -38,7 +38,11 @@ function Login() {
         event.preventDefault();
         setFormErrors(validation(formValues));
         setisSubmit(true);
-
+        liff
+        .init({
+            liffId: '2004489610-aP6ng65X'
+        })
+        .then(async () => {
             const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
             myHeaders.append("Accept", "*/*");
@@ -67,6 +71,7 @@ function Login() {
                             text: 'สวัสดีคุณ ' + result.name,
                             confirmButtonText: 'ตกลง'
                         })
+                        liff.closeWindow();
                     }
                     else {
                         Swal.fire({
@@ -76,6 +81,8 @@ function Login() {
                     }
                 })
                 .catch((error) => console.error(error));
+        })
+            
     }
 
     const lineHandleSubmit = async (event) => {
