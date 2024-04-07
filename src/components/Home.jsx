@@ -2,7 +2,7 @@ import React from 'react'
 import circleLogo from '../assets/IMG/circleLogo.png'
 function Home() {
   return (
-    <div className='w-[24.563rem] bg-[#F2F1EC] mx-auto min-h-[53.25rem]'>
+    <div className='w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-lvh'>
       <div className='navbar'>
         <div className='flex-1'>
           <img src={circleLogo} alt="logo" className='w-[6rem]' />
