@@ -126,7 +126,7 @@ function Register() {
 
     return (
         <div className="sm:contianer">
-            <div className='w-[24.563rem] bg-[#F2F1EC] mx-auto min-h-[53.25rem]'>
+            <div className='w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-lvh'>
                 <div className='w-[22.875rem] mx-auto'>
                     <div className='Logo'>
                         <img src={Logo} alt="Logo" />
