@@ -5,7 +5,7 @@ const initialState = {
     bp: {}
 }
 
-const slice = createSlice({
+export const slice = createSlice({
     name: "slice",
     initialState,
     reducers: {

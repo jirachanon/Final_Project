@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext,} from 'react'
+import React, { useState, useEffect} from 'react'
 import Logo from '../assets/IMG/Logo.png'
 import Line from '../assets/IMG/Line.png'
 import person from '../assets/icons/person.svg'
@@ -70,7 +70,6 @@ function Login() {
                 fetch("https://hpm-backend.onrender.com/v1/system/signIn", requestOptions)
                     .then((response) => response.json())
                     .then((result) => {
-                        console.log(result)
                         if (result.token) {
                             Swal.fire({
                                 title: 'เข้าสู่ระบบสำเร็จ',
@@ -233,9 +232,7 @@ function Login() {
                         <img src={Line} alt="Line" className='absolute w-[2.5rem] ml-1' />
                     </div>
                 </div>
-            </div>
-        </>
-
+        </div>
     )
 }
 

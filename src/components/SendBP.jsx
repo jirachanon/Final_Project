@@ -55,7 +55,6 @@ function SendBP() {
         if (Object.keys(formErrors).length === 0 && isSubmit) {
             console.log(formValues);
         }
-        console.log(user?.type + " " + user?.token);
     }, [formErrors])
 
     const validation = (validate) => {

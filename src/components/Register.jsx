@@ -26,7 +26,7 @@ function Register() {
     const [eyeIcon, setEyeIcon] = useState(closeEye)
 
     const showPassword = () => {
-        if (type==="password") {
+        if (type === "password") {
             setType("text")
             setEyeIcon(Eye)
         } else {
@@ -78,10 +78,23 @@ function Register() {
 
                     fetch("https://hpm-backend.onrender.com/v1/system/signUp", requestOptions)
                         .then((response) => response.json())
-                        .then((result) => console.log(result))
+                        .then((result) => {
+                            if (result.code === '200') {
+                                Swal.fire({
+                                    title: result.details.value,
+                                    confirmButtonText: 'ตกลง'
+                                })
+                            } else if (result.code === '200') {
+                                Swal.fire({
+                                    title: 'เกิดข้อผิดพลาด',
+                                    text: result.details.value,
+                                    confirmButtonText: 'ตกลง'
+                                })
+                            }
+                        })
                         .catch((error) => console.error(error));
                 } catch (error) {
-                    alert("ไม่สามารถสมัครสมาชิกได้")
+
                 }
             })
     }
