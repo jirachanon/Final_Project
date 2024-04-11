@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import circleLogo from '../assets/IMG/circleLogo.png'
+import { useSelector } from 'react-redux'
+
 function SendBP() {
     const initValues = {
         sys: "",
         dia: "",
         pul: "",
     }
+    var id = Math.floor(Math.random() * 10)
 
+    const { user } = useSelector((state) => state.slices);
     const [formValues, setFormValues] = useState(initValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setisSubmit] = useState(false);
@@ -14,13 +18,36 @@ function SendBP() {
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormValues({ ...formValues, [name]: value });
-        console.log(formValues);
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         setFormErrors(validation(formValues));
         setisSubmit(true);
+
+        var myHeaders = new Headers();
+        const authToken = user?.token;
+        myHeaders.append("Authorization", "Bearer " + authToken);
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "dia": formValues.dia,
+            "pul": formValues.pul,
+            "sys": formValues.sys,
+            "requestId": id
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        await fetch("https://hpm-backend.onrender.com/v1/bp/createBloodPressure", requestOptions)
+            .then(response => response.json())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
     }
 
     useEffect(() => {
@@ -28,6 +55,7 @@ function SendBP() {
         if (Object.keys(formErrors).length === 0 && isSubmit) {
             console.log(formValues);
         }
+        console.log(user?.type + " " + user?.token);
     }, [formErrors])
 
     const validation = (validate) => {
@@ -45,14 +73,6 @@ function SendBP() {
     }
     return (
         <div className='w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-lvh'>
-
-            {/* <div className='navbar'>
-                    <div className='w-[7.6rem] mx-auto mt-3'>
-                        <div className='Logo'>
-                            <img src={circleLogo} alt="Logo" />
-                        </div>
-                    </div>
-                </div> */}
 
             <div className='w-[7.6rem] mx-auto'>
                 <div className='Logo'>

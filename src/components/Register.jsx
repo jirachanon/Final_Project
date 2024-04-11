@@ -6,6 +6,7 @@ import closeEye from '../assets/icons/closeEye.svg'
 import vector from '../assets/icons/Vector.svg'
 import phone from '../assets/icons/phone.svg'
 import liff from '@line/liff'
+import Swal from 'sweetalert2'
 
 function Register() {
 
@@ -76,7 +77,7 @@ function Register() {
                     };
 
                     fetch("https://hpm-backend.onrender.com/v1/system/signUp", requestOptions)
-                        .then((response) => response.text())
+                        .then((response) => response.json())
                         .then((result) => console.log(result))
                         .catch((error) => console.error(error));
                 } catch (error) {
