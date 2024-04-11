@@ -74,6 +74,14 @@ function SendBP() {
     return (
         <div className='w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-lvh'>
 
+            {/* <div className='navbar'>
+                    <div className='w-[7.6rem] mx-auto mt-3'>
+                        <div className='Logo'>
+                            <img src={circleLogo} alt="Logo" />
+                        </div>
+                    </div>
+                </div> */}
+
             <div className='w-[7.6rem] mx-auto'>
                 <div className='Logo'>
                     <img src={circleLogo} alt="Logo" />

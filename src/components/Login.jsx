@@ -178,28 +178,27 @@ function Login() {
 
 
     return (
-        <>
-            <div className='w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-lvh'>
-                <div className='w-[22.875rem] mx-auto'>
-                    <div className='Logo'>
-                        <img src={Logo} alt="Logo" />
-                    </div>
+        <div className='w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-lvh'>
+            <div className='w-[22.875rem] mx-auto'>
+                <div className='Logo'>
+                    <img src={Logo} alt="Logo" />
                 </div>
-                <form onSubmit={handleSubmit}>
-                    <div className='w-[16.125rem] mx-auto mt-[5.35rem]'>
-                        <label className="form-control w-full max-w-xs">
-                            <div className="label">
-                                <span className="label-text text-gray-500">อีเมล</span>
-                            </div>
-                            <div className='flex justify-end items-center relative'>
-                                <input type="text" placeholder="me@me.com" name='email' className="input input-bordered w-full max-w-xs" value={formValues.email} onChange={handleChange} />
-                                <img src={person} className="absolute mr-2 w-[1.3rem]" alt="Lock Icon" />
-                            </div>
-                            <div className='label'>
-                                <span className='label-text text-red-700'>{formErrors.email}</span>
-                            </div>
-                        </label>
-                    </div>
+            </div>
+            <form onSubmit={handleSubmit}>
+                <div className='w-[16.125rem] mx-auto mt-[5.35rem]'>
+                    <label className="form-control w-full max-w-xs">
+                        <div className="label">
+                            <span className="label-text text-gray-500">อีเมล</span>
+                        </div>
+                        <div className='flex justify-end items-center relative'>
+                            <input type="text" placeholder="me@me.com" name='email' className="input input-bordered w-full max-w-xs" value={formValues.email} onChange={handleChange} />
+                            <img src={person} className="absolute mr-2 w-[1.3rem]" alt="Lock Icon" />
+                        </div>
+                        <div className='label'>
+                            <span className='label-text text-red-700'>{formErrors.email}</span>
+                        </div>
+                    </label>
+                </div>
 
                     <div className='w-[16.125rem] mx-auto mt-[2.995rem]'>
                         <label className="form-control w-full max-w-xs">
