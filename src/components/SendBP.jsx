@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import circleLogo from '../assets/IMG/circleLogo.png'
 import { useSelector } from 'react-redux'
+import Swal from 'sweetalert2'
 
 function SendBP() {
     const initValues = {
@@ -46,7 +47,20 @@ function SendBP() {
 
         await fetch("https://hpm-backend.onrender.com/v1/bp/createBloodPressure", requestOptions)
             .then(response => response.json())
-            .then(result => console.log(result))
+            .then(result => {
+                if (result.code === '200') {
+                    Swal.fire({
+                        title: result.details.value,
+                        confirmButtonText: 'ตกลง'
+                    })
+                } else if (result.code === '400') {
+                    Swal.fire({
+                        title: 'เกิดข้อผิดพลาด',
+                        text: result.details.value,
+                        confirmButtonText: 'ตกลง'
+                    })
+                }
+            })
             .catch(error => console.log('error', error));
     }
 
