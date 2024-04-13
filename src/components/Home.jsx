@@ -1,18 +1,31 @@
-import React from 'react'
-import circleLogo from '../assets/IMG/circleLogo.png'
+import React, {useEffect} from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
+import { useParams } from 'react-router-dom'
+import Nav from './Nav'
+
 function Home() {
+
+  const { user } = useSelector((state) => state.slices)
+  const navigate = useNavigate()
+  const param = useParams()
+
+  useEffect(() => {
+    if (!(param.param1 === user?.token)) {
+      Swal.fire({
+        title: 'กรุณาเข้าสู่ระบบอีกครั้ง',
+        confirmButtonText: 'ตกลง'
+      }).then(() => {
+        liff.closeWindow();
+        navigate("/")
+      })
+    }
+  },)
+
   return (
     <div className='w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-lvh'>
-      <div className='navbar'>
-        <div className='flex-1'>
-          <img src={circleLogo} alt="logo" className='w-[6rem]' />
-        </div>
-        <div className="flex-none gap-1">
-          <button className="btn btn-square btn-ghost">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-7 h-7 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-          </button>
-        </div>
-      </div>
+      <Nav />
     </div>
   )
 }

@@ -22,7 +22,7 @@ function App() {
             <Route path="/" element={<Login />} />
             <Route path="/Register" element={<Register />} />
             <Route path="/SendBP/:param1" element={<SendBP />} />
-            <Route path="/Home/:param2" element={<Home />} />
+            <Route path="/Home/:param1" element={<Home />} />
           </Routes>
         </Router>
       </Provider>

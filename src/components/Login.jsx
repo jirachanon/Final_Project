@@ -77,7 +77,7 @@ function Login() {
                             }).then(() => {
                                 dispatch(setUser(result || {}));
                                 liff.closeWindow();
-                                navigate(`/SendBP/${result?.token}`);
+                                navigate(`/Home/${result?.token}`);
                             })
                         }
                         else {
@@ -126,15 +126,15 @@ function Login() {
                     .then((response) => response.json())
                     .then((result) => {
                         console.log(result)
-                        if (result.token) {
+                        if (result?.token) {
                             Swal.fire({
                                 title: 'เข้าสู่ระบบสำเร็จ',
-                                text: 'สวัสดีคุณ ' + result.name,
+                                text: 'สวัสดีคุณ ' + result?.name,
                                 confirmButtonText: 'ตกลง'
                             }).then(() => {
                                 dispatch(setUser(result || {}));
                                 liff.closeWindow();
-                                navigate("/SendBP");
+                                navigate(`/Home/${result?.token}`);
 
                             })
                         }
@@ -149,13 +149,6 @@ function Login() {
 
             })
     }
-
-    useEffect(() => {
-        console.log(formErrors);
-        if (Object.keys(formErrors).length === 0 && isSubmit) {
-            console.log(formValues);
-        }
-    }, [formErrors])
 
     const validation = (validate) => {
         const error = {};
