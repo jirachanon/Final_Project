@@ -76,7 +76,7 @@ function Login() {
                                 confirmButtonText: 'ตกลง'
                             }).then(() => {
                                 dispatch(setUser(result || {}));
-                                // liff.closeWindow();
+                                liff.closeWindow();
                                 navigate(`/SendBP/${result?.token}`);
                             })
                         }
