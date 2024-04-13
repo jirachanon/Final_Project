@@ -170,7 +170,7 @@ function Login() {
 
 
     return (
-        <div className='w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-lvh'>
+        <div className='w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-full'>
             <div className='w-[22.875rem] mx-auto'>
                 <div className='Logo'>
                     <img src={Logo} alt="Logo" />
@@ -225,6 +225,7 @@ function Login() {
                     <img src={Line} alt="Line" className='absolute w-[2.5rem] ml-1' />
                 </div>
             </div>
+
         </div>
     )
 }

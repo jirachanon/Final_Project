@@ -96,7 +96,7 @@ function SendBP() {
         return error;
     }
     return (
-        <div className='w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-lvh'>
+        <div className='w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-full'>
 
             <div className='w-[7.6rem] mx-auto'>
                 <div className='Logo'>
