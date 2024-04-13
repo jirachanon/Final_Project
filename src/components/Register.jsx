@@ -79,15 +79,16 @@ function Register() {
                     fetch("https://hpm-backend.onrender.com/v1/system/signUp", requestOptions)
                         .then((response) => response.json())
                         .then((result) => {
-                            if (result.code === '200') {
+                            if (result.status.code === '200') {
                                 Swal.fire({
-                                    title: result.details.value,
+                                    title: 'สำเร็จ',
+                                    text: result?.status?.details[0]?.value,
                                     confirmButtonText: 'ตกลง'
                                 })
-                            } else if (result.code === '200') {
+                            } else if (result.status.code === '400') {
                                 Swal.fire({
                                     title: 'เกิดข้อผิดพลาด',
-                                    text: result.details.value,
+                                    text: result?.status?.details[0]?.value,
                                     confirmButtonText: 'ตกลง'
                                 })
                             }

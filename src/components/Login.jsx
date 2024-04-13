@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import Logo from '../assets/IMG/Logo.png'
 import Line from '../assets/IMG/Line.png'
 import person from '../assets/icons/person.svg'
@@ -6,10 +6,9 @@ import Eye from '../assets/icons/Eye.svg'
 import closeEye from "../assets/icons/closeEye.svg"
 import liff from '@line/liff'
 import Swal from 'sweetalert2'
-import { useDispatch} from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setUser } from './slices'
 import { useNavigate } from 'react-router-dom'
-
 
 function Login() {
 
@@ -70,15 +69,15 @@ function Login() {
                 fetch("https://hpm-backend.onrender.com/v1/system/signIn", requestOptions)
                     .then((response) => response.json())
                     .then((result) => {
-                        if (result.token) {
+                        if (result?.token) {
                             Swal.fire({
                                 title: 'เข้าสู่ระบบสำเร็จ',
-                                text: 'สวัสดีคุณ ' + result.name,
+                                text: 'สวัสดีคุณ ' + result?.name,
                                 confirmButtonText: 'ตกลง'
                             }).then(() => {
                                 dispatch(setUser(result || {}));
                                 liff.closeWindow();
-                                navigate("/SendBP");
+                                navigate(`/SendBP/${result?.token}`);
                             })
                         }
                         else {
@@ -87,6 +86,7 @@ function Login() {
                                 confirmButtonText: 'ตกลง'
                             })
                         }
+                        return result;
                     })
                     .catch((error) => console.error(error));
             })
@@ -135,7 +135,7 @@ function Login() {
                                 dispatch(setUser(result || {}));
                                 liff.closeWindow();
                                 navigate("/SendBP");
-                                
+
                             })
                         }
                         else {
@@ -199,39 +199,39 @@ function Login() {
                     </label>
                 </div>
 
-                    <div className='w-[16.125rem] mx-auto mt-[2.995rem]'>
-                        <label className="form-control w-full max-w-xs">
-                            <div className="label">
-                                <span className="label-text text-gray-500">รหัสผ่าน</span>
-                            </div>
-                            <div className='flex justify-end items-center relative'>
-                                <input type={type} placeholder="รหัสผ่าน" name='password' className="input input-bordered w-full max-w-xs" value={formValues.password} onChange={handleChange} />
-                                <img src={eyeIcon} onClick={showPassword} className="absolute mr-2 w-[1.6rem]" alt="Lock Icon" />
-                            </div>
-                            <div className='label'>
-                                <span className='label-text text-red-700'>{formErrors.password}</span>
-                            </div>
-
-                            <div className="label place-content-center">
-                                <a href="#" className='label-text text-gray-500 font-normal underline'>ลืมรหัสผ่าน?</a>
-                            </div>
-                        </label>
-                    </div>
-
-                    <div className='w-[13.563rem] mx-auto mt-[6.58rem]'>
-                        <button className='btn btn-block bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px]'>เข้าสู่ระบบ</button>
-                        <div className="label place-content-center">
-                            <a href="/Register" className='label-text text-gray-500 underline'>สมัครสมาชิก</a>
+                <div className='w-[16.125rem] mx-auto mt-[2.995rem]'>
+                    <label className="form-control w-full max-w-xs">
+                        <div className="label">
+                            <span className="label-text text-gray-500">รหัสผ่าน</span>
                         </div>
-                    </div>
-                </form>
+                        <div className='flex justify-end items-center relative'>
+                            <input type={type} placeholder="รหัสผ่าน" name='password' className="input input-bordered w-full max-w-xs" value={formValues.password} onChange={handleChange} />
+                            <img src={eyeIcon} onClick={showPassword} className="absolute mr-2 w-[1.6rem]" alt="Lock Icon" />
+                        </div>
+                        <div className='label'>
+                            <span className='label-text text-red-700'>{formErrors.password}</span>
+                        </div>
 
-                <div className='w-[13.563rem] mx-auto mt-[2.5rem]'>
-                    <div className='flex justify-start items-center relative'>
-                        <button className='btn btn-block bg-[#06C755] text-white pl-[3rem] font-normal text-[18px]' onClick={lineHandleSubmit}>เข้าสู่ระบบด้วย Line</button>
-                        <img src={Line} alt="Line" className='absolute w-[2.5rem] ml-1' />
+                        <div className="label place-content-center">
+                            <a href="#" className='label-text text-gray-500 font-normal underline'>ลืมรหัสผ่าน?</a>
+                        </div>
+                    </label>
+                </div>
+
+                <div className='w-[13.563rem] mx-auto mt-[6.58rem]'>
+                    <button className='btn btn-block bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px]'>เข้าสู่ระบบ</button>
+                    <div className="label place-content-center">
+                        <a href="/Register" className='label-text text-gray-500 underline'>สมัครสมาชิก</a>
                     </div>
                 </div>
+            </form>
+
+            <div className='w-[13.563rem] mx-auto mt-[2.5rem]'>
+                <div className='flex justify-start items-center relative'>
+                    <button className='btn btn-block bg-[#06C755] text-white pl-[3rem] font-normal text-[18px]' onClick={lineHandleSubmit}>เข้าสู่ระบบด้วย Line</button>
+                    <img src={Line} alt="Line" className='absolute w-[2.5rem] ml-1' />
+                </div>
+            </div>
         </div>
     )
 }

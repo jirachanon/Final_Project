@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import circleLogo from '../assets/IMG/circleLogo.png'
-import { useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
+import { useParams } from 'react-router-dom'
 
 function SendBP() {
     const initValues = {
@@ -11,10 +11,10 @@ function SendBP() {
     }
     var id = Math.floor(Math.random() * 10)
 
-    const { user } = useSelector((state) => state.slices);
     const [formValues, setFormValues] = useState(initValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setisSubmit] = useState(false);
+    const param = useParams()
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -27,8 +27,7 @@ function SendBP() {
         setisSubmit(true);
 
         var myHeaders = new Headers();
-        const authToken = user?.token;
-        myHeaders.append("Authorization", "Bearer " + authToken);
+        myHeaders.append("Authorization", "Bearer " + param.param1);
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
@@ -45,18 +44,20 @@ function SendBP() {
             redirect: 'follow'
         };
 
-        await fetch("https://hpm-backend.onrender.com/v1/bp/createBloodPressure", requestOptions)
+        fetch("https://hpm-backend.onrender.com/v1/bp/createBloodPressure", requestOptions)
             .then(response => response.json())
             .then(result => {
-                if (result.code === '200') {
+                console.log(result);
+                if (result.status.code === "200") {
                     Swal.fire({
-                        title: result.details.value,
+                        title: 'สำเร็จ',
+                        text: result?.status?.details[0]?.value,
                         confirmButtonText: 'ตกลง'
                     })
-                } else if (result.code === '400') {
+                } else if (result.status.code === "400") {
                     Swal.fire({
                         title: 'เกิดข้อผิดพลาด',
-                        text: result.details.value,
+                        text: result.status?.details[0]?.value,
                         confirmButtonText: 'ตกลง'
                     })
                 }
@@ -86,14 +87,6 @@ function SendBP() {
     }
     return (
         <div className='w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-lvh'>
-
-            {/* <div className='navbar'>
-                    <div className='w-[7.6rem] mx-auto mt-3'>
-                        <div className='Logo'>
-                            <img src={circleLogo} alt="Logo" />
-                        </div>
-                    </div>
-                </div> */}
 
             <div className='w-[7.6rem] mx-auto'>
                 <div className='Logo'>
