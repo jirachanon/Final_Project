@@ -1,9 +1,16 @@
 import React from 'react'
 import circleLogo from '../assets/IMG/circleLogo.png'
+import { useParams, useNavigate } from 'react-router-dom'
 
 function Nav() {
+    const navigate = useNavigate();
+    const param = useParams();
+
+    const listNav = () => {
+        navigate(`/SendBP/${param.param1}`)
+    }
     return (
-        <div className="navbar bg-[#F2F1EC]">
+        <div className="navbar bg-[#F2F1EC] w-auto md:w-full lg:w-full">
             <div className="flex-1">
                 <img src={circleLogo} alt="Logo" className='w-14' />
             </div>
@@ -14,9 +21,8 @@ function Nav() {
                     </button>
                     <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
                         <li>
-                            <a className="justify-between">
-                                Profile
-                                <span className="badge">New</span>
+                            <a className="justify-between" onClick={listNav}>
+                                ส่งผลวัดคสามดันโลหิต
                             </a>
                         </li>
                         <li><a>Settings</a></li>

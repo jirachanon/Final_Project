@@ -32,7 +32,7 @@ function SendBP() {
         setisSubmit(true);
 
         var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Bearer " + param.param2);
+        myHeaders.append("Authorization", "Bearer " + param.param1);
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({

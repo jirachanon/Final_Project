@@ -35,6 +35,18 @@ function Register() {
         }
     }
 
+    useEffect(() => {
+        liff
+            .init({
+                liffId: '2004489610-01vWBvVK',
+            })
+            .then(async () => {
+                if (!liff.isLoggedIn()) {
+                    liff.login();
+                }
+            })
+    })
+
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormValues({ ...formValues, [name]: value });
@@ -44,16 +56,8 @@ function Register() {
         event.preventDefault();
         setFormErrors(validation(formValues));
         setisSubmit(true);
-        liff
-            .init({
-                liffId: '2004489610-01vWBvVK',
-            })
-            .then(async () => {
-                if (!liff.isLoggedIn()) {
-                    liff.login();
-                }
+        
                 const lifftoken = liff.getIDToken();
-                try {
                     const myHeaders = new Headers();
                     myHeaders.append("Content-Type", "application/json");
                     myHeaders.append("Accept", "*/*");
@@ -94,10 +98,6 @@ function Register() {
                             }
                         })
                         .catch((error) => console.error(error));
-                } catch (error) {
-
-                }
-            })
     }
 
     const validation = (validate) => {
