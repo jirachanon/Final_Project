@@ -7,6 +7,7 @@ import vector from '../assets/icons/Vector.svg'
 import phone from '../assets/icons/phone.svg'
 import liff from '@line/liff'
 import Swal from 'sweetalert2'
+import { useNavigate } from 'react-router-dom'
 
 function Register() {
 
@@ -24,6 +25,7 @@ function Register() {
     const [isSubmit, setisSubmit] = useState(false);
     const [type, setType] = useState("password");
     const [eyeIcon, setEyeIcon] = useState(closeEye)
+    const naviagte = useNavigate();
 
     const showPassword = () => {
         if (type === "password") {
@@ -88,6 +90,8 @@ function Register() {
                                     title: 'สำเร็จ',
                                     text: result?.status?.details[0]?.value,
                                     confirmButtonText: 'ตกลง'
+                                }).then(() => {
+                                    naviagte('/')
                                 })
                             } else if (result.status.code === '400') {
                                 Swal.fire({
