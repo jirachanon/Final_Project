@@ -38,7 +38,7 @@ function Register() {
     useEffect(() => {
         liff
             .init({
-                liffId: '2004489610-01vWBvVK',
+                liffId: '2004489610-aP6ng65X',
             })
             .then(async () => {
                 if (!liff.isLoggedIn()) {

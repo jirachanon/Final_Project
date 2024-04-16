@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useParams } from "react-router-dom";
 import Nav from "./Nav";
+import { setBp } from "./slices";
 
 function Home() {
   const { user } = useSelector((state) => state.slices);
   const navigate = useNavigate();
   const param = useParams();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!(param.param1 === user?.token)) {
@@ -48,7 +50,10 @@ function Home() {
         requestOptions
       )
         .then((response) => response.json())
-        .then((result) => console.log(result))
+        .then((result) => {
+          console.log(result)
+          dispatch(setBp(result || {}))
+        })
         .catch((error) => console.log("error", error));
     }
   });
