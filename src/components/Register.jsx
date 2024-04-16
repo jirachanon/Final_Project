@@ -36,15 +36,7 @@ function Register() {
     }
 
     useEffect(() => {
-        liff
-            .init({
-                liffId: '2004489610-aP6ng65X',
-            })
-            .then(async () => {
-                if (!liff.isLoggedIn()) {
-                    liff.login();
-                }
-            })
+        
     })
 
     const handleChange = (event) => {
@@ -56,6 +48,16 @@ function Register() {
         event.preventDefault();
         setFormErrors(validation(formValues));
         setisSubmit(true);
+
+        liff
+            .init({
+                liffId: '2004489610-aP6ng65X',
+            })
+            .then(async () => {
+                if (!liff.isLoggedIn()) {
+                    liff.login();
+                }
+            })
         
                 const lifftoken = liff.getIDToken();
                     const myHeaders = new Headers();
