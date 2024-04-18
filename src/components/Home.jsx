@@ -60,7 +60,7 @@ function Home() {
 
   return (
     <>
-      <div className="w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-dvh md:h-screen lg:h-screen">
+      <div className="w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-dvh md:min-h-screen lg:h-screen">
         <Nav />
         <div className="w-64 mx-auto text-center">
           <p className="font-bold">ประวัติผลวัดความดันโลหิต</p>

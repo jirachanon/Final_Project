@@ -165,14 +165,14 @@ function Login() {
   };
 
   return (
-    <div className="w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-full lg:h-screen">
+    <div className="w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto min-h-screen lg:h-screen">
       <div className="w-[22.875rem] mx-auto">
         <div className="Logo">
           <img src={Logo} alt="Logo" />
         </div>
       </div>
       <form onSubmit={handleSubmit}>
-        <div className="w-[16.125rem] mx-auto mt-[5.35rem]">
+        <div className="w-[16.125rem] mx-auto mt-[4rem]">
           <label className="form-control w-full max-w-xs">
             <div className="label">
               <span className="label-text text-gray-500">อีเมล</span>
