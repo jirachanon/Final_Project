@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { useParams } from "react-router-dom";
 import Nav from "./Nav";
 import { setBp } from "./slices";
+import BpListing from "./bpListing";
 
 function Home() {
   const { user } = useSelector((state) => state.slices);
@@ -18,7 +19,6 @@ function Home() {
         title: "กรุณาเข้าสู่ระบบอีกครั้ง",
         confirmButtonText: "ตกลง",
       }).then(() => {
-        
         navigate("/");
       });
     } else {
@@ -34,7 +34,7 @@ function Home() {
           {
             direction: "Desc",
             property: "createDate",
-          }
+          },
         ],
       });
 
@@ -51,17 +51,22 @@ function Home() {
       )
         .then((response) => response.json())
         .then((result) => {
-          console.log(result)
-          dispatch(setBp(result || {}))
+          console.log(result);
+          dispatch(setBp(result || {}));
         })
         .catch((error) => console.log("error", error));
     }
   });
 
   return (
-    <div className="w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-full">
-      <Nav />
-    </div>
+    <>
+      <div className="w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-dvh md:h-full lg:h-screen">
+        <Nav />
+        <div className="w-1/2 mx-auto">
+          <BpListing />
+        </div>
+      </div>
+    </>
   );
 }
 
