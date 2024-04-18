@@ -91,7 +91,7 @@ function Register() {
                                     text: result?.status?.details[0]?.value,
                                     confirmButtonText: 'ตกลง'
                                 }).then(() => {
-                                    naviagte('/')
+                                    liff.closeWindow();
                                 })
                             } else if (result.status.code === '400') {
                                 Swal.fire({
