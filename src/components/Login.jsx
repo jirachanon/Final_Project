@@ -43,11 +43,9 @@ function Login() {
         liffId: "2004489610-aP6ng65X",
       })
       .then(async () => {
-        // if (!liff.isLoggedIn()) {
+        if (!liff.isLoggedIn()) {
           liff.login();
-          const liffToken = liff.getIDToken();
-          console.log(liffToken);
-        // }
+        }
       });
   });
 
@@ -64,7 +62,7 @@ function Login() {
       requestId: id,
       email: formValues.email,
       password: formValues.password,
-      lineToken: "",
+      lineToken: liff.getIDToken(),
     });
 
     const requestOptions = {
@@ -102,8 +100,6 @@ function Login() {
   const lineHandleSubmit = async (event) => {
     event.preventDefault();
 
-    const lifftoken = liff.getIDToken();
-
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Accept", "*/*");
@@ -111,7 +107,7 @@ function Login() {
     const raw = JSON.stringify({
       type: "line",
       requestId: id,
-      lineToken: lifftoken,
+      lineToken: lifftoken.getIDToken(),
     });
 
     const requestOptions = {
