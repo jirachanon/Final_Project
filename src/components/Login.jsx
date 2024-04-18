@@ -43,9 +43,9 @@ function Login() {
         liffId: "2004489610-aP6ng65X",
       })
       .then(async () => {
-        // if (!liff.isLoggedIn()) {
-        //   liff.login();
-        // }
+        if (!liff.isLoggedIn()) {
+          liff.login();
+        }
       });
   });
 
@@ -85,9 +85,10 @@ function Login() {
             liff.closeWindow();
             navigate(`/Home/${result?.token}`);
           });
-        } else {
+        } else if (result?.status?.code === "400") {
           Swal.fire({
             title: "เกิดข้อผิดพลาด",
+            text: result?.status?.details[0]?.value,
             confirmButtonText: "ตกลง",
           });
         }
