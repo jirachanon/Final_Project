@@ -138,7 +138,7 @@ function Register() {
 
     return (
         <div className="sm:contianer">
-            <div className='w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-full lg:h-screen min-h-screen'>
+            <div className='w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-auto lg:h-screen min-h-screen'>
                 <div className='w-[22.875rem] mx-auto'>
                     <div className='Logo'>
                         <img src={Logo} alt="Logo" />
@@ -146,7 +146,7 @@ function Register() {
                 </div>
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <div className='w-[16.125rem] mx-auto mt-[2rem]'>
+                        <div className='w-[16.125rem] mx-auto mt-[1rem]'>
                             <label htmlFor="" className='form-control w-full max-w-xs'>
                                 <div className='label'>
                                     <span className='label-text text-gray-500'>อีเมล</span>
@@ -161,7 +161,7 @@ function Register() {
                             </label>
                         </div>
 
-                        <div className='w-[16.125rem] mx-auto mt-[2rem]'>
+                        <div className='w-[16.125rem] mx-auto mt-[1rem]'>
                             <label htmlFor="" className='form-control w-full max-w-xs'>
                                 <div className='label'>
                                     <span className='label-text text-gray-500'>รหัสผ่าน</span>
@@ -176,7 +176,7 @@ function Register() {
                             </label>
                         </div>
 
-                        <div className='w-[16.125rem] mx-auto mt-[2rem]'>
+                        <div className='w-[16.125rem] mx-auto mt-[1rem]'>
                             <label htmlFor="" className='form-control w-full max-w-xs'>
                                 <div className='label'>
                                     <span className='label-text text-gray-500'>Hospital Number</span>
@@ -191,7 +191,7 @@ function Register() {
                             </label>
                         </div>
 
-                        <div className='w-[16.125rem] mx-auto mt-[2rem]'>
+                        <div className='w-[16.125rem] mx-auto mt-[1rem]'>
                             <label htmlFor="" className='form-control w-full max-w-xs'>
                                 <div className='label'>
                                     <span className='label-text text-gray-500'>เบอร์โทรศัพท์</span>
