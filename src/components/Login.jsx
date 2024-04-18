@@ -43,11 +43,11 @@ function Login() {
         liffId: "2004489610-aP6ng65X",
       })
       .then(async () => {
-        if (!liff.isLoggedIn()) {
+        // if (!liff.isLoggedIn()) {
           liff.login();
           const liffToken = liff.getIDToken();
           console.log(liffToken);
-        }
+        // }
       });
   });
 
