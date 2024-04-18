@@ -96,7 +96,7 @@ function SendBP() {
         return error;
     }
     return (
-        <div className='w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-dvh md:h-full lg:h-screen'>
+        <div className='w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-auto lg:h-screen'>
 
             <div className='w-[7.6rem] mx-auto'>
                 <div className='Logo'>
@@ -146,6 +146,7 @@ function SendBP() {
                     <button className='btn btn-block bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px]'>ส่งผลตรวจ</button>
                 </div>
             </form>
+
         </div>
     )
 }

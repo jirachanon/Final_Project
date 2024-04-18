@@ -21,48 +21,53 @@ function Home() {
       }).then(() => {
         navigate("/");
       });
-    } else {
-      var myHeaders = new Headers();
-      myHeaders.append("Authorization", "Bearer " + param.param1);
-      myHeaders.append("Content-Type", "application/json");
-
-      var raw = JSON.stringify({
-        requestId: "1",
-        page: "0",
-        size: "10",
-        sortBy: [
-          {
-            direction: "Desc",
-            property: "createDate",
-          },
-        ],
-      });
-
-      var requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow",
-      };
-
-      fetch(
-        "https://hpm-backend.onrender.com/v1/bp/u/getBloodPressurePagingByUserId",
-        requestOptions
-      )
-        .then((response) => response.json())
-        .then((result) => {
-          console.log(result);
-          dispatch(setBp(result || {}));
-        })
-        .catch((error) => console.log("error", error));
     }
+    
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer " + param.param1);
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      requestId: "1",
+      page: "0",
+      size: "10",
+      sortBy: [
+        {
+          direction: "Desc",
+          property: "createDate",
+        },
+      ],
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch(
+      "https://hpm-backend.onrender.com/v1/bp/u/getBloodPressurePagingByUserId",
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result.bps[0]?.createDate);
+        dispatch(setBp(result || {}));
+      })
+      .catch((error) => console.log("error", error));
   });
 
   return (
     <>
-      <div className="w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-dvh md:h-full lg:h-screen">
+      <div className="w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-dvh md:h-screen lg:h-screen">
         <Nav />
-        <div className="w-1/2 mx-auto">
+        <div className="w-64 mx-auto text-center">
+          <p className="font-bold">ประวัติผลวัดความดันโลหิต</p>
+          <p className="font-bold">ของ</p>
+          <p className="text-[#1B3B83] font-bold">คุณ{user.name}</p>
+        </div>
+        <div className="w-64 mx-auto">
           <BpListing />
         </div>
       </div>
