@@ -46,19 +46,18 @@ function Home() {
       redirect: "follow",
     };
 
-    async function fetch() {
-      await fetch(
-        "https://hpm-backend.onrender.com/v1/bp/u/getBloodPressurePagingByUserId",
-        requestOptions
-      )
-        .then((response) => response.json())
-        .then((result) => {
-          console.log(result.bps[0]?.createDate);
-          dispatch(setBp(result || {}));
-        })
-        .catch((error) => console.log("error", error));
-    }
-  },);
+    fetch(
+      "https://hpm-backend.onrender.com/v1/bp/u/getBloodPressurePagingByUserId",
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result.bps);
+        dispatch(setBp(result || {}));
+      })
+      .catch((error) => console.log("error", error));
+
+  },[param.param1]);
 
   return (
     <>
