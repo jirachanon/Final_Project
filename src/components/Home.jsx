@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { useParams } from "react-router-dom";
 import Nav from "./Nav";
 import { setBp } from "./slices";
-import BpListing from "./bpListing";
+import BpListing from "./BpListing";
 
 function Home() {
   const { user } = useSelector((state) => state.slices);
@@ -22,7 +22,7 @@ function Home() {
         navigate("/");
       });
     }
-    
+
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer " + param.param1);
     myHeaders.append("Content-Type", "application/json");
