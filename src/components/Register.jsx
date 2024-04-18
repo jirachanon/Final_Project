@@ -42,10 +42,10 @@ function Register() {
             .init({
                 liffId: '2004489610-aP6ng65X',
             })
-            .then(async () => {
-                // if (!liff.isLoggedIn()) {
-                //     liff.login();
-                // }
+            .then(() => {
+                if (!liff.isLoggedIn()) {
+                    liff.login();
+                }
             })
     })
 
@@ -54,12 +54,11 @@ function Register() {
         setFormValues({ ...formValues, [name]: value });
     }
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
         setFormErrors(validation(formValues));
         setisSubmit(true);
 
-                const lifftoken = liff.getIDToken();
                     const myHeaders = new Headers();
                     myHeaders.append("Content-Type", "application/json");
                     myHeaders.append("Accept", "*/*");
@@ -72,7 +71,7 @@ function Register() {
                         "password": formValues.pws,
                         "phone": formValues.tel,
                         "requestId": "",
-                        "lineToken": lifftoken
+                        "lineToken": liff.getIDToken()
                     });
 
                     const requestOptions = {
