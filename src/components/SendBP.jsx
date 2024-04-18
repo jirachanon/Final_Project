@@ -106,7 +106,7 @@ function SendBP() {
 
             <div className='text-[2.2rem] text-[#1B3B83] mt-5 text-center'>ส่งผลตรวจ</div>
             <form onSubmit={handleSubmit}>
-                <div className='w-[16.125rem] mx-auto mt-[4rem]'>
+                <div className='w-[16.125rem] mx-auto mt-[2rem]'>
                     <label className="form-control w-full max-w-xs">
                         <div className="label">
                             <span className="label-text text-gray-500">ค่าความดันขณะหัวใจบีบตัว (SYS)</span>
@@ -118,7 +118,7 @@ function SendBP() {
                     </label>
                 </div>
 
-                <div className='w-[16.125rem] mx-auto mt-[4rem]'>
+                <div className='w-[16.125rem] mx-auto mt-[2rem]'>
                     <label className="form-control w-full max-w-xs">
                         <div className="label">
                             <span className="label-text text-gray-500">ค่าความดันขณะหัวใจคลายตัว (DIA)</span>
@@ -130,7 +130,7 @@ function SendBP() {
                     </label>
                 </div>
 
-                <div className='w-[16.125rem] mx-auto mt-[4rem]'>
+                <div className='w-[16.125rem] mx-auto mt-[2rem]'>
                     <label className="form-control w-full max-w-xs">
                         <div className="label">
                             <span className="label-text text-gray-500">ชีพจร (PUL)</span>
