@@ -45,8 +45,7 @@ function Login() {
       })
       .then(async () => {
         if (!liff.isLoggedIn()) {
-          const destinationURL = window.location.href
-          liff.login({ redirectUri: `https://main.d3ri0kgpziqudg.amplifyapp.com/Login/home`});
+          liff.login();
         }
       });
   });
@@ -85,6 +84,7 @@ function Login() {
           }).then(() => {
             dispatch(setUser(result || {}));
             localStorage.setItem("token", result?.token)
+            localStorage.setItem("userName", result?.name)
             if (params.from === 'home') {
               navigate(`/`);
             }else if (params.from === 'sendbp') {
@@ -137,6 +137,7 @@ function Login() {
           }).then(() => {
             dispatch(setUser(result || {}));
             localStorage.setItem("token", result?.token)
+            localStorage.setItem("userName", result?.name)
             if (params.from === 'home') {
               navigate(`/`);
             }else if (params.from === 'sendbp') {

@@ -11,6 +11,8 @@ function Home() {
   const { user, bp } = useSelector((state) => state.slices);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const userName = localStorage.getItem('userName')
+
 
   useEffect(() => {
     liff
@@ -64,6 +66,8 @@ function Home() {
       })
       .catch((error) => console.log("error", error));
 
+      console.log(bp.bps)
+
   }, [user?.token]);
 
   return (
@@ -72,6 +76,8 @@ function Home() {
         <Nav />
         <div className="w-64 mx-auto text-center">
           <p className="font-bold">ประวัติผลวัดความดันโลหิต</p>
+          <p className="font-bold">ของ</p>
+          <p className="ftext-[#1B3B83] font-bold">คุณ {userName}</p>
         </div>
         <div className="w-64 mx-auto">
           <BpListing />
