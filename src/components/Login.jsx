@@ -45,7 +45,8 @@ function Login() {
       })
       .then(async () => {
         if (!liff.isLoggedIn()) {
-          liff.login();
+          const destinationURL = window.location.href
+          liff.login({ redirectUri: `https://main.d3ri0kgpziqudg.amplifyapp.com/Login/home`});
         }
       });
   });
@@ -112,7 +113,7 @@ function Login() {
     const raw = JSON.stringify({
       type: "line",
       requestId: id,
-      lineToken: lifftoken.getIDToken(),
+      lineToken: liff.getIDToken(),
     });
 
     const requestOptions = {
@@ -128,7 +129,7 @@ function Login() {
     )
       .then((response) => response.json())
       .then((result) => {
-        if (result?.token) {
+        if (result?.roles[0] === "ROLE_USER") {
           Swal.fire({
             title: "เข้าสู่ระบบสำเร็จ",
             text: "สวัสดีคุณ " + result?.name,
