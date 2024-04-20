@@ -64,6 +64,8 @@ function SendBP() {
                         title: 'เกิดข้อผิดพลาด',
                         text: result.status?.details[0]?.value,
                         confirmButtonText: 'ตกลง'
+                    }).then(() => {
+                        liff.closeWindow();
                     })
                 }
             })
