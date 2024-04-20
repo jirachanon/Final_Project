@@ -87,7 +87,7 @@ function Register() {
                             if (result.status.code === '200') {
                                 Swal.fire({
                                     title: 'สำเร็จ',
-                                    text: result?.status?.details[0]?.value,
+                                    text: result?.status?.details[0]?.value + '\nกรุณาลองอีกครั้ง',
                                     confirmButtonText: 'ตกลง'
                                 }).then(() => {
                                     liff.closeWindow();
