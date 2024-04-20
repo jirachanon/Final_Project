@@ -5,7 +5,7 @@ function Card({bp}) {
     const formattedTime = moment(bp.createDate).format('kk:mm')
         
   return (
-    <div className="collapse bg-white">
+    <div className="collapse bg-white mt-3">
       <input type="checkbox" />
       <div className="collapse-title text-base">
         {formattedDate}
