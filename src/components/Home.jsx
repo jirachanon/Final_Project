@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import liff from "@line/liff";
 import Nav from "./Nav";
 import { setBp } from "./slices";
 import BpListing from "./BpListing";
