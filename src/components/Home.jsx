@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -6,9 +6,11 @@ import liff from "@line/liff";
 import Nav from "./Nav";
 import { setBp } from "./slices";
 import BpListing from "./BpListing";
+import Loading from "./Loading";
 
 function Home() {
   const { user, bp } = useSelector((state) => state.slices);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userName = localStorage.getItem('userName')
@@ -56,17 +58,16 @@ function Home() {
       redirect: "follow",
     };
 
-    fetch(
-      "https://hpm-backend.onrender.com/v1/bp/u/getBloodPressurePagingByUserId",
-      requestOptions
-    )
-      .then((response) => response.json())
-      .then((result) => {
-        dispatch(setBp(result || {}));
-      })
-      .catch((error) => console.log("error", error));
-
-      console.log(bp.bps)
+      fetch(
+        "https://hpm-backend.onrender.com/v1/bp/u/getBloodPressurePagingByUserId",
+        requestOptions
+      )
+        .then((response) => response.json())
+        .then((result) => {
+          dispatch(setBp(result || {}));
+          setTimeout(() => {setIsLoading(false)}, 1800)
+        })
+        .catch((error) => console.log("error", error));
 
   }, [user?.token]);
 
@@ -77,10 +78,10 @@ function Home() {
         <div className="w-64 mx-auto text-center">
           <p className="font-bold">ประวัติผลวัดความดันโลหิต</p>
           <p className="font-bold">ของ</p>
-          <p className="ftext-[#1B3B83] font-bold">คุณ {userName}</p>
+          <p className="text-[#1B3B83] font-bold">คุณ {userName}</p>
         </div>
         <div className="w-64 mx-auto">
-          <BpListing />
+          {!isLoading ? <Loading/> : <BpListing/>}
         </div>
       </div>
     </>
