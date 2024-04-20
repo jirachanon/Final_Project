@@ -80,8 +80,8 @@ function Home() {
           <p className="font-bold">ของ</p>
           <p className="text-[#1B3B83] font-bold">คุณ {userName}</p>
         </div>
-        <div className="w-64 mx-auto">
-          {!isLoading ? <Loading/> : <BpListing/>}
+        <div className="w-64 mx-auto mt-4">
+          {isLoading ? <Loading/> : <BpListing/>}
         </div>
       </div>
     </>
