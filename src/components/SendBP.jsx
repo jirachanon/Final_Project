@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import circleLogo from '../assets/IMG/circleLogo.png'
 import Swal from 'sweetalert2'
-import liff from "@line/liff";
 import { useNavigate } from 'react-router-dom'
 import liff from '@line/liff'
 import { useSelector } from 'react-redux'
