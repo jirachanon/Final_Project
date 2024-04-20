@@ -17,7 +17,7 @@ function SendBP() {
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setisSubmit] = useState(false);
     const navigate = useNavigate()
-    const user  = useSelector((state) => state.slices)
+    const user = useSelector((state) => state.slices)
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -56,6 +56,8 @@ function SendBP() {
                         title: 'สำเร็จ',
                         text: result?.status?.details[0]?.value,
                         confirmButtonText: 'ตกลง'
+                    }).then(() => {
+                        liff.closeWindow();
                     })
                 } else if (result.status.code === "400") {
                     Swal.fire({
@@ -69,6 +71,15 @@ function SendBP() {
     }
 
     useEffect(() => {
+        liff
+            .init({
+                liffId: '2004489610-MOpXKpry'
+            }).then(async () => {
+                if (!liff.isLoggedIn()) {
+                    liff.login();
+                }
+            });
+            
         if (!localStorage.getItem("token")) {
             Swal.fire({
                 title: 'กรุณาเข้าสู่ระบบอีกครั้ง',

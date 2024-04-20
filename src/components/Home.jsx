@@ -12,6 +12,15 @@ function Home() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    liff
+      .init({
+        liffId: '2004489610-dq14p1vw'
+      }).then(async () => {
+        if (!liff.isLoggedIn()) {
+          liff.login();
+        }
+      });
+
     if (!localStorage.getItem("token")) {
       Swal.fire({
         title: "กรุณาเข้าสู่ระบบอีกครั้ง",
@@ -54,7 +63,7 @@ function Home() {
       })
       .catch((error) => console.log("error", error));
 
-  },[user?.token]);
+  }, [user?.token]);
 
   return (
     <>
