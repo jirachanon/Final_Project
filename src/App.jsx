@@ -19,10 +19,10 @@ function App() {
       <Provider store={store}>
         <Router>
           <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path="/Login/:from" element={<Login />} />
             <Route path="/Register" element={<Register />} />
-            <Route path="/SendBP/:param1" element={<SendBP />} />
-            <Route path="/Home/:param1" element={<Home />} />
+            <Route path="/SendBP" element={<SendBP />} />
+            <Route path="/" element={<Home />} />
           </Routes>
         </Router>
       </Provider>

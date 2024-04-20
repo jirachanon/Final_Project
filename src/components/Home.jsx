@@ -2,29 +2,27 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { useParams } from "react-router-dom";
 import Nav from "./Nav";
 import { setBp } from "./slices";
 import BpListing from "./BpListing";
 
 function Home() {
-  const { user } = useSelector((state) => state.slices);
+  const { user, bp } = useSelector((state) => state.slices);
   const navigate = useNavigate();
-  const param = useParams();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!(param.param1 === user?.token)) {
+    if (!localStorage.getItem("token")) {
       Swal.fire({
         title: "กรุณาเข้าสู่ระบบอีกครั้ง",
         confirmButtonText: "ตกลง",
       }).then(() => {
-        navigate("/");
+        navigate(`/Login/${'home'}`);
       });
     }
 
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer " + param.param1);
+    myHeaders.append("Authorization", "Bearer " + localStorage.getItem("token"));
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
@@ -52,12 +50,11 @@ function Home() {
     )
       .then((response) => response.json())
       .then((result) => {
-        console.log(result.bps);
         dispatch(setBp(result || {}));
       })
       .catch((error) => console.log("error", error));
 
-  },[param.param1]);
+  },[user?.token]);
 
   return (
     <>
@@ -65,8 +62,6 @@ function Home() {
         <Nav />
         <div className="w-64 mx-auto text-center">
           <p className="font-bold">ประวัติผลวัดความดันโลหิต</p>
-          <p className="font-bold">ของ</p>
-          <p className="text-[#1B3B83] font-bold">คุณ{user.name}</p>
         </div>
         <div className="w-64 mx-auto">
           <BpListing />

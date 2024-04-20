@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import circleLogo from '../assets/IMG/circleLogo.png'
 import Swal from 'sweetalert2'
-import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import liff from '@line/liff'
 import { useSelector } from 'react-redux'
@@ -17,9 +16,8 @@ function SendBP() {
     const [formValues, setFormValues] = useState(initValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setisSubmit] = useState(false);
-    const param = useParams()
     const navigate = useNavigate()
-    const { user } = useSelector((state) => state.slices)
+    const user  = useSelector((state) => state.slices)
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -32,7 +30,7 @@ function SendBP() {
         setisSubmit(true);
 
         var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Bearer " + param.param1);
+        myHeaders.append("Authorization", "Bearer " + localStorage.getItem("token"));
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
@@ -71,13 +69,13 @@ function SendBP() {
     }
 
     useEffect(() => {
-        if (!(param.param1 === user?.token)) {
+        if (!localStorage.getItem("token")) {
             Swal.fire({
                 title: 'กรุณาเข้าสู่ระบบอีกครั้ง',
                 confirmButtonText: 'ตกลง'
             }).then(() => {
                 liff.closeWindow();
-                navigate("/")
+                navigate(`/Login/${'sendbp'}`)
             })
         }
     },)

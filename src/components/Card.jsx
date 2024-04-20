@@ -15,6 +15,7 @@ function Card({bp}) {
         <p>DIA: {bp.dia}</p>
         <p>PUL: {bp.pul}</p>
         <p>เวลา : {formattedTime}</p>
+        <p className="text-[#1B3B83] font-bold">ชื่อผู้ใช้ : {bp.createBy.firstName} {bp.createBy.lastName}</p>
       </div>
     </div>
   );

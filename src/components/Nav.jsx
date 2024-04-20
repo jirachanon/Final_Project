@@ -7,7 +7,7 @@ function Nav() {
     const param = useParams();
 
     const listNav = () => {
-        navigate(`/SendBP/${param.param1}`)
+        navigate(`/SendBP`)
     }
     return (
         <div className="navbar bg-[#F2F1EC] w-auto md:w-full lg:w-full">

@@ -8,7 +8,7 @@ import liff from "@line/liff";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { setUser } from "./slices";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function Login() {
   const initValues = { email: "", password: "" };
@@ -20,6 +20,7 @@ function Login() {
   const [type, setType] = useState("password");
   const [eyeIcon, setEyeIcon] = useState(closeEye);
   const dispatch = useDispatch();
+  const params = useParams();
   const navigate = useNavigate();
 
   const showPassword = () => {
@@ -75,15 +76,19 @@ function Login() {
     fetch("https://hpm-backend.onrender.com/v1/system/signIn", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        if (result?.token) {
+        if (result?.roles[0] === "ROLE_USER") {
           Swal.fire({
             title: "เข้าสู่ระบบสำเร็จ",
             text: "สวัสดีคุณ " + result?.name,
             confirmButtonText: "ตกลง",
           }).then(() => {
             dispatch(setUser(result || {}));
-            liff.closeWindow();
-            navigate(`/Home/${result?.token}`);
+            localStorage.setItem("token", result?.token)
+            if (params.from === 'home') {
+              navigate(`/`);
+            }else if (params.from === 'sendbp') {
+              navigate(`/SendBp`)
+            }
           });
         } else if (result?.status?.code === "400") {
           Swal.fire({
@@ -123,7 +128,6 @@ function Login() {
     )
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
         if (result?.token) {
           Swal.fire({
             title: "เข้าสู่ระบบสำเร็จ",
@@ -131,8 +135,12 @@ function Login() {
             confirmButtonText: "ตกลง",
           }).then(() => {
             dispatch(setUser(result || {}));
-            // liff.closeWindow();
-            navigate(`/Home/${result?.token}`);
+            localStorage.setItem("token", result?.token)
+            if (params.from === 'home') {
+              navigate(`/`);
+            }else if (params.from === 'sendbp') {
+              navigate(`/SendBp`)
+            }
           });
         } else if (result?.status?.code === "400") {
           Swal.fire({
