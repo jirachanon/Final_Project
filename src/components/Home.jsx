@@ -28,9 +28,9 @@ function Home() {
             confirmButtonText: "ตกลง",
           }).then(() => {
             if (!liff.isLoggedIn()) {
-              liff.login()
-            }
-            navigate('/Login/home');
+          liff.login()
+        }
+            navigate('https://liff.line.me/2004489610-aP6ng65X');
           });
         }
       },[Cookies.get('user_token')])
