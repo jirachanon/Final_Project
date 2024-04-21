@@ -44,11 +44,6 @@ function Login() {
       .init({
         liffId: "2004489610-aP6ng65X",
       })
-      .then(async () => {
-        if (!liff.isLoggedIn()) {
-          liff.login();
-        }
-      });
   });
 
   const handleSubmit = async (event) => {
