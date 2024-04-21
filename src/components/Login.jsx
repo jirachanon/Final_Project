@@ -53,11 +53,12 @@ function Login() {
     liff
       .init({
         liffId: liffID,
-      }).then(() => {
-        if (!liff.isLoggedIn()) {
-          liff.login()
-        }
-      });
+      })
+      //.then(() => {
+      //   if (!liff.isLoggedIn()) {
+      //     liff.login()
+      //   }
+      // });
   },[liffID]);
 
   const handleSubmit = async (event) => {

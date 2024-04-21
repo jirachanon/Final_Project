@@ -82,7 +82,9 @@ function SendBP() {
                         title: 'กรุณาเข้าสู่ระบบอีกครั้ง',
                         confirmButtonText: 'ตกลง'
                     }).then(() => {
-                        liff.logout();
+                        if (!liff.isLoggedIn()) {
+                            liff.login()
+                        }
                         navigate('/Login/sendbp')
                     })
                 }
