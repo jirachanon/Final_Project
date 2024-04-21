@@ -1,6 +1,7 @@
 import React from 'react'
 import circleLogo from '../assets/IMG/circleLogo.png'
 import { useParams, useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie';
 
 function Nav() {
     const navigate = useNavigate();
@@ -9,6 +10,11 @@ function Nav() {
     const listNav = () => {
         navigate(`/SendBP`)
     }
+
+    const logOut = () => {
+        Cookies.remove("user_token")
+    }
+
     return (
         <div className="navbar bg-[#F2F1EC] w-auto md:w-full lg:w-full">
             <div className="flex-1">
@@ -26,7 +32,7 @@ function Nav() {
                             </a>
                         </li>
                         <li><a>Settings</a></li>
-                        <li><a>Logout</a></li>
+                        <li><a onClick={ logOut }>Logout</a></li>
                     </ul>
                 </div>
             </div>
