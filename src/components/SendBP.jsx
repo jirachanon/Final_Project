@@ -4,6 +4,7 @@ import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
 import liff from '@line/liff'
 import { useSelector } from 'react-redux'
+import Cookies from 'js-cookie'
 
 function SendBP() {
     const initValues = {
@@ -17,7 +18,6 @@ function SendBP() {
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setisSubmit] = useState(false);
     const navigate = useNavigate()
-    const user = useSelector((state) => state.slices)
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -30,7 +30,7 @@ function SendBP() {
         setisSubmit(true);
 
         var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Bearer " + localStorage.getItem("token"));
+        myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
@@ -82,7 +82,7 @@ function SendBP() {
                 }
             });
 
-        if (!localStorage.getItem("token")) {
+        if (!Cookies.get("user_token")) {
             Swal.fire({
                 title: 'กรุณาเข้าสู่ระบบอีกครั้ง',
                 confirmButtonText: 'ตกลง'

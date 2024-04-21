@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { setUser } from "./slices";
 import { useNavigate, useParams } from "react-router-dom";
+import Cookies from "js-cookie";
 
 function Login() {
   const initValues = { email: "", password: "" };
@@ -83,7 +84,7 @@ function Login() {
             confirmButtonText: "ตกลง",
           }).then(() => {
             dispatch(setUser(result || {}));
-            localStorage.setItem("token", result?.token)
+            Cookies.set('user_token', result?.token, { expires: 1/48 })
             localStorage.setItem("userName", result?.name)
             if (params.from === 'home') {
               navigate(`/`);

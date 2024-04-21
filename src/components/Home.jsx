@@ -7,9 +7,10 @@ import Nav from "./Nav";
 import { setBp } from "./slices";
 import BpListing from "./BpListing";
 import Loading from "./Loading";
+import Cookies from "js-cookie";
 
 function Home() {
-  const { user, bp } = useSelector((state) => state.slices);
+  const { user } = useSelector((state) => state.slices);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ function Home() {
         }
       });
 
-    if (!localStorage.getItem("token")) {
+    if (!Cookies.get("user_token")) {
       Swal.fire({
         title: "กรุณาเข้าสู่ระบบอีกครั้ง",
         confirmButtonText: "ตกลง",
@@ -36,7 +37,7 @@ function Home() {
     }
 
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer " + localStorage.getItem("token"));
+    myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
@@ -69,7 +70,7 @@ function Home() {
         })
         .catch((error) => console.log("error", error));
 
-  }, [user?.token]);
+  }, [Cookies.get("user_token")]);
 
   return (
     <>
