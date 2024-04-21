@@ -25,7 +25,7 @@ function Login() {
   const navigate = useNavigate();
 
   const getLiffId = () => {
-    if (window.location.pathname === '/Login/sendbp') {
+    if (window.location.pathname === '/Login/sendbp/') {
       setLiffId('2004489610-3eGKYGV4')
     }else{
       setLiffId('2004489610-aP6ng65X')
@@ -49,7 +49,7 @@ function Login() {
 
   useEffect(() => {
     getLiffId()
-    console.log(window.location.pathname === '/Login/sendbp' ? true : false)
+    console.log(window.location.pathname === '/Login/sendbp/' ? true : false)
     liff
       .init({
         liffId: liffID,
