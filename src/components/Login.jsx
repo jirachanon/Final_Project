@@ -93,9 +93,9 @@ function Login() {
             Cookies.set('user_token', result?.token, { expires: 1/48 })
             localStorage.setItem("userName", result?.name)
             if (window.location.href === homeUrl) {
-              window.location.assign(homeUrl)
+              window.location.assign('https://main.d3ri0kgpziqudg.amplifyapp.com/')
             }else if (window.location.href === sendBpUrl) {
-              window.location.assign(sendBpUrl)
+              window.location.assign('https://main.d3ri0kgpziqudg.amplifyapp.com/SendBP')
             }
           });
         } else if (result?.status?.code === "400") {
