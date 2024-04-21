@@ -28,7 +28,7 @@ function Home() {
             confirmButtonText: "ตกลง",
           }).then(() => {
             liff.logout();
-            navigate(`/Login/${'home'}`);
+            navigate(`/Login/home`);
           });
         }
       })
