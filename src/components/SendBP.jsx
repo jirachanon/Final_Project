@@ -77,12 +77,15 @@ function SendBP() {
             .init({
                 liffId: '2004489610-MOpXKpry'
             }).then(() => {
+                if (!liff.isLoggedIn) {
+                    liff.login();
+                }
+
                 if (!Cookies.get("user_token")) {
                     Swal.fire({
                         title: 'กรุณาเข้าสู่ระบบอีกครั้ง',
                         confirmButtonText: 'ตกลง'
                     }).then(() => {
-                        liff.login();
                         navigate('/Login/sendbp')
                     })
                 }

@@ -22,12 +22,15 @@ function Home() {
       .init({
         liffId: '2004489610-dq14p1vw'
       }).then(() => {
+        if (!liff.isLoggedIn) {
+          liff.login();
+        }
+
         if (!Cookies.get("user_token")) {
           Swal.fire({
             title: "กรุณาเข้าสู่ระบบอีกครั้ง",
             confirmButtonText: "ตกลง",
-          }).then(() => {
-            liff.login();
+          }).then(() => {;
             navigate('/Login/home');
           });
         }
