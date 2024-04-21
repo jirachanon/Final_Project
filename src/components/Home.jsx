@@ -25,16 +25,16 @@ function Home() {
         if (!liff.isLoggedIn()) {
           liff.login();
         }
-      });
-
-    if (!Cookies.get("user_token")) {
-      Swal.fire({
-        title: "กรุณาเข้าสู่ระบบอีกครั้ง",
-        confirmButtonText: "ตกลง",
       }).then(() => {
-        navigate(`/Login/${'home'}`);
-      });
-    }
+        if (!Cookies.get("user_token")) {
+          Swal.fire({
+            title: "กรุณาเข้าสู่ระบบอีกครั้ง",
+            confirmButtonText: "ตกลง",
+          }).then(() => {
+            navigate(`/Login/${'home'}`);
+          });
+        }
+      })
 
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));

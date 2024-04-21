@@ -80,16 +80,16 @@ function SendBP() {
                 if (!liff.isLoggedIn()) {
                     liff.login();
                 }
-            });
-
-        if (!Cookies.get("user_token")) {
-            Swal.fire({
-                title: 'กรุณาเข้าสู่ระบบอีกครั้ง',
-                confirmButtonText: 'ตกลง'
             }).then(() => {
-                navigate(`/Login/${'sendbp'}`)
-            })
-        }
+                if (!Cookies.get("user_token")) {
+                    Swal.fire({
+                        title: 'กรุณาเข้าสู่ระบบอีกครั้ง',
+                        confirmButtonText: 'ตกลง'
+                    }).then(() => {
+                        navigate(`/Login/${'sendbp'}`)
+                    })
+                }
+            });
     },)
 
     const validation = (validate) => {
