@@ -8,11 +8,11 @@ import liff from "@line/liff";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { setUser } from "./slices";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,} from "react-router-dom";
 import Cookies from "js-cookie";
 
-function Login() {
-  const initValues = { email: "", password: "" };
+function LoginSendBp() {
+    const initValues = { email: "", password: "" };
   var id = Math.floor(Math.random() * 10);
 
   const [formValues, setFormValues] = useState(initValues);
@@ -41,7 +41,7 @@ function Login() {
   useEffect(() => {
     liff
       .init({
-        liffId: "2004489610-aP6ng65X",
+        liffId: "2004489610-3eGKYGV4",
       }).then(() => {
         if (!liff.isLoggedIn()) {
           liff.login()
@@ -84,7 +84,7 @@ function Login() {
             dispatch(setUser(result || {}));
             Cookies.set('user_token', result?.token, { expires: 1/48 })
             localStorage.setItem("userName", result?.name)
-            navigate(`/`);
+            navigate(`/SendBP`);
           });
         } else if (result?.status?.code === "400") {
           Swal.fire({
@@ -131,9 +131,9 @@ function Login() {
             confirmButtonText: "ตกลง",
           }).then(() => {
             dispatch(setUser(result || {}));
-            localStorage.setItem("token", result?.token)
+            Cookies.set('user_token', result?.token, { expires: 1/48 })
             localStorage.setItem("userName", result?.name)
-            navigate(`/`);
+            navigate(`/SendBP`);
           });
         } else if (result?.status?.code === "400") {
           Swal.fire({
@@ -266,4 +266,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default LoginSendBp

@@ -21,17 +21,14 @@ function Home() {
     liff
       .init({
         liffId: '2004489610-dq14p1vw'
-      }).then(async () => {
-        if (!liff.isLoggedIn()) {
-          liff.login();
-        }
       }).then(() => {
         if (!Cookies.get("user_token")) {
           Swal.fire({
             title: "กรุณาเข้าสู่ระบบอีกครั้ง",
             confirmButtonText: "ตกลง",
           }).then(() => {
-            navigate(`/Login/${'home'}`);
+            liff.logout();
+            navigate(`/Login/home`);
           });
         }
       })
