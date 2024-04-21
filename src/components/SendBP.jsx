@@ -83,7 +83,7 @@ function SendBP() {
                         confirmButtonText: 'ตกลง'
                     }).then(() => {
                         liff.logout();
-                        navigate(`/Login/sendbp`)
+                        navigate('/Login/sendbp')
                     })
                 }
             });

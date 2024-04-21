@@ -20,9 +20,17 @@ function Login() {
   const [isSubmit, setisSubmit] = useState(false);
   const [type, setType] = useState("password");
   const [eyeIcon, setEyeIcon] = useState(closeEye);
-  const liffID = window.location.pathname === '/Login/home' ? liffID = '2004489610-aP6ng65X' : liffID = '2004489610-3eGKYGV4'
+  const [liffID, setLiffId] = useState('2004489610-aP6ng65X')
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const getLiffId = () => {
+    if (window.location.pathname === '/Login/sendbp') {
+      setLiffId('2004489610-3eGKYGV4')
+    }else{
+      setLiffId('2004489610-aP6ng65X')
+    }
+  }
 
   const showPassword = () => {
     if (type === "password") {
@@ -40,6 +48,8 @@ function Login() {
   };
 
   useEffect(() => {
+    getLiffId()
+    
     liff
       .init({
         liffId: liffID,
