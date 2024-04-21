@@ -30,8 +30,8 @@ function Home() {
           Swal.fire({
             title: "กรุณาเข้าสู่ระบบอีกครั้ง",
             confirmButtonText: "ตกลง",
-          }).then(() => {;
-            navigate('/Login/home');
+          }).then(() => {
+            window.location.assign('https://main.d3ri0kgpziqudg.amplifyapp.com/Login/home')
           });
         }
       }, [Cookies.get('user_token')])
