@@ -76,10 +76,6 @@ function SendBP() {
         liff
             .init({
                 liffId: '2004489610-MOpXKpry'
-            }).then(async () => {
-                if (!liff.isLoggedIn()) {
-                    liff.login();
-                }
             }).then(() => {
                 if (!Cookies.get("user_token")) {
                     Swal.fire({
