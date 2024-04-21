@@ -86,7 +86,7 @@ function SendBP() {
                         title: 'กรุณาเข้าสู่ระบบอีกครั้ง',
                         confirmButtonText: 'ตกลง'
                     }).then(() => {
-                        navigate('/Login/sendbp')
+                        window.location.assign('https://main.d3ri0kgpziqudg.amplifyapp.com/Login/home')
                     })
                 }
             });
