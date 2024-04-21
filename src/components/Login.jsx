@@ -97,7 +97,7 @@ function Login() {
             localStorage.setItem("userName", result?.name)
             if (window.location.pathname === '/Login/home') {
               navigate('/')
-            }else if (window.location.pathname === '/Login/sendbp') {
+            }if (window.location.pathname === '/Login/sendbp') {
               navigate('/SendBP')
             }
           });
