@@ -22,6 +22,9 @@ function Login() {
   const [eyeIcon, setEyeIcon] = useState(closeEye);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const sendBpUrl = 'https://main.d3ri0kgpziqudg.amplifyapp.com/Login/sendbp/'
+  const homeUrl =  'https://main.d3ri0kgpziqudg.amplifyapp.com/Login/home/'
+
 
   const showPassword = () => {
     if (type === "password") {
@@ -38,14 +41,18 @@ function Login() {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  useEffect(() => {
-    liff
+  useEffect(async () => {
+    await liff
       .init({
         liffId: '2004489610-aP6ng65X',
       })
       .then(() => {
         if (!liff.isLoggedIn()) {
-          liff.login()
+          if (window.location.href === homeUrl) {
+            liff.login({redirectUri: homeUrl});
+          }else if (window.location.href === sendBpUrl) {
+            liff.login({redirectUri: sendBpUrl})
+          }
         }
       });
   });
@@ -85,7 +92,11 @@ function Login() {
             dispatch(setUser(result || {}));
             Cookies.set('user_token', result?.token, { expires: 1/48 })
             localStorage.setItem("userName", result?.name)
-              navigate('/')
+            if (window.location.href === homeUrl) {
+              window.location.assign(homeUrl)
+            }else if (window.location.href === sendBpUrl) {
+              window.location.assign(sendBpUrl)
+            }
           });
         } else if (result?.status?.code === "400") {
           Swal.fire({
@@ -134,7 +145,11 @@ function Login() {
             dispatch(setUser(result || {}));
             Cookies.set('user_token', result?.token, { expires: 1/48 })
             localStorage.setItem("userName", result?.name)
-              navigate('/')
+            if (window.location.href === homeUrl) {
+              window.location.assign(homeUrl)
+            }else if (window.location.href === sendBpUrl) {
+              window.location.assign(sendBpUrl)
+            }
           });
         } else if (result?.status?.code === "400") {
           Swal.fire({

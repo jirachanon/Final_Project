@@ -17,8 +17,8 @@ function Home() {
   const userName = localStorage.getItem('userName')
 
 
-  useEffect(() => {
-    liff
+  useEffect(async () => {
+    await liff
       .init({
         liffId: '2004489610-dq14p1vw'
       }).then(() => {
@@ -27,13 +27,11 @@ function Home() {
             title: "กรุณาเข้าสู่ระบบอีกครั้ง",
             confirmButtonText: "ตกลง",
           }).then(() => {
-            if (!liff.isLoggedIn()) {
-          liff.login()
-        }
-            navigate('https://liff.line.me/2004489610-aP6ng65X');
+            liff.logout();
+            navigate('/Login/home');
           });
         }
-      },[Cookies.get('user_token')])
+      }, [Cookies.get('user_token')])
 
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
@@ -58,16 +56,16 @@ function Home() {
       redirect: "follow",
     };
 
-      fetch(
-        "https://hpm-backend.onrender.com/v1/bp/u/getBloodPressurePagingByUserId",
-        requestOptions
-      )
-        .then((response) => response.json())
-        .then((result) => {
-          dispatch(setBp(result || {}));
-          setTimeout(() => {setIsLoading(false)}, 1800)
-        })
-        .catch((error) => console.log("error", error));
+    fetch(
+      "https://hpm-backend.onrender.com/v1/bp/u/getBloodPressurePagingByUserId",
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        dispatch(setBp(result || {}));
+        setTimeout(() => { setIsLoading(false) }, 1800)
+      })
+      .catch((error) => console.log("error", error));
 
   }, [Cookies.get("user_token")]);
 
@@ -81,7 +79,7 @@ function Home() {
           <p className="text-[#1B3B83] font-bold">คุณ {userName}</p>
         </div>
         <div className="w-64 mx-auto mt-4">
-          {isLoading ? <Loading/> : <BpListing/>}
+          {isLoading ? <Loading /> : <BpListing />}
         </div>
       </div>
     </>

@@ -37,8 +37,8 @@ function Register() {
         }
     }
 
-    useEffect(() => {
-        liff
+    useEffect(async () => {
+        await liff
             .init({
                 liffId: '2004489610-01vWBvVK',
             })

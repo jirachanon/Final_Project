@@ -72,8 +72,8 @@ function SendBP() {
             .catch(error => console.log('error', error));
     }
 
-    useEffect(() => {
-        liff
+    useEffect(async () => {
+        await liff
             .init({
                 liffId: '2004489610-MOpXKpry'
             }).then(() => {
@@ -82,10 +82,8 @@ function SendBP() {
                         title: 'กรุณาเข้าสู่ระบบอีกครั้ง',
                         confirmButtonText: 'ตกลง'
                     }).then(() => {
-                        if (!liff.isLoggedIn()) {
-                            liff.login()
-                        }
-                        navigate('/Login/home')
+                        liff.logout
+                        navigate('/Login/sendbp')
                     })
                 }
             });
