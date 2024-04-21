@@ -20,7 +20,6 @@ function Login() {
   const [isSubmit, setisSubmit] = useState(false);
   const [type, setType] = useState("password");
   const [eyeIcon, setEyeIcon] = useState(closeEye);
-  const [liffID, setLiffId] = useState('2004489610-aP6ng65X')
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -40,7 +39,6 @@ function Login() {
   };
 
   useEffect(() => {
-    getLiffId()
     liff
       .init({
         liffId: '2004489610-aP6ng65X',
@@ -50,7 +48,7 @@ function Login() {
           liff.login()
         }
       });
-  },[liffID]);
+  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
