@@ -24,14 +24,6 @@ function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const getLiffId = () => {
-    if (window.location.pathname === '/Login/sendbp/') {
-      setLiffId('2004489610-3eGKYGV4')
-    }else{
-      setLiffId('2004489610-aP6ng65X')
-    }
-  }
-
   const showPassword = () => {
     if (type === "password") {
       setType("text");
@@ -49,16 +41,15 @@ function Login() {
 
   useEffect(() => {
     getLiffId()
-    console.log(window.location.pathname === '/Login/sendbp/' ? true : false)
     liff
       .init({
-        liffId: liffID,
+        liffId: '2004489610-aP6ng65X',
       })
-      //.then(() => {
-      //   if (!liff.isLoggedIn()) {
-      //     liff.login()
-      //   }
-      // });
+      .then(() => {
+        if (!liff.isLoggedIn()) {
+          liff.login()
+        }
+      });
   },[liffID]);
 
   const handleSubmit = async (event) => {
