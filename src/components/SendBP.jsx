@@ -85,7 +85,7 @@ function SendBP() {
                         if (!liff.isLoggedIn()) {
                             liff.login()
                         }
-                        navigate('/Login/sendbp')
+                        navigate('/Login/home')
                     })
                 }
             });

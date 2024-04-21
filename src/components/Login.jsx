@@ -85,11 +85,7 @@ function Login() {
             dispatch(setUser(result || {}));
             Cookies.set('user_token', result?.token, { expires: 1/48 })
             localStorage.setItem("userName", result?.name)
-            if (window.location.pathname === '/Login/home') {
               navigate('/')
-            }if (window.location.pathname === '/Login/sendbp') {
-              navigate('/SendBP/')
-            }
           });
         } else if (result?.status?.code === "400") {
           Swal.fire({
@@ -138,11 +134,7 @@ function Login() {
             dispatch(setUser(result || {}));
             Cookies.set('user_token', result?.token, { expires: 1/48 })
             localStorage.setItem("userName", result?.name)
-            if (window.location.pathname === '/Login/home') {
               navigate('/')
-            }if (window.location.pathname === '/Login/sendbp') {
-              navigate('/SendBP')
-            }
           });
         } else if (result?.status?.code === "400") {
           Swal.fire({
