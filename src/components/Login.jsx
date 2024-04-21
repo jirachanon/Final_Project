@@ -137,7 +137,7 @@ function Login() {
             confirmButtonText: "ตกลง",
           }).then(() => {
             dispatch(setUser(result || {}));
-            localStorage.setItem("token", result?.token)
+            Cookies.set('user_token', result?.token, { expires: 1/48 })
             localStorage.setItem("userName", result?.name)
             if (params.from === 'home') {
               navigate(`/`);
