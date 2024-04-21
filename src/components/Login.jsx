@@ -23,6 +23,7 @@ function Login() {
   const dispatch = useDispatch();
   const params = useParams();
   const navigate = useNavigate();
+  const destinationURL = `https://main.d3ri0kgpziqudg.amplifyapp.com/Login/${params.from}`
 
   const showPassword = () => {
     if (type === "password") {
@@ -43,7 +44,11 @@ function Login() {
     liff
       .init({
         liffId: "2004489610-aP6ng65X",
-      })
+      }).then(() => {
+        if (!liff.isLoggedIn()) {
+          liff.login({ redirectUri: destinationURL})
+        }
+      });
   });
 
   const handleSubmit = async (event) => {
