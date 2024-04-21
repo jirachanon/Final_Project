@@ -131,7 +131,7 @@ function Login() {
             confirmButtonText: "ตกลง",
           }).then(() => {
             dispatch(setUser(result || {}));
-            Cookies.set('user_token', result?.token, { expires: 1/48 })
+            localStorage.setItem("token", result?.token)
             localStorage.setItem("userName", result?.name)
             navigate(`/`);
           });
