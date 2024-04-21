@@ -20,6 +20,7 @@ function Login() {
   const [isSubmit, setisSubmit] = useState(false);
   const [type, setType] = useState("password");
   const [eyeIcon, setEyeIcon] = useState(closeEye);
+  const liffID = window.location.pathname === '/Login/home' ? liffID = '2004489610-aP6ng65X' : liffID = '2004489610-3eGKYGV4'
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -41,7 +42,7 @@ function Login() {
   useEffect(() => {
     liff
       .init({
-        liffId: "2004489610-aP6ng65X",
+        liffId: liffID,
       }).then(() => {
         if (!liff.isLoggedIn()) {
           liff.login()
@@ -84,7 +85,11 @@ function Login() {
             dispatch(setUser(result || {}));
             Cookies.set('user_token', result?.token, { expires: 1/48 })
             localStorage.setItem("userName", result?.name)
-            navigate(`/`);
+            if (window.location.pathname === '/Login/home') {
+              navigate('/')
+            }else if (window.location.pathname === '/Login/sendbp') {
+              navigate('/SendBP')
+            }
           });
         } else if (result?.status?.code === "400") {
           Swal.fire({
