@@ -31,7 +31,7 @@ function Home() {
             navigate('/Login/home');
           });
         }
-      })
+      },[Cookies.get('user_token')])
 
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));

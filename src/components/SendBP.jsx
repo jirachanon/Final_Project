@@ -87,7 +87,7 @@ function SendBP() {
                     })
                 }
             });
-    },)
+    },[Cookies.get('user_token')])
 
     const validation = (validate) => {
         const error = {};

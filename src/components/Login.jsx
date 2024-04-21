@@ -49,7 +49,7 @@ function Login() {
 
   useEffect(() => {
     getLiffId()
-    
+    console.log(window.location.pathname === '/Login/sendbp' ? true : false)
     liff
       .init({
         liffId: liffID,
@@ -58,7 +58,7 @@ function Login() {
           liff.login()
         }
       });
-  });
+  },[liffID]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -146,9 +146,13 @@ function Login() {
             confirmButtonText: "ตกลง",
           }).then(() => {
             dispatch(setUser(result || {}));
-            localStorage.setItem("token", result?.token)
+            Cookies.set('user_token', result?.token, { expires: 1/48 })
             localStorage.setItem("userName", result?.name)
-            navigate(`/`);
+            if (window.location.pathname === '/Login/home') {
+              navigate('/')
+            }else if (window.location.pathname === '/Login/sendbp') {
+              navigate('/SendBP')
+            }
           });
         } else if (result?.status?.code === "400") {
           Swal.fire({
