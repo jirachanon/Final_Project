@@ -19,12 +19,20 @@ function Login() {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setisSubmit] = useState(false);
   const [type, setType] = useState("password");
+  const [liffID, setLiffID] = useState('2004489610-dq14p1vw')
   const [eyeIcon, setEyeIcon] = useState(closeEye);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const sendBpUrl = 'https://main.d3ri0kgpziqudg.amplifyapp.com/Login/sendbp/'
   const homeUrl =  'https://main.d3ri0kgpziqudg.amplifyapp.com/Login/home/'
 
+  const getLiffId = () => {
+    if (window.location.pathname === '/Login/sendbp') {
+      setLiffID('2004489610-MOpXKpry')
+    }else if (window.location.pathname === '/Login/home') {
+      setLiffID('2004489610-dq14p1vw')
+    }
+  }
 
   const showPassword = () => {
     if (type === "password") {
@@ -42,9 +50,10 @@ function Login() {
   };
 
   useEffect(async () => {
+    getLiffId();
     await liff
       .init({
-        liffId: '2004489610-aP6ng65X',
+        liffId: liffID,
       })
       .then(() => {
         if (!liff.isLoggedIn()) {
@@ -93,9 +102,9 @@ function Login() {
             Cookies.set('user_token', result?.token, { expires: 1/48 })
             localStorage.setItem("userName", result?.name)
             if (window.location.href === homeUrl) {
-              window.location.assign('https://main.d3ri0kgpziqudg.amplifyapp.com/')
+              navigate('/')
             }else if (window.location.href === sendBpUrl) {
-              window.location.assign('https://main.d3ri0kgpziqudg.amplifyapp.com/SendBP')
+              navigate('/SendBP')
             }
           });
         } else if (result?.status?.code === "400") {
@@ -146,9 +155,9 @@ function Login() {
             Cookies.set('user_token', result?.token, { expires: 1/48 })
             localStorage.setItem("userName", result?.name)
             if (window.location.href === homeUrl) {
-              window.location.assign(homeUrl)
+              navigate('/')
             }else if (window.location.href === sendBpUrl) {
-              window.location.assign(sendBpUrl)
+              navigate('/SendBP')
             }
           });
         } else if (result?.status?.code === "400") {

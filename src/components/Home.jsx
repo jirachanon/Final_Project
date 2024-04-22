@@ -27,11 +27,12 @@ function Home() {
         }
 
         if (!Cookies.get("user_token")) {
+          liff.logout();
           Swal.fire({
             title: "กรุณาเข้าสู่ระบบอีกครั้ง",
             confirmButtonText: "ตกลง",
           }).then(() => {
-            window.location.assign('https://main.d3ri0kgpziqudg.amplifyapp.com/Login/home')
+            navigate('/Login/home')
           });
         }
       }, [Cookies.get('user_token')])
