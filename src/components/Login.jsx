@@ -23,7 +23,6 @@ function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const sendBpUrl = 'https://main.d3ri0kgpziqudg.amplifyapp.com/SendBp/login'
   const homeUrl =  'https://main.d3ri0kgpziqudg.amplifyapp.com/Login/home'
 
   const showPassword = () => {
@@ -104,6 +103,7 @@ function Login() {
 
   const lineHandleSubmit = async (event) => {
     event.preventDefault();
+    setisSubmit(true);
 
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -128,6 +128,7 @@ function Login() {
     )
       .then((response) => response.json())
       .then((result) => {
+        console.log(result);
         if (result?.roles[0] === "ROLE_USER") {
           Swal.fire({
             title: "เข้าสู่ระบบสำเร็จ",
