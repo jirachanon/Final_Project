@@ -23,13 +23,13 @@ function Login() {
   const [eyeIcon, setEyeIcon] = useState(closeEye);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const sendBpUrl = 'https://main.d3ri0kgpziqudg.amplifyapp.com/Login/sendbp/'
-  const homeUrl =  'https://main.d3ri0kgpziqudg.amplifyapp.com/Login/home/'
+  const sendBpUrl = 'https://main.d3ri0kgpziqudg.amplifyapp.com/Login/sendbp'
+  const homeUrl =  'https://main.d3ri0kgpziqudg.amplifyapp.com/Login/home'
 
   const getLiffId = () => {
-    if (window.location.href === sendBpUrl) {
+    if (window.location.pathname === '/Login/sendbp') {
       setLiffID('2004489610-MOpXKpry')
-    }else if (window.location.href === homeUrl) {
+    }else if (window.location.href === '/Login/home') {
       setLiffID('2004489610-dq14p1vw')
     }
   }
@@ -51,15 +51,16 @@ function Login() {
 
   useEffect(() => {
     getLiffId();
+    console.log(liffID);
     liff
       .init({
         liffId: liffID,
       })
       .then(() => {
         if (!liff.isLoggedIn()) {
-          if (window.location.href === homeUrl) {
+          if (window.location.pathname === '/Login/home') {
             liff.login({redirectUri: homeUrl});
-          }else if (window.location.href === sendBpUrl) {
+          }else if (window.location.href === '/Login/sendbp') {
             liff.login({redirectUri: sendBpUrl})
           }
         }
@@ -101,9 +102,9 @@ function Login() {
             dispatch(setUser(result || {}));
             Cookies.set('user_token', result?.token, { expires: 1/48 })
             localStorage.setItem("userName", result?.name)
-            if (window.location.href === homeUrl) {
+            if (window.location.pathname === '/Login/home') {
               navigate('/')
-            }else if (window.location.href === sendBpUrl) {
+            }else if (window.location.pathname === '/Login/sendbp') {
               navigate('/SendBP')
             }
           });
@@ -154,9 +155,9 @@ function Login() {
             dispatch(setUser(result || {}));
             Cookies.set('user_token', result?.token, { expires: 1/48 })
             localStorage.setItem("userName", result?.name)
-            if (window.location.href === homeUrl) {
+            if (window.location.pathname === '/Login/home') {
               navigate('/')
-            }else if (window.location.href === sendBpUrl) {
+            }else if (window.location.pathname === '/Login/sendbp') {
               navigate('/SendBP')
             }
           });
