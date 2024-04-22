@@ -43,9 +43,9 @@ function Register() {
                 liffId: '2004489610-01vWBvVK',
             })
             .then(() => {
-                // if (!liff.isLoggedIn()) {
-                //     liff.login();
-                // }
+                if (!liff.isLoggedIn()) {
+                    liff.login();
+                }
             })
     })
 
