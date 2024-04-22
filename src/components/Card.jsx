@@ -2,7 +2,7 @@ import React from "react";
 import moment from 'moment'
 function Card({bp}) {
     const formattedDate = moment(bp.createDate).add(543, 'YEAR').format('วันที่ DD/MM/YYYY')
-    const formattedTime = moment(bp.createDate).format('kk:mm')
+    const formattedTime = moment.utc(bp.createDate).utcOffset('+0700').format('kk:mm')
         
   return (
     <div className="collapse bg-white mt-3">
