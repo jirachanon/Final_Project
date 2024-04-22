@@ -71,7 +71,7 @@ function Register() {
                         "password": formValues.pws,
                         "phone": formValues.tel,
                         "requestId": "",
-                        "lineToken": 'eyJraWQiOiJjNmYzNGU4NjNkM2U1ZTMyYmEzMjA4MTQwMmQ4YjNlMTBlOGVkYjYzODU2OGE1N2IyNzE2YzBmMzBmNTY3MTAzIiwidHlwIjoiSldUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJodHRwczovL2FjY2Vzcy5saW5lLm1lIiwic3ViIjoiVTA2YzkxOWY1N2ZlZjJhZTYwZWIxZDZhYjViZDcwODQxIiwiYXVkIjoiMjAwNDQ4OTYxMCIsImV4cCI6MTcxMzc4MTkzOSwiaWF0IjoxNzEzNzc4MzM5LCJhbXIiOlsibGluZXNzbyJdLCJuYW1lIjoiWUVBVyIsInBpY3R1cmUiOiJodHRwczovL3Byb2ZpbGUubGluZS1zY2RuLm5ldC8waC11NUl5LW1yY2xvSU1HQzlWRzBORFRSMWZEZF9IblFTY0ZGdE8zcGtLVGgzVTJZRk1WZG9PeWd6TEd3c1V6QUpOMUE3T3lVd2VXNXkifQ.sbvCrbUtVWBpr5QxG1dN7eoIRagtTN_kZWk8pm54NWL5U6PMJmzrSfifcZOXrKI6zCb55qZ5F9NpQHZDL0tSMA'
+                        "lineToken": liff.getIDToken(),
                     });
 
                     const requestOptions = {

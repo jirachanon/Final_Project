@@ -54,7 +54,7 @@ function Login() {
     getLiffId();
     liff
       .init({
-        liffId: liffID,
+        liffId: '2004489610-dq14p1vw',
       })
       .then(() => {
         if (!liff.isLoggedIn()) {
