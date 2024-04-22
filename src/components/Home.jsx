@@ -14,7 +14,7 @@ function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userName = localStorage.getItem('userName')
+  const userName = Cookies.get('user_name')
 
 
   useEffect(() => {
@@ -67,7 +67,7 @@ function Home() {
       .then((response) => response.json())
       .then((result) => {
         dispatch(setBp(result || {}));
-        setTimeout(() => { setIsLoading(false) }, 1800)
+        setTimeout(() => { setIsLoading(false) }, 1000)
       })
       .catch((error) => console.log("error", error));
 
