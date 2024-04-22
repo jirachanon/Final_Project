@@ -41,7 +41,6 @@ function LoginSBP() {
   };
 
   useEffect(() => {
-    console.log(location.pathname);
     liff
       .init({
         liffId: '2004489610-MOpXKpry',

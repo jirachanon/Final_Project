@@ -18,14 +18,22 @@ function Login() {
   const [formValues, setFormValues] = useState(initValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setisSubmit] = useState(false);
+  const [liffID, setLiffID] = useState('2004489610-dq14p1vw')
   const [type, setType] = useState("password");
   const [eyeIcon, setEyeIcon] = useState(closeEye);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const sendBpUrl = 'https://main.d3ri0kgpziqudg.amplifyapp.com/Login/sendbp'
+  const sendBpUrl = 'https://main.d3ri0kgpziqudg.amplifyapp.com/SendBp/login'
   const homeUrl =  'https://main.d3ri0kgpziqudg.amplifyapp.com/Login/home'
 
+  const getLiffId = () => {
+    if (location.pathname === '/SendBP/login'){
+      setLiffID('2004489610-MOpXKpry')
+    }else if (location.pathname === '/Login/home') {
+      setLiffID('2004489610-dq14p1vw')
+    }
+  }
 
   const showPassword = () => {
     if (type === "password") {
@@ -43,14 +51,18 @@ function Login() {
   };
 
   useEffect(() => {
-    console.log(location.pathname);
+    getLiffId();
     liff
       .init({
-        liffId: '2004489610-dq14p1vw',
+        liffId: liffID,
       })
       .then(() => {
         if (!liff.isLoggedIn()) {
-          liff.login({redirectUri: homeUrl});
+          if (location.pathname === '/SendBP/login'){
+            liff.login({redirectUri: sendBpUrl})
+          }else if (location.pathname === '/Login/home') {
+            liff.login({redirectUri: homeUrl})
+          }
         }
       });
   });
@@ -89,8 +101,12 @@ function Login() {
           }).then(() => {
             dispatch(setUser(result || {}));
             Cookies.set('user_token', result?.token, { expires: 1/48 })
-            localStorage.setItem("userName", result?.name)
-            navigate('/')
+            Cookies.setItem("user_name", result?.name)
+            if (location.pathname === '/SendBP/login'){
+              navigate('/SendBP')
+            }else if (location.pathname === '/Login/home') {
+              navigate('/')
+            }
           });
         } else if (result?.status?.code === "400") {
           Swal.fire({
@@ -138,8 +154,12 @@ function Login() {
           }).then(() => {
             dispatch(setUser(result || {}));
             Cookies.set('user_token', result?.token, { expires: 1/48 })
-            localStorage.setItem("userName", result?.name)
-            navigate('/')
+            Cookies.setItem("user_name", result?.name)
+            if (location.pathname === '/SendBP/login'){
+              navigate('/SendBP')
+            }else if (location.pathname === '/Login/home') {
+              navigate('/')
+            }
           });
         } else if (result?.status?.code === "400") {
           Swal.fire({
