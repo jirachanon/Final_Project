@@ -49,7 +49,7 @@ function LoginSBP() {
       })
       .then(() => {
         if (!liff.isLoggedIn()) {
-            liff.login({redirectUri: 'https://main.d3ri0kgpziqudg.amplifyapp.com' + location.pathname})
+            liff.login({redirectUri: homeUrl})
         }
       });
   });
