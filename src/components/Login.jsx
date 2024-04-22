@@ -27,9 +27,9 @@ function Login() {
   const homeUrl =  'https://main.d3ri0kgpziqudg.amplifyapp.com/Login/home/'
 
   const getLiffId = () => {
-    if (window.location.pathname === '/Login/sendbp') {
+    if (window.location.href === sendBpUrl) {
       setLiffID('2004489610-MOpXKpry')
-    }else if (window.location.pathname === '/Login/home') {
+    }else if (window.location.href === homeUrl) {
       setLiffID('2004489610-dq14p1vw')
     }
   }
