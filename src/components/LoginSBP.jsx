@@ -86,7 +86,7 @@ function LoginSBP() {
           }).then(() => {
             dispatch(setUser(result || {}));
             Cookies.set('user_token', result?.token, { expires: 1/48 })
-            localStorage.setItem("userName", result?.name)
+            Cookies.set("userName", result?.name)
             navigate('/SendBP')
           });
         } else if (result?.status?.code === "400") {
@@ -121,10 +121,7 @@ function LoginSBP() {
       redirect: "follow",
     };
 
-    await fetch(
-      "https://hpm-backend.onrender.com/v1/system/signIn",
-      requestOptions
-    )
+    await fetch("https://hpm-backend.onrender.com/v1/system/signIn",requestOptions)
       .then((response) => response.json())
       .then((result) => {
         if (result?.roles[0] === "ROLE_USER") {
@@ -135,7 +132,7 @@ function LoginSBP() {
           }).then(() => {
             dispatch(setUser(result || {}));
             Cookies.set('user_token', result?.token, { expires: 1/48 })
-            localStorage.setItem("userName", result?.name)
+            Cookies.set("userName", result?.name)
             navigate('/SendBP')
           });
         } else if (result?.status?.code === "400") {

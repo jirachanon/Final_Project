@@ -18,7 +18,6 @@ function Login() {
   const [formValues, setFormValues] = useState(initValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setisSubmit] = useState(false);
-  const [liffID, setLiffID] = useState('2004489610-dq14p1vw')
   const [type, setType] = useState("password");
   const [eyeIcon, setEyeIcon] = useState(closeEye);
   const dispatch = useDispatch();
@@ -26,14 +25,6 @@ function Login() {
   const location = useLocation();
   const sendBpUrl = 'https://main.d3ri0kgpziqudg.amplifyapp.com/SendBp/login'
   const homeUrl =  'https://main.d3ri0kgpziqudg.amplifyapp.com/Login/home'
-
-  const getLiffId = () => {
-    if (location.pathname === '/SendBP/login'){
-      setLiffID('2004489610-MOpXKpry')
-    }else if (location.pathname === '/Login/home') {
-      setLiffID('2004489610-dq14p1vw')
-    }
-  }
 
   const showPassword = () => {
     if (type === "password") {
@@ -51,7 +42,6 @@ function Login() {
   };
 
   useEffect(() => {
-    getLiffId();
     liff
       .init({
         liffId: '2004489610-dq14p1vw',
@@ -97,7 +87,7 @@ function Login() {
           }).then(() => {
             dispatch(setUser(result || {}));
             Cookies.set('user_token', result?.token, { expires: 1/48 })
-            Cookies.setItem("user_name", result?.name)
+            Cookies.set("user_name", result?.name)
             navigate('/')
           });
         } else if (result?.status?.code === "400") {
@@ -132,7 +122,7 @@ function Login() {
       redirect: "follow",
     };
 
-    await fetch(
+    fetch(
       "https://hpm-backend.onrender.com/v1/system/signIn",
       requestOptions
     )
@@ -146,7 +136,7 @@ function Login() {
           }).then(() => {
             dispatch(setUser(result || {}));
             Cookies.set('user_token', result?.token, { expires: 1/48 })
-            Cookies.setItem("user_name", result?.name)
+            Cookies.set("user_name", result?.name)
             navigate('/')
           });
         } else if (result?.status?.code === "400") {
