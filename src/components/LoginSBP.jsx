@@ -11,7 +11,7 @@ import { setUser } from "./slices";
 import { useNavigate, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
 
-function Login() {
+function LoginSBP() {
   const initValues = { email: "", password: "" };
   var id = Math.floor(Math.random() * 10);
 
@@ -25,7 +25,6 @@ function Login() {
   const location = useLocation();
   const sendBpUrl = 'https://main.d3ri0kgpziqudg.amplifyapp.com/Login/sendbp'
   const homeUrl =  'https://main.d3ri0kgpziqudg.amplifyapp.com/Login/home'
-
 
   const showPassword = () => {
     if (type === "password") {
@@ -43,11 +42,10 @@ function Login() {
   };
 
   useEffect(() => {
-    getLiffId();
     console.log(location.pathname);
     liff
       .init({
-        liffId: 2004489610-dq14p1vw,
+        liffId: '2004489610-MOpXKpry',
       })
       .then(() => {
         if (!liff.isLoggedIn()) {
@@ -285,4 +283,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default LoginSBP;
