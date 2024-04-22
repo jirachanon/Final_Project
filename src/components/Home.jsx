@@ -17,8 +17,8 @@ function Home() {
   const userName = localStorage.getItem('userName')
 
 
-  useEffect(async () => {
-    await liff
+  useEffect(() => {
+    liff
       .init({
         liffId: '2004489610-dq14p1vw'
       }).then(() => {

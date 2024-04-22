@@ -72,8 +72,8 @@ function SendBP() {
             .catch(error => console.log('error', error));
     }
 
-    useEffect(async () => {
-        await liff
+    useEffect(() => {
+        liff
             .init({
                 liffId: '2004489610-MOpXKpry'
             }).then(() => {
@@ -87,7 +87,7 @@ function SendBP() {
                         title: 'กรุณาเข้าสู่ระบบอีกครั้ง',
                         confirmButtonText: 'ตกลง'
                     }).then(() => {
-                        navigate('/Login/senbp')
+                        navigate('/Login/sendbp')
                     })
                 }
             });

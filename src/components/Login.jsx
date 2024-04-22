@@ -49,9 +49,9 @@ function Login() {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     getLiffId();
-    await liff
+    liff
       .init({
         liffId: liffID,
       })
