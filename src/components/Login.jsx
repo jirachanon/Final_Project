@@ -58,11 +58,7 @@ function Login() {
       })
       .then(() => {
         if (!liff.isLoggedIn()) {
-          if (location.pathname === '/SendBP/login'){
-            liff.login({redirectUri: sendBpUrl})
-          }else if (location.pathname === '/Login/home') {
-            liff.login({redirectUri: homeUrl})
-          }
+          liff.login({redirectUri: homeUrl})
         }
       });
   });
@@ -102,11 +98,7 @@ function Login() {
             dispatch(setUser(result || {}));
             Cookies.set('user_token', result?.token, { expires: 1/48 })
             Cookies.setItem("user_name", result?.name)
-            if (location.pathname === '/SendBP/login'){
-              navigate('/SendBP')
-            }else if (location.pathname === '/Login/home') {
-              navigate('/')
-            }
+            navigate('/')
           });
         } else if (result?.status?.code === "400") {
           Swal.fire({
@@ -155,11 +147,7 @@ function Login() {
             dispatch(setUser(result || {}));
             Cookies.set('user_token', result?.token, { expires: 1/48 })
             Cookies.setItem("user_name", result?.name)
-            if (location.pathname === '/SendBP/login'){
-              navigate('/SendBP')
-            }else if (location.pathname === '/Login/home') {
-              navigate('/')
-            }
+            navigate('/')
           });
         } else if (result?.status?.code === "400") {
           Swal.fire({

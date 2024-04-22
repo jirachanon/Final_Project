@@ -21,7 +21,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/Login/home/" element={<Login />} />
-            <Route path="/SendBP/login" element={<Login />} />
+            <Route path="/SendBP/login" element={<LoginSBP />} />
             <Route path="/Register/" element={<Register />} />
             <Route path="/SendBP/" element={<SendBP />} />
             <Route path="/" element={<Home />} />
