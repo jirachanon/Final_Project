@@ -18,9 +18,6 @@ function Card({ bp }) {
           <p>เวลา : {formattedTime}</p>
         </div>
       </div>
-      <div className="mt-6">
-
-      </div>
     </>
   );
 }
