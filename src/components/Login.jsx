@@ -8,7 +8,7 @@ import liff from "@line/liff";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { setUser } from "./slices";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
 
 function Login() {
@@ -23,13 +23,14 @@ function Login() {
   const [eyeIcon, setEyeIcon] = useState(closeEye);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const sendBpUrl = 'https://main.d3ri0kgpziqudg.amplifyapp.com/Login/sendbp'
   const homeUrl =  'https://main.d3ri0kgpziqudg.amplifyapp.com/Login/home'
 
   const getLiffId = () => {
-    if (window.location.pathname === '/Login/sendbp') {
+    if (location.pathname === '/Login/sendbp') {
       setLiffID('2004489610-MOpXKpry')
-    }else if (window.location.href === '/Login/home') {
+    }else if (location.pathname === '/Login/home') {
       setLiffID('2004489610-dq14p1vw')
     }
   }
@@ -51,16 +52,16 @@ function Login() {
 
   useEffect(() => {
     getLiffId();
-    console.log(liffID);
+    location.pathname
     liff
       .init({
         liffId: liffID,
       })
       .then(() => {
         if (!liff.isLoggedIn()) {
-          if (window.location.pathname === '/Login/home') {
+          if (location.pathname === '/Login/home') {
             liff.login({redirectUri: homeUrl});
-          }else if (window.location.href === '/Login/sendbp') {
+          }else if (location.pathname === '/Login/sendbp') {
             liff.login({redirectUri: sendBpUrl})
           }
         }
@@ -102,9 +103,9 @@ function Login() {
             dispatch(setUser(result || {}));
             Cookies.set('user_token', result?.token, { expires: 1/48 })
             localStorage.setItem("userName", result?.name)
-            if (window.location.pathname === '/Login/home') {
+            if (location.pathname === '/Login/home') {
               navigate('/')
-            }else if (window.location.pathname === '/Login/sendbp') {
+            }else if (location.pathname === '/Login/sendbp') {
               navigate('/SendBP')
             }
           });
@@ -155,9 +156,9 @@ function Login() {
             dispatch(setUser(result || {}));
             Cookies.set('user_token', result?.token, { expires: 1/48 })
             localStorage.setItem("userName", result?.name)
-            if (window.location.pathname === '/Login/home') {
+            if (location.pathname === '/Login/home') {
               navigate('/')
-            }else if (window.location.pathname === '/Login/sendbp') {
+            }else if (location.pathname === '/Login/sendbp') {
               navigate('/SendBP')
             }
           });
