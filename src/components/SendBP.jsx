@@ -78,7 +78,7 @@ function SendBP() {
                 liffId: '2004489610-MOpXKpry'
             }).then(() => {
                 if (!liff.isLoggedIn) {
-                    liff.login();
+                    liff.login({redirectUri: 'https://main.d3ri0kgpziqudg.amplifyapp.com/SendBP'});
                 }
 
                 if (!Cookies.get("user_token")) {
