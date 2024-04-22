@@ -8,7 +8,7 @@ import liff from "@line/liff";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { setUser } from "./slices";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 function LoginSBP() {
@@ -22,8 +22,7 @@ function LoginSBP() {
   const [eyeIcon, setEyeIcon] = useState(closeEye);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
-  const sendbpUrl =  'https://main.d3ri0kgpziqudg.amplifyapp.com/SendBp/login'
+  const sendbpUrl =  'https://main.d3ri0kgpziqudg.amplifyapp.com/SendBP/login'
 
   const showPassword = () => {
     if (type === "password") {
@@ -56,7 +55,7 @@ function LoginSBP() {
     event.preventDefault();
     setFormErrors(validation(formValues));
     setisSubmit(true);
-    
+
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Accept", "*/*");
