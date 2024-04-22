@@ -23,8 +23,7 @@ function LoginSBP() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const sendBpUrl = 'https://main.d3ri0kgpziqudg.amplifyapp.com/Login/sendbp'
-  const homeUrl =  'https://main.d3ri0kgpziqudg.amplifyapp.com/Login/home'
+  const sendbpUrl =  'https://main.d3ri0kgpziqudg.amplifyapp.com/SendBp/login'
 
   const showPassword = () => {
     if (type === "password") {
@@ -49,7 +48,7 @@ function LoginSBP() {
       })
       .then(() => {
         if (!liff.isLoggedIn()) {
-            liff.login({redirectUri: homeUrl})
+            liff.login({redirectUri: sendbpUrl})
         }
       });
   });
