@@ -87,7 +87,7 @@ function SendBP() {
                         title: 'กรุณาเข้าสู่ระบบอีกครั้ง',
                         confirmButtonText: 'ตกลง'
                     }).then(() => {
-                        navigate('/Login/sendbp')
+                        navigate('/SendBP/login')
                     })
                 }
             });
