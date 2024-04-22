@@ -43,9 +43,9 @@ function Register() {
                 liffId: '2004489610-01vWBvVK',
             })
             .then(() => {
-                if (!liff.isLoggedIn()) {
-                    liff.login();
-                }
+                // if (!liff.isLoggedIn()) {
+                //     liff.login();
+                // }
             })
     })
 
@@ -233,6 +233,8 @@ function Register() {
                                 <a href="/" className='label-text text-gray-500 underline'>เข้าสู่ระบบ</a>
                             </div>
                         </div>
+
+                        <div className='mt-6'></div>
                     </div>
                 </form>
             </div>
