@@ -46,15 +46,11 @@ function Login() {
     console.log(location.pathname);
     liff
       .init({
-        liffId: 2004489610-dq14p1vw,
+        liffId: '2004489610-dq14p1vw',
       })
       .then(() => {
         if (!liff.isLoggedIn()) {
-          if (location.pathname === '/Login/home') {
-            liff.login({redirectUri: homeUrl});
-          }else if (location.pathname === '/Login/sendbp') {
-            liff.login({redirectUri: sendBpUrl})
-          }
+          liff.login({redirectUri: homeUrl});
         }
       });
   });
@@ -94,11 +90,7 @@ function Login() {
             dispatch(setUser(result || {}));
             Cookies.set('user_token', result?.token, { expires: 1/48 })
             localStorage.setItem("userName", result?.name)
-            if (location.pathname === '/Login/home') {
-              navigate('/')
-            }else if (location.pathname === '/Login/sendbp') {
-              navigate('/SendBP')
-            }
+            navigate('/')
           });
         } else if (result?.status?.code === "400") {
           Swal.fire({
@@ -147,11 +139,7 @@ function Login() {
             dispatch(setUser(result || {}));
             Cookies.set('user_token', result?.token, { expires: 1/48 })
             localStorage.setItem("userName", result?.name)
-            if (location.pathname === '/Login/home') {
-              navigate('/')
-            }else if (location.pathname === '/Login/sendbp') {
-              navigate('/SendBP')
-            }
+            navigate('/')
           });
         } else if (result?.status?.code === "400") {
           Swal.fire({

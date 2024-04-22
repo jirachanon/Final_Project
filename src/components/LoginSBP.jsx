@@ -49,11 +49,7 @@ function LoginSBP() {
       })
       .then(() => {
         if (!liff.isLoggedIn()) {
-          if (location.pathname === '/Login/home') {
-            liff.login({redirectUri: homeUrl});
-          }else if (location.pathname === '/Login/sendbp') {
-            liff.login({redirectUri: sendBpUrl})
-          }
+            liff.login({redirectUri: 'https://main.d3ri0kgpziqudg.amplifyapp.com' + location.pathname})
         }
       });
   });
@@ -93,11 +89,7 @@ function LoginSBP() {
             dispatch(setUser(result || {}));
             Cookies.set('user_token', result?.token, { expires: 1/48 })
             localStorage.setItem("userName", result?.name)
-            if (location.pathname === '/Login/home') {
-              navigate('/')
-            }else if (location.pathname === '/Login/sendbp') {
-              navigate('/SendBP')
-            }
+            navigate('/SendBP')
           });
         } else if (result?.status?.code === "400") {
           Swal.fire({
@@ -146,11 +138,7 @@ function LoginSBP() {
             dispatch(setUser(result || {}));
             Cookies.set('user_token', result?.token, { expires: 1/48 })
             localStorage.setItem("userName", result?.name)
-            if (location.pathname === '/Login/home') {
-              navigate('/')
-            }else if (location.pathname === '/Login/sendbp') {
-              navigate('/SendBP')
-            }
+            navigate('/SendBP')
           });
         } else if (result?.status?.code === "400") {
           Swal.fire({
