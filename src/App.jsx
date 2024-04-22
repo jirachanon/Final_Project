@@ -11,6 +11,7 @@ import Register from './components/Register.jsx';
 import SendBP from './components/SendBP.jsx';
 import { Provider } from 'react-redux'
 import store from './store.js';
+import LoginSBP from "./components/LoginSBP.jsx";
 
 function App() {
 
@@ -20,7 +21,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/Login/home/" element={<Login />} />
-            <Route path="/Login/sendbp/" element={<Login />} />
+            <Route path="/Login/sendbp/" element={<LoginSBP />} />
             <Route path="/Register/" element={<Register />} />
             <Route path="/SendBP/" element={<SendBP />} />
             <Route path="/" element={<Home />} />

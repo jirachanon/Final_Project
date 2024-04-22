@@ -43,7 +43,6 @@ function Login() {
   };
 
   useEffect(() => {
-    getLiffId();
     console.log(location.pathname);
     liff
       .init({
