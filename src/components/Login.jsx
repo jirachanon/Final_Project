@@ -48,9 +48,7 @@ function Login() {
         liffId: liffID,
       })
       .then(() => {
-        if (!liff.isLoggedIn()) {
           liff.login({})
-        }
       });
     }
     liff();
