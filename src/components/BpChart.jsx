@@ -1,4 +1,5 @@
 import { Line } from "react-chartjs-2";
+import moment from "moment";
 
 const BpChart = ({ bp }) => {
     const formattedDate = moment(bp.createDate).add(543, 'YEAR').format('วันที่ DD/MM/YYYY')

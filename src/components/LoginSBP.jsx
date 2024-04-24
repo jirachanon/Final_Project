@@ -41,7 +41,8 @@ function LoginSBP() {
   };
 
   useEffect(() => {
-    liff
+    const liff = async () => {
+      await liff
       .init({
         liffId: liffID,
       })
@@ -50,6 +51,8 @@ function LoginSBP() {
             liff.login({})
         }
       });
+    }
+    liff();
   },[liffID]);
 
   const handleSubmit = async (event) => {
