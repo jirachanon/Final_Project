@@ -5,6 +5,8 @@ import Loading from "./Loading";
 
 const BpChart = () => {
     const {bp} = useSelector((state) => state.slices)
+    const sys = bp.bps.map(item => parseInt(item.sys))
+    const dia = bp.bps.map(item => parseInt(item.dia))
 
     if (!bp || !bp.bps) {
         return <div className="text-center"><Loading /></div>;
@@ -14,17 +16,17 @@ const BpChart = () => {
         labels: bp.bps.map(item => (moment(item.createDate).add(543, 'YEAR').format('DD/MM/YY'))),
         datasets: [
             {
-                label: "Sys",
-                data: bp.bps.map(item => parseInt(item.sys)),
+                label: "ค่าบน/ค่าล่าง",
+                data: [sys, dia],
                 borderColor: "rgb(255, 99, 132)",
                 tension: 0.1,
             },
-            {
-                label: "Dia",
-                data: bp.bps.map(item => parseInt(item.dia)),
-                borderColor: "rgb(54, 162, 235)",
-                tension: 0.1,
-            },
+            // {
+            //     label: "Dia",
+            //     data: bp.bps.map(item => parseInt(item.dia)),
+            //     borderColor: "rgb(54, 162, 235)",
+            //     tension: 0.1,
+            // },
             {
                 label: "Pul",
                 data: bp.bps.map(item => parseInt(item.pul)),

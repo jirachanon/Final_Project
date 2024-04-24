@@ -74,7 +74,6 @@ function Home() {
       .then((response) => response.json())
       .then((result) => {
         dispatch(setBp(result || {}));
-        // setTimeout(() => { setIsLoading(false) }, 1000)
       })
       .catch((error) => console.log("error", error));
 
@@ -99,7 +98,7 @@ function Home() {
         {showGraph ?
           <div className="w-auto mx-auto mt-4">
             <BloodPressureChart />
-          </div> 
+          </div>
           :
           <div className="w-64 mx-auto mt-4">
             <BpListing />

@@ -12,9 +12,8 @@ function Card({ bp }) {
           {formattedDate}
         </div>
         <div className="collapse-content">
-          <p>SYS: {bp.sys}</p>
-          <p>DIA: {bp.dia}</p>
-          <p>PUL: {bp.pul}</p>
+          <p>ค่าบน/ค่าล่าง: {bp.sys}/{bp.dia}</p>
+          <p>ชีพจร: {bp.pul}</p>
           <p>เวลา : {formattedTime}</p>
         </div>
       </div>

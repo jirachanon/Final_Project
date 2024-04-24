@@ -22,7 +22,6 @@ function LoginSBP() {
   const [eyeIcon, setEyeIcon] = useState(closeEye);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const sendbpUrl =  'https://main.d3ri0kgpziqudg.amplifyapp.com/SendBP/login'
   const liffID = '2004489610-EbYDJY9K'
 
   const showPassword = () => {
@@ -89,8 +88,8 @@ function LoginSBP() {
             confirmButtonText: "ตกลง",
           }).then(() => {
             dispatch(setUser(result || {}));
-            Cookies.set('user_token', result?.token, { expires: 1/48 })
-            Cookies.set("userName", result?.name)
+            Cookies.set('user_token', result?.token, { expires: 7})
+            Cookies.set("userName", result?.name, {expires: 7})
             navigate('/SendBP')
           });
         } else if (result?.status?.code === "400") {
