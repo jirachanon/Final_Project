@@ -13,32 +13,36 @@ import { BloodPressureChart } from "./BpChart";
 function Home() {
   const { user } = useSelector((state) => state.slices);
   const [isLoading, setIsLoading] = useState(true);
+  const [showGraph, setShowGraph] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userName = Cookies.get('user_name')
   const liffID = '2004489610-dq14p1vw'
 
+  const handleShowGraph = () => {
+    setShowGraph(!showGraph);
+  }
 
   useEffect(() => {
     const liffInit = async () => {
-      await liff.init({liffId: liffID})
+      await liff.init({ liffId: liffID })
     }
 
     liffInit().then(() => {
-        if (!liff.isLoggedIn) {
-          liff.login();
-        }
+      if (!liff.isLoggedIn) {
+        liff.login();
+      }
 
-        if (!Cookies.get("user_token")) {
-          liff.logout();
-          Swal.fire({
-            title: "กรุณาเข้าสู่ระบบอีกครั้ง",
-            confirmButtonText: "ตกลง",
-          }).then(() => {
-            navigate('/Login/home')
-          });
-        }
-      }, [Cookies.get('user_token')])
+      if (!Cookies.get("user_token")) {
+        liff.logout();
+        Swal.fire({
+          title: "กรุณาเข้าสู่ระบบอีกครั้ง",
+          confirmButtonText: "ตกลง",
+        }).then(() => {
+          navigate('/Login/home')
+        });
+      }
+    }, [Cookies.get('user_token')])
 
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
@@ -70,7 +74,7 @@ function Home() {
       .then((response) => response.json())
       .then((result) => {
         dispatch(setBp(result || {}));
-        setTimeout(() => { setIsLoading(false) }, 1000)
+        // setTimeout(() => { setIsLoading(false) }, 1000)
       })
       .catch((error) => console.log("error", error));
 
@@ -80,17 +84,27 @@ function Home() {
     <>
       <div className="w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto min-h-screen md:min-h-screen lg:min-h-screen">
         <Nav />
+        <div className="flex justify-end mb-4 mr-5">
+          <button className="btn outline outline-1 outline-[#1B3B83] btn-xs sm:btn-sm md:btn-md lg:btn-lg text-[#1B3B83]"
+            onClick={handleShowGraph}
+          >
+            {showGraph ? 'แสดงเป็นรายการ' : 'แสดงเป็นกราฟ'}
+          </button>
+        </div>
         <div className="w-64 mx-auto text-center">
           <p className="font-bold">ประวัติผลวัดความดันโลหิต</p>
           <p className="font-bold">ของ</p>
           <p className="text-[#1B3B83] font-bold">คุณ {userName}</p>
         </div>
-        <div className="w-64 mx-auto mt-4">
-          {isLoading ? <Loading /> : <BpListing />}
-        </div>
-        <div className="w-auto mx-auto mt-4">
-          <BloodPressureChart />
-        </div>
+        {showGraph ?
+          <div className="w-auto mx-auto mt-4">
+            <BloodPressureChart />
+          </div> 
+          :
+          <div className="w-64 mx-auto mt-4">
+            <BpListing />
+          </div>
+        }
       </div>
     </>
   );

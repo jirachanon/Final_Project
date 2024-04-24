@@ -1,13 +1,13 @@
 import { Line } from "react-chartjs-2";
 import moment from "moment";
 import { useSelector } from "react-redux";
+import Loading from "./Loading";
 
 const BpChart = () => {
     const {bp} = useSelector((state) => state.slices)
-    const formattedDate = moment(bp.createDate).add(543, 'YEAR').format('DD/MM/YYYY')
 
     if (!bp || !bp.bps) {
-        return <div className="text-center">No data available</div>;
+        return <div className="text-center"><Loading /></div>;
     }
 
     const data = {
