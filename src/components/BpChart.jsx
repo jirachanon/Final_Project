@@ -1,27 +1,29 @@
 import { Line } from "react-chartjs-2";
 import moment from "moment";
+import { useSelector } from "react-redux";
 
-const BpChart = ({ bp }) => {
-    const formattedDate = moment(bp.createDate).add(543, 'YEAR').format('วันที่ DD/MM/YYYY')
+const BpChart = () => {
+    const formattedDate = moment(bp.createDate).add(543, 'YEAR').format('DD/MM/YYYY')
+    const {bp} = useSelector((state) => state.slices)
 
     const data = {
-        labels: formattedDate,
+        labels: bp.bps.map(item => parseInt(item.createDate)),
         datasets: [
             {
-                label: "Systolic",
-                data: bp.sys,
+                label: "Sys",
+                data: bp.bps.map(item => parseInt(item.sys)),
                 borderColor: "rgb(255, 99, 132)",
                 tension: 0.1,
             },
             {
                 label: "Dia",
-                data: bp.dia,
+                data: bp.bps.map(item => parseInt(item.dia)),
                 borderColor: "rgb(54, 162, 235)",
                 tension: 0.1,
             },
             {
                 label: "Pul",
-                data: bp.pul,
+                data: bp.bps.map(item => parseInt(item.pul)),
                 borderColor: "rgb(75, 192, 192)",
                 tension: 0.1,
             },

@@ -10,7 +10,6 @@ function BpListing() {
       {bp.bps && bp.bps.map((bp) => (
           <Card key={bp.id} bp={bp} />
       ))}
-      <BloodPressureChart bp={bp}/>
     </div>
   )
 }

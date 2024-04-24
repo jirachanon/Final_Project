@@ -8,6 +8,7 @@ import { setBp } from "./slices";
 import BpListing from "./BpListing";
 import Loading from "./Loading";
 import Cookies from "js-cookie";
+import { BloodPressureChart } from "./BpChart";
 
 function Home() {
   const { user } = useSelector((state) => state.slices);
@@ -86,6 +87,9 @@ function Home() {
         </div>
         <div className="w-64 mx-auto mt-4">
           {isLoading ? <Loading /> : <BpListing />}
+        </div>
+        <div className="w-64 mx-auto mt-4">
+          <BloodPressureChart />
         </div>
       </div>
     </>
