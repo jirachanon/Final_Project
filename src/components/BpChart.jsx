@@ -3,11 +3,15 @@ import moment from "moment";
 import { useSelector } from "react-redux";
 
 const BpChart = () => {
-    const formattedDate = moment(bp.createDate).add(543, 'YEAR').format('DD/MM/YYYY')
+    // const formattedDate = moment(bp.createDate).add(543, 'YEAR').format('DD/MM/YYYY')
     const {bp} = useSelector((state) => state.slices)
 
+    if (!bp || !bp.bps) {
+        return <div className="text-center">No data available</div>;
+    }
+
     const data = {
-        labels: bp.bps.map(item => parseInt(item.createDate)),
+        labels: bp.bps.map(item => (item.createDate)),
         datasets: [
             {
                 label: "Sys",
