@@ -18,6 +18,7 @@ function SendBP() {
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setisSubmit] = useState(false);
     const navigate = useNavigate()
+    const liffID = '2004489610-MOpXKpry'
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -73,10 +74,10 @@ function SendBP() {
     }
 
     useEffect(() => {
-        liff
-            .init({
-                liffId: '2004489610-MOpXKpry'
-            }).then(() => {
+        const liffInit = async () => {
+            await liff.init({liffId: liffID })
+        }
+        liffInit().then(() => {
                 if (!liff.isLoggedIn) {
                     liff.login();
                 }

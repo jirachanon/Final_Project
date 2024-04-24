@@ -42,16 +42,19 @@ function Login() {
   };
 
   useEffect(() => {
-    const liff = async () => {
+    const liffInit = async () => {
       await liff
       .init({
         liffId: liffID,
       })
       .then(() => {
-          liff.login({})
+          if (!liff.isLoggedIn()) {
+            liff.login()
+          }
       });
     }
-    liff();
+
+    liffInit();
   }, [liffID]);
 
   const handleSubmit = async (event) => {

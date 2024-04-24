@@ -15,13 +15,15 @@ function Home() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userName = Cookies.get('user_name')
+  const liffID = '2004489610-dq14p1vw'
 
 
   useEffect(() => {
-    liff
-      .init({
-        liffId: '2004489610-dq14p1vw'
-      }).then(() => {
+    const liffInit = async () => {
+      await liff.init({liffId: liffID})
+    }
+
+    liffInit().then(() => {
         if (!liff.isLoggedIn) {
           liff.login();
         }
