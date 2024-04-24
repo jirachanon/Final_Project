@@ -88,7 +88,7 @@ function Home() {
         <div className="w-64 mx-auto mt-4">
           {isLoading ? <Loading /> : <BpListing />}
         </div>
-        <div className="w-64 mx-auto mt-4">
+        <div className="w-auto mx-auto mt-4">
           <BloodPressureChart />
         </div>
       </div>
