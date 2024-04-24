@@ -26,6 +26,7 @@ function Register() {
     const [type, setType] = useState("password");
     const [eyeIcon, setEyeIcon] = useState(closeEye)
     const naviagte = useNavigate();
+    const liffID = '2004489610-01vWBvVK'
 
     const showPassword = () => {
         if (type === "password") {
@@ -40,14 +41,14 @@ function Register() {
     useEffect(() => {
         liff
             .init({
-                liffId: '2004489610-01vWBvVK',
+                liffId: liffID,
             })
             .then(() => {
                 if (!liff.isLoggedIn()) {
                     liff.login();
                 }
             })
-    })
+    }, [liffID])
 
     const handleChange = (event) => {
         const { name, value } = event.target;

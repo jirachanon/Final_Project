@@ -23,6 +23,7 @@ function LoginSBP() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const sendbpUrl =  'https://main.d3ri0kgpziqudg.amplifyapp.com/SendBP/login'
+  const liffID = '2004489610-EbYDJY9K'
 
   const showPassword = () => {
     if (type === "password") {
@@ -42,14 +43,14 @@ function LoginSBP() {
   useEffect(() => {
     liff
       .init({
-        liffId: '2004489610-MOpXKpry',
+        liffId: liffID,
       })
       .then(() => {
         if (!liff.isLoggedIn()) {
-            liff.login({redirectUri: sendbpUrl})
+            liff.login({})
         }
       });
-  });
+  },[liffID]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

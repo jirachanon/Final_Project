@@ -12,8 +12,17 @@ import SendBP from './components/SendBP.jsx';
 import { Provider } from 'react-redux'
 import store from './store.js';
 import LoginSBP from "./components/LoginSBP.jsx";
+import {
+  CategoryScale,
+  Chart as ChartJS,
+  LineElement,
+  LinearScale,
+  PointElement,
+} from "chart.js/auto";
 
 function App() {
+  
+  ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement);
 
   return (
     <>
