@@ -11,7 +11,7 @@ const BpChart = () => {
     }
 
     const data = {
-        labels: bp.bps.map(item => (moment(item.createDate).add(543, 'YEAR').format('DD'))),
+        labels: bp.bps.map(item => (moment(item.createDate).add(543, 'YEAR').format('DD/MM'))),
         datasets: [
             {
                 label: "Sys",
@@ -39,13 +39,13 @@ const BpChart = () => {
             x: {
                 title: {
                     display: true,
-                    text: "Date",
+                    text: "วัน/เดือน",
                 },
             },
             y: {
                 title: {
                     display: true,
-                    text: "Value",
+                    text: "ผลวัดความดัน",
                 },
             },
         },
