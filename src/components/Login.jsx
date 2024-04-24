@@ -24,7 +24,7 @@ function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const homeUrl =  'https://main.d3ri0kgpziqudg.amplifyapp.com/Login/home'
-  const liffID = '2004489610-dq14p1vw'
+  const liffID = '2004489610-aP6ng65X'
 
   const showPassword = () => {
     if (type === "password") {
@@ -42,15 +42,18 @@ function Login() {
   };
 
   useEffect(() => {
-    liff
+    const liff = async () => {
+      await liff
       .init({
         liffId: liffID,
       })
       .then(() => {
         if (!liff.isLoggedIn()) {
-          liff.login({redirectUri: homeUrl})
+          liff.login({})
         }
       });
+    }
+    liff();
   }, [liffID]);
 
   const handleSubmit = async (event) => {
