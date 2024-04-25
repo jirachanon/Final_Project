@@ -75,24 +75,24 @@ function SendBP() {
 
     useEffect(() => {
         const liffInit = async () => {
-            await liff.init({liffId: liffID })
+            await liff.init({ liffId: liffID })
         }
         liffInit().then(() => {
-                if (!liff.isLoggedIn) {
-                    liff.login();
-                }
+            if (!liff.isLoggedIn) {
+                liff.login();
+            }
 
-                if (!Cookies.get("user_token")) {
-                    liff.logout()
-                    Swal.fire({
-                        title: 'กรุณาเข้าสู่ระบบอีกครั้ง',
-                        confirmButtonText: 'ตกลง'
-                    }).then(() => {
-                        navigate('/SendBP/login')
-                    })
-                }
-            });
-    },[Cookies.get('user_token')])
+            if (!Cookies.get("user_token")) {
+                liff.logout()
+                Swal.fire({
+                    title: 'กรุณาเข้าสู่ระบบอีกครั้ง',
+                    confirmButtonText: 'ตกลง'
+                }).then(() => {
+                    navigate('/SendBP/login')
+                })
+            }
+        });
+    }, [Cookies.get('user_token')])
 
     const validation = (validate) => {
         const error = {};
@@ -156,6 +156,10 @@ function SendBP() {
 
                 <div className='w-[13.625rem] mx-auto mt-[5rem]'>
                     <button className='btn btn-block bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px]'>ส่งผลตรวจ</button>
+                </div>
+
+                <div className='w-[13.625rem] mx-auto mt-[5rem]'>
+                    <input type="file" accept="image/*,video/*" capture />
                 </div>
             </form>
 
