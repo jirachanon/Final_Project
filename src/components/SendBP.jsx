@@ -3,7 +3,6 @@ import circleLogo from '../assets/IMG/circleLogo.png'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
 import liff from '@line/liff'
-import { useSelector } from 'react-redux'
 import Cookies from 'js-cookie'
 
 function SendBP() {
@@ -154,12 +153,19 @@ function SendBP() {
                     </label>
                 </div>
 
-                <div className='w-[13.625rem] mx-auto mt-[5rem]'>
+                <div className='w-[13.625rem] mx-auto mt-[3rem]'>
                     <button className='btn btn-block bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px]'>ส่งผลตรวจ</button>
                 </div>
 
-                <div className='w-[13.625rem] mx-auto mt-[5rem]'>
-                    <input type="file" accept="image/*,video/*" capture />
+                <div className='w-[13.625rem] mx-auto mt-[4rem]'>
+                    <label for='img_upload' className='btn btn-block bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px]'>ถ่ายรูปเครื่องวัด</label>
+                    <input
+                        type="file"
+                        accept="image/*,video/*"
+                        capture
+                        hidden
+                        id='img_upload'
+                    />
                 </div>
             </form>
 
