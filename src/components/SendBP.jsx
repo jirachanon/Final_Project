@@ -4,6 +4,11 @@ import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
 import liff from '@line/liff'
 import Cookies from 'js-cookie'
+import ReactCrop, { centerCrop, makeAspectCrop } from 'react-image-crop'
+import Modal from 'react-modal'
+import cross from '../assets/icons/cross.svg'
+
+Modal.setAppElement('#root');
 
 function SendBP() {
     const initValues = {
@@ -16,6 +21,9 @@ function SendBP() {
     const [formValues, setFormValues] = useState(initValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setisSubmit] = useState(false);
+    const [imgSrc, setImgSrc] = useState('')
+    const [showModal, setShowModal] = useState(false)
+    const [crop, setCrop] = useState()
     const navigate = useNavigate()
     const liffID = '2004489610-MOpXKpry'
 
@@ -93,6 +101,51 @@ function SendBP() {
         });
     }, [Cookies.get('user_token')])
 
+    const onSelectedFile = (e) => {
+        const file = e.target.files?.[0]
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.addEventListener("load", () => {
+            const imgUrl = reader.result?.toString() || " ";
+            setImgSrc(imgUrl);
+            setShowModal(true)
+        })
+        reader.readAsDataURL(file)
+    }
+
+    function closeModal() {
+        setShowModal(false)
+    }
+
+    const onImageLoad = (e) => {
+        const { width, height } = e.currentTarget;
+        const crop = centerCrop(
+            makeAspectCrop(
+                {
+                    unit: "%",
+                    width: 50
+                },
+                1,
+                width,
+                height
+            ),
+            width,
+            height
+        );
+        setCrop(crop);
+    }
+
+    const sbpPhoto = () => {
+        Swal.fire({
+            icon: 'success',
+            title:'Yeah!!!!',
+            confirmButtonText: 'ตกลง'
+        }).then(() => {
+            liff.closeWindow()
+        })
+    }
+
     const validation = (validate) => {
         const error = {};
         if (!validate.sys) {
@@ -157,18 +210,68 @@ function SendBP() {
                     <button className='btn btn-block bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px]'>ส่งผลตรวจ</button>
                 </div>
 
-                <div className='w-[13.625rem] mx-auto mt-[4rem]'>
-                    <label for='img_upload' className='btn btn-block bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px]'>ถ่ายรูปเครื่องวัด</label>
-                    <input
-                        type="file"
-                        accept="image/*,video/*"
-                        capture
-                        hidden
-                        id='img_upload'
-                    />
-                </div>
             </form>
 
+            <div className='w-[13.625rem] mx-auto mt-[4rem]'>
+                <label htmlFor='img_upload' className='btn btn-block bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px]'>ถ่ายรูปเครื่องวัด</label>
+                <input
+                    type="file"
+                    accept="image/*,video/*"
+                    capture
+                    hidden
+                    id='img_upload'
+                    onChange={onSelectedFile}
+                />
+            </div>
+
+            <Modal
+                isOpen={showModal}
+                onRequestClose={closeModal}
+                style={{
+                    overlay: {
+                        position: 'fixed',
+                        top: '0',
+                        right: '0',
+                        left: '0',
+                        bottom: '0'
+                    }
+                }}
+            >
+                <div className='flex flex-col justify-center'>
+                    <div className='flex justify-end'><img src={cross} className='btn btn-ghost btn-xs' onClick={closeModal} /></div>
+                    <div className='mt-2 text-[18px] text-error'>***คำแนะนำ : กรุณาตัดรูปภาพให้เห็นเฉพาะหน้าจอเครื่องวัดความดัน</div>
+                    <div className='w-auto mt-2'>
+                        <ReactCrop
+                            crop={crop}
+                            keepSelection
+                            onChange={
+                                (pixelCrop, percentCrop) => setCrop(percentCrop)
+                            }
+                            aspect={1}
+                            minWidth={150}
+                        >
+                            <img
+                                src={imgSrc}
+                                alt="404_NOT_FOUND"
+                                onLoad={onImageLoad}
+                                className='mx-auto'
+                            />
+                        </ReactCrop>
+                    </div>
+                    <div className='flex justify-center mt-2'>
+                        <button className='btn bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px] mr-1' onClick={sbpPhoto}>ตกลง</button>
+                        <label htmlFor='img_upload_retry' className='btn bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px] ml-1'>ถ่ายอีกครั้ง</label>
+                        <input
+                            type="file"
+                            accept="image/*,video/*"
+                            capture
+                            hidden
+                            id='img_upload_retry'
+                            onChange={onSelectedFile}
+                        />
+                    </div>
+                </div>
+            </Modal>
         </div>
     )
 }

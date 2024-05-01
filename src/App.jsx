@@ -19,6 +19,7 @@ import {
   LinearScale,
   PointElement,
 } from "chart.js/auto";
+import 'react-image-crop/dist/ReactCrop.css'
 
 function App() {
   
