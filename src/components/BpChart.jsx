@@ -36,7 +36,7 @@ const BpChart = () => {
 
     const options = {
         indexAxis: 'y',
-        maintainAspectRatio: false,
+        aspectRatio: "1/4",
         scales: {
             y: {
                 title: {
@@ -56,7 +56,7 @@ const BpChart = () => {
 
     return (
         <div>
-            <Line data={data} options={options} height="80vh"/>
+            <Line data={data} options={options} />
         </div>
     );
 };
