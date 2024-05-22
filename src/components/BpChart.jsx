@@ -35,6 +35,7 @@ const BpChart = () => {
     };
 
     const options = {
+        indexAxis: 'y',
         scales: {
             y: {
                 title: {
@@ -46,6 +47,7 @@ const BpChart = () => {
                 title: {
                     display: true,
                     text: "ผลวัดความดัน",
+                    beginAtZero: false
                 },
             },
         },
@@ -53,7 +55,7 @@ const BpChart = () => {
 
     return (
         <div>
-            <Line data={data} options={options} />
+            <Line data={data} options={options}/>
         </div>
     );
 };
