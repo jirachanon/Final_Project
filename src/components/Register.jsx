@@ -45,7 +45,7 @@ function Register() {
               liffId: liffID,
             })
             .then(() => {
-                  liff.login({})
+                liff.login({})
             });
           }
           liffInit();
