@@ -36,13 +36,13 @@ const BpChart = () => {
 
     const options = {
         scales: {
-            x: {
+            y: {
                 title: {
                     display: true,
                     text: "วัน/เดือน/ปี",
                 },
             },
-            y: {
+            x: {
                 title: {
                     display: true,
                     text: "ผลวัดความดัน",
