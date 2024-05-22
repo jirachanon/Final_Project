@@ -96,7 +96,7 @@ function Home() {
           <p className="text-[#1B3B83] font-bold">คุณ {userName}</p>
         </div>
         {showGraph ?
-          <div className="w-auto min-h-screen mx-auto mt-4">
+          <div className="w-auto mx-auto mt-4">
             <BloodPressureChart />
           </div>
           :
