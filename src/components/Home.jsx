@@ -100,7 +100,7 @@ function Home() {
             <BloodPressureChart />
           </div>
           :
-          <div className="w-64 mx-auto mt-4">
+          <div className="w-64 min-h-screen mx-auto mt-4">
             <BpListing />
           </div>
         }
