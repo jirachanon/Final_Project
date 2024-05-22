@@ -56,7 +56,7 @@ const BpChart = () => {
 
     return (
         <div>
-            <Line data={data} options={options} height={80}/>
+            <Line data={data} options={options} height={200}/>
         </div>
     );
 };
