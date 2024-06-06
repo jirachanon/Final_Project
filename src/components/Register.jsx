@@ -43,11 +43,12 @@ function Register() {
             await liff.init({ liffId: liffID })
         }
 
-        liffInit().then(() => {
-            if (!liff.isLoggedIn) {
-                liff.login();
-            }
-        })
+        liffInit()
+        // .then(() => {
+        //     if (!liff.isLoggedIn) {
+        //         liff.login();
+        //     }
+        // })
 
     }, [liffID])
 
