@@ -44,11 +44,11 @@ function Register() {
         }
 
         liffInit().then(() => {
-            if (!liff.isLoggedIn) {
+            if (!liff.isLoggedIn()) {
                 liff.login();
             }
         })
-    })
+    }, [liffID])
 
     const handleChange = (event) => {
         const { name, value } = event.target;
