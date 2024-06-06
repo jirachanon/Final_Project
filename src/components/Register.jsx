@@ -48,7 +48,7 @@ function Register() {
                 liff.login({})
             });
           }
-          liffInit();
+        liffInit();
     }, [liffID])
 
     const handleChange = (event) => {
