@@ -39,20 +39,11 @@ function Register() {
     }
 
     useEffect(() => {
-
-        const liffInit = async () => {
-            await liff
-            .init({
-              liffId: liffID,
-            })
-            .then(() => {
-                  if (!liff.isLoggedIn()) {
-                    liff.login()
-                  }
-            });
-          }
-          liffInit();
-
+        liff.init({ liffId : '2004489610-01vWBvVK'}).then(() => {
+            if (!liff.isLoggedIn()) {
+                liff.login()
+            }
+        })
     })
 
     const handleChange = (event) => {
