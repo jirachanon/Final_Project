@@ -40,15 +40,15 @@ function Register() {
 
     useEffect(() => {
         const liffInit = async () => {
-            await liff
-            .init({
-              liffId: liffID,
-            })
-            .then(() => {
-                liff.login({})
-            });
-          }
-        liffInit();
+            await liff.init({ liffId: liffID })
+        }
+
+        liffInit().then(() => {
+            if (!liff.isLoggedIn) {
+                liff.login();
+            }
+        })
+
     }, [liffID])
 
     const handleChange = (event) => {
@@ -61,48 +61,48 @@ function Register() {
         setFormErrors(validation(formValues));
         setisSubmit(true);
 
-                    const myHeaders = new Headers();
-                    myHeaders.append("Content-Type", "application/json");
-                    myHeaders.append("Accept", "*/*");
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Accept", "*/*");
 
-                    const raw = JSON.stringify({
-                        "email": formValues.email,
-                        "firstName": formValues.name,
-                        "hn": formValues.HN,
-                        "lastName": formValues.surname,
-                        "password": formValues.pws,
-                        "phone": formValues.tel,
-                        "requestId": "",
-                        "lineToken": liff.getIDToken(),
-                    });
+        const raw = JSON.stringify({
+            "email": formValues.email,
+            "firstName": formValues.name,
+            "hn": formValues.HN,
+            "lastName": formValues.surname,
+            "password": formValues.pws,
+            "phone": formValues.tel,
+            "requestId": "",
+            "lineToken": liff.getIDToken(),
+        });
 
-                    const requestOptions = {
-                        method: "POST",
-                        headers: myHeaders,
-                        body: raw,
-                        redirect: "follow"
-                    };
+        const requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow"
+        };
 
-                    fetch("https://hpm-backend.onrender.com/v1/system/signUp", requestOptions)
-                        .then((response) => response.json())
-                        .then((result) => {
-                            if (result?.status?.code === '200') {
-                                Swal.fire({
-                                    title: 'สำเร็จ',
-                                    text: result?.status?.details[0]?.value,
-                                    confirmButtonText: 'ตกลง'
-                                }).then(() => {
-                                    liff.closeWindow();
-                                })
-                            } else if (result?.status?.code === '400') {
-                                Swal.fire({
-                                    title: 'เกิดข้อผิดพลาด',
-                                    text: result?.status?.details[0]?.value,
-                                    confirmButtonText: 'ตกลง'
-                                })
-                            }
-                        })
-                        .catch((error) => console.error(error));
+        fetch("https://hpm-backend.onrender.com/v1/system/signUp", requestOptions)
+            .then((response) => response.json())
+            .then((result) => {
+                if (result?.status?.code === '200') {
+                    Swal.fire({
+                        title: 'สำเร็จ',
+                        text: result?.status?.details[0]?.value,
+                        confirmButtonText: 'ตกลง'
+                    }).then(() => {
+                        liff.closeWindow();
+                    })
+                } else if (result?.status?.code === '400') {
+                    Swal.fire({
+                        title: 'เกิดข้อผิดพลาด',
+                        text: result?.status?.details[0]?.value,
+                        confirmButtonText: 'ตกลง'
+                    })
+                }
+            })
+            .catch((error) => console.error(error));
     }
 
     const validation = (validate) => {
