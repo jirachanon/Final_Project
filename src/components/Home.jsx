@@ -29,7 +29,7 @@ function Home() {
     }
 
     liffInit().then(() => {
-      if (!liff.isLoggedIn) {
+      if (!liff.isLoggedIn()) {
         liff.login();
       }
 

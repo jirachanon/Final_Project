@@ -85,7 +85,7 @@ function SendBP() {
             await liff.init({ liffId: liffID })
         }
         liffInit().then(() => {
-            if (!liff.isLoggedIn) {
+            if (!liff.isLoggedIn()) {
                 liff.login();
             }
 
