@@ -31,7 +31,7 @@ function Nav() {
                                 ส่งผลวัดคสามดันโลหิต
                             </a>
                         </li>
-                        <li className='bg-[#FF0000] text-white'><a onClick={ logOut }>Logout</a></li>
+                        <li className='bg-[#FF0000] text-white rounded-full'><a onClick={ logOut }>Logout</a></li>
                     </ul>
                 </div>
             </div>
