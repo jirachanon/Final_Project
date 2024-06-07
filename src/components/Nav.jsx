@@ -1,11 +1,10 @@
 import React from 'react'
 import circleLogo from '../assets/IMG/circleLogo.png'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie';
 
 function Nav() {
     const navigate = useNavigate();
-    const param = useParams();
 
     const listNav = () => {
         navigate(`/SendBP`)
@@ -13,6 +12,7 @@ function Nav() {
 
     const logOut = () => {
         Cookies.remove("user_token")
+        navigate(0)
     }
 
     return (
@@ -31,8 +31,7 @@ function Nav() {
                                 ส่งผลวัดคสามดันโลหิต
                             </a>
                         </li>
-                        <li><a>Settings</a></li>
-                        <li><a onClick={ logOut }>Logout</a></li>
+                        <li className='bg-[#FF0000] text-white'><a onClick={ logOut }>Logout</a></li>
                     </ul>
                 </div>
             </div>
