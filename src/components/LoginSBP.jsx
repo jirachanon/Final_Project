@@ -42,22 +42,25 @@ function LoginSBP() {
   useEffect(() => {
     const liffInit = async () => {
       await liff
-      .init({
-        liffId: liffID,
-      })
-      .then(() => {
-            if (!liff.isLoggedIn()) {
-              liff.login()
-            }
-      });
+        .init({
+          liffId: liffID,
+        })
+        .then(() => {
+          if (!liff.isLoggedIn()) {
+            liff.login()
+          }
+        });
     }
     liffInit();
-  },[liffID]);
+
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      setisSubmit(true)
+    }
+  }, [liffID, formErrors]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setFormErrors(validation(formValues));
-    setisSubmit(true);
 
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -88,8 +91,8 @@ function LoginSBP() {
             confirmButtonText: "ตกลง",
           }).then(() => {
             dispatch(setUser(result || {}));
-            Cookies.set('user_token', result?.token, { expires: 7})
-            Cookies.set("userName", result?.name, {expires: 7})
+            Cookies.set('user_token', result?.token, { expires: 7 })
+            Cookies.set("userName", result?.name, { expires: 7 })
             navigate('/SendBP')
           });
         } else if (result?.status?.code === "400") {
@@ -124,7 +127,7 @@ function LoginSBP() {
       redirect: "follow",
     };
 
-    await fetch("https://hpm-backend.onrender.com/v1/system/signIn",requestOptions)
+    await fetch("https://hpm-backend.onrender.com/v1/system/signIn", requestOptions)
       .then((response) => response.json())
       .then((result) => {
         if (result?.roles[0] === "ROLE_USER") {
@@ -134,7 +137,7 @@ function LoginSBP() {
             confirmButtonText: "ตกลง",
           }).then(() => {
             dispatch(setUser(result || {}));
-            Cookies.set('user_token', result?.token, { expires: 1/48 })
+            Cookies.set('user_token', result?.token, { expires: 1 / 48 })
             Cookies.set("userName", result?.name)
             navigate('/SendBP')
           });
@@ -156,13 +159,20 @@ function LoginSBP() {
 
     if (!validate.email) {
       error.email = "กรุณากรอก ' อีเมล ' ของท่าน!";
+      setisSubmit(false)
     } else if (!regex.test(validate.email)) {
       error.email = "ข้อมูลที่กรอกไม่ใช่ ' อีเมล '!";
+      setisSubmit(false)
+
     }
     if (!validate.password) {
       error.password = "กรุณากรอก ' รหัสผ่าน ' ของท่าน!";
-    } else if (validate.password.length < 4) {
+      setisSubmit(false)
+
+    } else if (validate.password.length < 9) {
       error.password = "รหัสผ่านสั้นเกินไป!";
+      setisSubmit(false)
+
     }
 
     return error;

@@ -35,7 +35,6 @@ function SendBP() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         setFormErrors(validation(formValues));
-        setisSubmit(true);
 
         var myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
@@ -99,7 +98,11 @@ function SendBP() {
                 })
             }
         });
-    }, [Cookies.get('user_token')])
+
+        if (Object.keys(formErrors).length === 0 && isSubmit) {
+            setisSubmit(true)
+        }
+    }, [Cookies.get('user_token'), formErrors])
 
     const onSelectedFile = (e) => {
         const file = e.target.files?.[0]
@@ -150,12 +153,15 @@ function SendBP() {
         const error = {};
         if (!validate.sys) {
             error.sys = "กรุณากรอกข้อมูล!";
+            setisSubmit(false)
         }
         if (!validate.dia) {
             error.dia = "กรุณากรอกข้อมูล!";
+            setisSubmit(false)
         }
         if (!validate.pul) {
             error.pul = "กรุณากรอกข้อมูล!";
+            setisSubmit(false)
         }
         return error;
     }

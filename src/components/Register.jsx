@@ -49,7 +49,7 @@ function Register() {
             }
         })
 
-        if (Object.keys(formErrors).length === 0) {
+        if (Object.keys(formErrors).length === 0 && isSubmit) {
             setisSubmit(true)
         }
     }, [liffID, formErrors])
@@ -122,7 +122,7 @@ function Register() {
         if (!validate.pws) {
             error.pws = "กรุณากรอก ' รหัสผ่าน ' ของท่าน!";
             setisSubmit(false);
-        } else if (validate.pws.length < 4) {
+        } else if (validate.pws.length < 9) {
             error.pws = "รหัสผ่านสั้นเกินไป!"
             setisSubmit(false);
         }
@@ -181,7 +181,7 @@ function Register() {
                                     <span className='label-text text-gray-500'>รหัสผ่าน</span>
                                 </div>
                                 <div className='flex justify-end items-center relative'>
-                                    <input type={type} name='pws' placeholder='รหัสผ่าน' className='input input-bordered w-full max-w-xs' value={formValues.pws} onChange={handleChange} />
+                                    <input type={type} name='pws' placeholder='ความยาว 9 ตัวขึ้นไป' className='input input-bordered w-full max-w-xs' value={formValues.pws} onChange={handleChange} />
                                     <img src={eyeIcon} onClick={showPassword} className="absolute mr-2 w-[1.6rem]" alt="password" />
                                 </div>
                                 <div className='label'>

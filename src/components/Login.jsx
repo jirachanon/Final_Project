@@ -53,12 +53,16 @@ function Login() {
     }
 
     liffInit();
-  }, [liffID]);
+
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      setisSubmit(true)
+    }
+  }, [liffID, formErrors]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setFormErrors(validation(formValues));
-    setisSubmit(true);
+
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Accept", "*/*");
@@ -161,13 +165,17 @@ function Login() {
 
     if (!validate.email) {
       error.email = "กรุณากรอก ' อีเมล ' ของท่าน!";
+      setisSubmit(false)
     } else if (!regex.test(validate.email)) {
       error.email = "ข้อมูลที่กรอกไม่ใช่ ' อีเมล '!";
+      setisSubmit(false)
     }
     if (!validate.password) {
       error.password = "กรุณากรอก ' รหัสผ่าน ' ของท่าน!";
+      setisSubmit(false)
     } else if (validate.password.length < 4) {
       error.password = "รหัสผ่านสั้นเกินไป!";
+      setisSubmit(false)
     }
 
     return error;
