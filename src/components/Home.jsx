@@ -32,17 +32,17 @@ function Home() {
       if (!liff.isLoggedIn()) {
         liff.login();
       }
-
-      if (!Cookies.get("user_token")) {
-        liff.logout();
-        Swal.fire({
-          title: "กรุณาเข้าสู่ระบบอีกครั้ง",
-          confirmButtonText: "ตกลง",
-        }).then(() => {
-          window.location.href = 'https://liff.line.me/2004489610-aP6ng65X';
-        });
-      }
     })
+
+    if (!Cookies.get("user_token")) {
+      liff.logout();
+      Swal.fire({
+        title: "กรุณาเข้าสู่ระบบอีกครั้ง",
+        confirmButtonText: "ตกลง",
+      }).then(() => {
+        window.location.href = 'https://liff.line.me/2004489610-aP6ng65X';
+      });
+    }
 
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
