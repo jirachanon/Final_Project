@@ -49,10 +49,7 @@ function Register() {
             }
         })
 
-        if (Object.keys(formErrors).length === 0 && isSubmit) {
-            console.log(formErrors);
-        }
-    }, [liffID, formErrors])
+    }, [liffID])
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -64,49 +61,51 @@ function Register() {
         setFormErrors(validation(formValues));
         setisSubmit(true);
 
-        const myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Accept", "*/*");
+        if (isSubmit === true) {
+            const myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Accept", "*/*");
 
-        const raw = JSON.stringify({
-            "email": formValues.email,
-            "firstName": formValues.name,
-            "hn": formValues.HN,
-            "lastName": formValues.surname,
-            "password": formValues.pws,
-            "phone": formValues.tel,
-            "requestId": "",
-            "lineToken": liff.getIDToken(),
-        });
+            const raw = JSON.stringify({
+                "email": formValues.email,
+                "firstName": formValues.name,
+                "hn": formValues.HN,
+                "lastName": formValues.surname,
+                "password": formValues.pws,
+                "phone": formValues.tel,
+                "requestId": "",
+                "lineToken": liff.getIDToken(),
+            });
 
-        const requestOptions = {
-            method: "POST",
-            headers: myHeaders,
-            body: raw,
-            redirect: "follow"
-        };
+            const requestOptions = {
+                method: "POST",
+                headers: myHeaders,
+                body: raw,
+                redirect: "follow"
+            };
 
-        fetch("https://hpm-backend.onrender.com/v1/system/signUp", requestOptions)
-            .then((response) => response.json())
-            .then((result) => {
-                console.log(result?.firstName);
-                if (result?.status?.code === '200') {
-                    Swal.fire({
-                        title: 'สำเร็จ',
-                        text: result?.status?.details[0]?.value,
-                        confirmButtonText: 'ตกลง'
-                    }).then(() => {
-                        liff.closeWindow();
-                    })
-                } else if (result?.status?.code === '400') {
-                    Swal.fire({
-                        title: 'เกิดข้อผิดพลาด',
-                        text: result?.status?.details[0]?.value,
-                        confirmButtonText: 'ตกลง'
-                    })
-                }
-            })
-            .catch((error) => console.error(error));
+            fetch("https://hpm-backend.onrender.com/v1/system/signUp", requestOptions)
+                .then((response) => response.json())
+                .then((result) => {
+                    console.log(result?.firstName);
+                    if (result?.status?.code === '200') {
+                        Swal.fire({
+                            title: 'สำเร็จ',
+                            text: result?.status?.details[0]?.value,
+                            confirmButtonText: 'ตกลง'
+                        }).then(() => {
+                            liff.closeWindow();
+                        })
+                    } else if (result?.status?.code === '400') {
+                        Swal.fire({
+                            title: 'เกิดข้อผิดพลาด',
+                            text: result?.status?.details[0]?.value,
+                            confirmButtonText: 'ตกลง'
+                        })
+                    }
+                })
+                .catch((error) => console.error(error));
+        }
     }
 
     const validation = (validate) => {
@@ -114,26 +113,35 @@ function Register() {
         const regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
         if (!validate.email) {
             error.email = "กรุณากรอก ' อีเมล ' ของท่าน!";
+            setisSubmit(false);
         } else if (!regex.test(validate.email)) {
             error.email = "ข้อมูลที่กรอกไม่ใช่ ' อีเมล '!"
+            setisSubmit(false);
         }
         if (!validate.pws) {
             error.pws = "กรุณากรอก ' รหัสผ่าน ' ของท่าน!";
+            setisSubmit(false);
         } else if (validate.pws.length < 4) {
             error.pws = "รหัสผ่านสั้นเกินไป!"
+            setisSubmit(false);
         }
         if (!validate.HN) {
             error.HN = "กรุณากรอก ' หมายเลข ' ของท่าน!";
+            setisSubmit(false);
         }
         if (!validate.tel) {
             error.tel = "กรุณากรอก ' เบอร์โทร ' ของท่าน!";
+            setisSubmit(false);
         } else if (validate.tel.length < 10) {
             error.tel = "กรุณากรอก ' เบอร์โทร ' ให้ครบ!"
+            setisSubmit(false);
         }
         if (!validate.name) {
             error.name = "กรุณากรอก ' ชื่อ ' หรือ ' นามสกุล ' ของท่าน!";
+            setisSubmit(false);
         } else if (!validate.surname) {
             error.name = "กรุณากรอก ' ชื่อ ' หรือ ' นามสกุล ' ของท่าน!";
+            setisSubmit(false);
         }
 
         return error;
