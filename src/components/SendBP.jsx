@@ -98,7 +98,7 @@ function SendBP() {
             }
         });
 
-        if (Object.keys(formErrors).length === 0 && Object.keys(formValues).length != 2) {
+        if (Object.keys(formErrors).length === 0 && Object.keys(formValues).length === 2) {
             setisSubmit(true)
         }
     }, [Cookies.get('user_token'), formErrors])
