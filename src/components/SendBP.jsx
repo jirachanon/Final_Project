@@ -35,7 +35,7 @@ function SendBP() {
         event.preventDefault();
         setFormErrors(validation(formValues));
 
-        if (isSubmit === true) {
+        if (isSubmit) {
             var myHeaders = new Headers();
             myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
             myHeaders.append("Content-Type", "application/json");
@@ -98,7 +98,7 @@ function SendBP() {
             }
         });
 
-        if (Object.keys(formErrors).length === 0 && isSubmit) {
+        if (Object.keys(formErrors).length === 0 && Object.keys(formValues).length != 2) {
             setisSubmit(true)
         }
     }, [Cookies.get('user_token'), formErrors])

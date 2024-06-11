@@ -52,16 +52,16 @@ function Login() {
 
     liffInit();
 
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
+    if (Object.keys(formErrors).length === 0 && Object.keys(formErrors).length != 1) {
       setisSubmit(true)
     }
-  }, [liffID, formErrors]);
+  }, [liffID, formErrors, formValues]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setFormErrors(validation(formValues));
 
-    if (isSubmit === true) {
+    if (isSubmit) {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("Accept", "*/*");

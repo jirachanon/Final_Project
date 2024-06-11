@@ -48,10 +48,10 @@ function Register() {
             }
         })
 
-        if (Object.keys(formErrors).length === 0 && isSubmit) {
+        if (Object.keys(formErrors).length === 0 && Object.keys(formValues).length != 5) {
             setisSubmit(true)
         }
-    }, [liffID, formErrors])
+    }, [liffID, formErrors, formValues])
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -62,7 +62,7 @@ function Register() {
         event.preventDefault();
         setFormErrors(validation(formValues));
 
-        if (isSubmit === true) {
+        if (isSubmit) {
             const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
             myHeaders.append("Accept", "*/*");
