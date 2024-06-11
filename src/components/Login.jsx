@@ -52,7 +52,7 @@ function Login() {
 
     liffInit();
 
-    if (Object.keys(formErrors).length === 0 && Object.keys(formErrors).length === 1) {
+    if (Object.keys(formErrors).length === 0 && Object.keys(formValues).length != 0) {
       setisSubmit(true)
     }
   }, [liffID, formErrors, formValues]);
