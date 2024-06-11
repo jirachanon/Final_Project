@@ -20,7 +20,6 @@ function Login() {
   const [type, setType] = useState("password");
   const [eyeIcon, setEyeIcon] = useState(closeEye);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const liffID = '2004489610-aP6ng65X'
 
   const showPassword = () => {

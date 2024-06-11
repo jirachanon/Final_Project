@@ -14,7 +14,6 @@ function Home() {
   const { user } = useSelector((state) => state.slices);
   const [isLoading, setIsLoading] = useState(true);
   const [showGraph, setShowGraph] = useState(false);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const userName = Cookies.get('user_name')
   const liffID = '2004489610-dq14p1vw'

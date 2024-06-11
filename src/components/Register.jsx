@@ -25,7 +25,6 @@ function Register() {
     const [isSubmit, setisSubmit] = useState(false);
     const [type, setType] = useState("password");
     const [eyeIcon, setEyeIcon] = useState(closeEye)
-    const naviagte = useNavigate();
     const liffID = '2004489610-01vWBvVK'
 
     const showPassword = () => {

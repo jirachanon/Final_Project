@@ -24,7 +24,6 @@ function SendBP() {
     const [imgSrc, setImgSrc] = useState('')
     const [showModal, setShowModal] = useState(false)
     const [crop, setCrop] = useState()
-    const navigate = useNavigate()
     const liffID = '2004489610-MOpXKpry'
 
     const handleChange = (event) => {
