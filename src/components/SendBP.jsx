@@ -89,7 +89,6 @@ function SendBP() {
             }
 
             if (!Cookies.get("user_token")) {
-                liff.logout()
                 Swal.fire({
                     title: 'กรุณาเข้าสู่ระบบอีกครั้ง',
                     confirmButtonText: 'ตกลง'
