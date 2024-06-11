@@ -89,7 +89,7 @@ function Login() {
         .then((response) => response.json())
         .then((result) => {
           console.log(result?.status?.code === "400");
-          if (result?.roles === "ROLE_USER") {
+          if (result?.token) {
             Swal.fire({
               title: "เข้าสู่ระบบสำเร็จ",
               text: "สวัสดีคุณ " + result?.name,
