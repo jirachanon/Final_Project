@@ -87,7 +87,7 @@ function LoginSBP() {
       fetch("https://hpm-backend.onrender.com/v1/system/signIn", requestOptions)
         .then((response) => response.json())
         .then((result) => {
-          if (result?.roles[0] === "ROLE_USER") {
+          if (result?.token) {
             Swal.fire({
               title: "เข้าสู่ระบบสำเร็จ",
               text: "สวัสดีคุณ " + result?.name,
@@ -134,7 +134,7 @@ function LoginSBP() {
     await fetch("https://hpm-backend.onrender.com/v1/system/signIn", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        if (result?.roles[0] === "ROLE_USER") {
+        if (result?.token) {
           Swal.fire({
             title: "เข้าสู่ระบบสำเร็จ",
             text: "สวัสดีคุณ " + result?.name,

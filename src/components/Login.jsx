@@ -141,7 +141,7 @@ function Login() {
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
-        if (result?.roles[0] === "ROLE_USER") {
+        if (result?.token) {
           Swal.fire({
             title: "เข้าสู่ระบบสำเร็จ",
             text: "สวัสดีคุณ " + result?.name,
