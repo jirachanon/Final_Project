@@ -8,7 +8,6 @@ import liff from "@line/liff";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { setUser } from "./slices";
-import { useNavigate, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
 
 function Login() {
@@ -95,7 +94,7 @@ function Login() {
               dispatch(setUser(result || {}));
               Cookies.set('user_token', result?.token, { expires: 1 / 48 })
               Cookies.set("user_name", result?.name)
-              navigate('/')
+              window.location.href = "https://liff.line.me/2004489610-dq14p1vw"
             });
           } else if (result?.status?.code === "400") {
             Swal.fire({
@@ -147,7 +146,7 @@ function Login() {
             dispatch(setUser(result || {}));
             Cookies.set('user_token', result?.token, { expires: 7 })
             Cookies.set("user_name", result?.name, { expires: 7 })
-            navigate('/')
+            window.location.href = "https://liff.line.me/2004489610-dq14p1vw"
           });
         } else if (result?.status?.code === "400") {
           Swal.fire({

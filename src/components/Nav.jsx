@@ -1,13 +1,11 @@
 import React from 'react'
 import circleLogo from '../assets/IMG/circleLogo.png'
-import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie';
 
 function Nav() {
-    const navigate = useNavigate();
 
     const listNav = () => {
-        navigate(`/SendBP`)
+        window.location.href = "https://liff.line.me/2004489610-MOpXKpry"
     }
 
     const logOut = () => {

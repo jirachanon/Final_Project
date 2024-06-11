@@ -94,7 +94,7 @@ function SendBP() {
                     title: 'กรุณาเข้าสู่ระบบอีกครั้ง',
                     confirmButtonText: 'ตกลง'
                 }).then(() => {
-                    navigate('/SendBP/login')
+                    window.location.href = "https://liff.line.me/2004489610-EbYDJY9K"
                 })
             }
         });

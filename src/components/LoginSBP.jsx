@@ -8,7 +8,6 @@ import liff from "@line/liff";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { setUser } from "./slices";
-import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 function LoginSBP() {
@@ -21,7 +20,6 @@ function LoginSBP() {
   const [type, setType] = useState("password");
   const [eyeIcon, setEyeIcon] = useState(closeEye);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const liffID = '2004489610-EbYDJY9K'
 
   const showPassword = () => {
@@ -94,7 +92,7 @@ function LoginSBP() {
               dispatch(setUser(result || {}));
               Cookies.set('user_token', result?.token, { expires: 7 })
               Cookies.set("userName", result?.name, { expires: 7 })
-              navigate('/SendBP')
+              window.location.href = "https://liff.line.me/2004489610-MOpXKpry"
             });
           } else if (result?.status?.code === "400") {
             Swal.fire({
@@ -141,7 +139,7 @@ function LoginSBP() {
             dispatch(setUser(result || {}));
             Cookies.set('user_token', result?.token, { expires: 1 / 48 })
             Cookies.set("userName", result?.name)
-            navigate('/SendBP')
+            window.location.href = "https://liff.line.me/2004489610-MOpXKpry"
           });
         } else if (result?.status?.code === "400") {
           Swal.fire({
