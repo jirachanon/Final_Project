@@ -54,8 +54,8 @@ function Login() {
 
     if (
       Object.keys(formErrors).length === 0 &&
-      Object.keys(formValues.email).length != 0 &&
-      Object.keys(formValues.password).length != 0
+      Object.keys(formValues.email).length > 2 &&
+      Object.keys(formValues.password).length > 2
     ) {
       setisSubmit(true)
     }
@@ -88,7 +88,8 @@ function Login() {
       fetch("https://hpm-backend.onrender.com/v1/system/signIn", requestOptions)
         .then((response) => response.json())
         .then((result) => {
-          if (result?.roles[0] === "ROLE_USER") {
+          console.log(result?.status?.code === "400");
+          if (result?.roles === "ROLE_USER") {
             Swal.fire({
               title: "เข้าสู่ระบบสำเร็จ",
               text: "สวัสดีคุณ " + result?.name,
@@ -105,7 +106,7 @@ function Login() {
               title: "เกิดข้อผิดพลาด",
               text: result?.status?.details[0]?.value,
               confirmButtonText: "ตกลง",
-            });
+            })
           }
         })
         .catch((error) => console.error(error));
