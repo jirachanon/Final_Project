@@ -89,7 +89,7 @@ function Register() {
         fetch("https://hpm-backend.onrender.com/v1/system/signUp", requestOptions)
             .then((response) => response.json())
             .then((result) => {
-                console.log(result);
+                console.log(result?.firstName);
                 if (result?.status?.code === '200') {
                     Swal.fire({
                         title: 'สำเร็จ',
