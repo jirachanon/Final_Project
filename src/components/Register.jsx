@@ -48,6 +48,10 @@ function Register() {
                 liff.login();
             }
         })
+
+        if (Object.keys(formErrors).length === 0 && isSubmit) {
+            setisSubmit(false);
+        }
     }, [liffID])
 
     const handleChange = (event) => {
