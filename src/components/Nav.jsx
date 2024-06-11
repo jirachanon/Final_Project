@@ -10,7 +10,7 @@ function Nav() {
 
     const logOut = () => {
         Cookies.remove("user_token")
-        navigate(0)
+        window.location.reload()
     }
 
     return (
