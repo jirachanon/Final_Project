@@ -42,14 +42,14 @@ function Login() {
   useEffect(() => {
     const liffInit = async () => {
       await liff
-      .init({
-        liffId: liffID,
-      })
-      .then(() => {
+        .init({
+          liffId: liffID,
+        })
+        .then(() => {
           if (!liff.isLoggedIn()) {
             liff.login()
           }
-      });
+        });
     }
 
     liffInit();
@@ -57,55 +57,57 @@ function Login() {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       setisSubmit(true)
     }
-  }, [liffID]);
+  }, [liffID, formErrors]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setFormErrors(validation(formValues));
 
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Accept", "*/*");
+    if (isSubmit === true) {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Accept", "*/*");
 
-    const raw = JSON.stringify({
-      type: "email",
-      requestId: id,
-      email: formValues.email,
-      password: formValues.password,
-      lineToken: liff.getIDToken(),
-    });
+      const raw = JSON.stringify({
+        type: "email",
+        requestId: id,
+        email: formValues.email,
+        password: formValues.password,
+        lineToken: liff.getIDToken(),
+      });
 
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
 
-    fetch("https://hpm-backend.onrender.com/v1/system/signIn", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        if (result?.roles[0] === "ROLE_USER") {
-          Swal.fire({
-            title: "เข้าสู่ระบบสำเร็จ",
-            text: "สวัสดีคุณ " + result?.name,
-            confirmButtonText: "ตกลง",
-          }).then(() => {
-            dispatch(setUser(result || {}));
-            Cookies.set('user_token', result?.token, { expires: 1/48 })
-            Cookies.set("user_name", result?.name)
-            navigate('/')
-          });
-        } else if (result?.status?.code === "400") {
-          Swal.fire({
-            title: "เกิดข้อผิดพลาด",
-            text: result?.status?.details[0]?.value,
-            confirmButtonText: "ตกลง",
-          });
-        }
-        return result;
-      })
-      .catch((error) => console.error(error));
+      fetch("https://hpm-backend.onrender.com/v1/system/signIn", requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          if (result?.roles[0] === "ROLE_USER") {
+            Swal.fire({
+              title: "เข้าสู่ระบบสำเร็จ",
+              text: "สวัสดีคุณ " + result?.name,
+              confirmButtonText: "ตกลง",
+            }).then(() => {
+              dispatch(setUser(result || {}));
+              Cookies.set('user_token', result?.token, { expires: 1 / 48 })
+              Cookies.set("user_name", result?.name)
+              navigate('/')
+            });
+          } else if (result?.status?.code === "400") {
+            Swal.fire({
+              title: "เกิดข้อผิดพลาด",
+              text: result?.status?.details[0]?.value,
+              confirmButtonText: "ตกลง",
+            });
+          }
+          return result;
+        })
+        .catch((error) => console.error(error));
+    }
   };
 
   const lineHandleSubmit = async (event) => {
@@ -144,7 +146,7 @@ function Login() {
           }).then(() => {
             dispatch(setUser(result || {}));
             Cookies.set('user_token', result?.token, { expires: 7 })
-            Cookies.set("user_name", result?.name, {expires: 7})
+            Cookies.set("user_name", result?.name, { expires: 7 })
             navigate('/')
           });
         } else if (result?.status?.code === "400") {

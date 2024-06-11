@@ -36,47 +36,48 @@ function SendBP() {
         event.preventDefault();
         setFormErrors(validation(formValues));
 
-        var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
-        myHeaders.append("Content-Type", "application/json");
+        if (isSubmit === true) {
+            var myHeaders = new Headers();
+            myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
+            myHeaders.append("Content-Type", "application/json");
+            var raw = JSON.stringify({
+                "dia": formValues.dia,
+                "pul": formValues.pul,
+                "sys": formValues.sys,
+                "requestId": id
+            });
 
-        var raw = JSON.stringify({
-            "dia": formValues.dia,
-            "pul": formValues.pul,
-            "sys": formValues.sys,
-            "requestId": id
-        });
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
 
-        var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-        };
-
-        fetch("https://hpm-backend.onrender.com/v1/bp/createBloodPressure", requestOptions)
-            .then(response => response.json())
-            .then(result => {
-                console.log(result);
-                if (result.status.code === "200") {
-                    Swal.fire({
-                        title: 'สำเร็จ',
-                        text: result?.status?.details[0]?.value,
-                        confirmButtonText: 'ตกลง'
-                    }).then(() => {
-                        liff.closeWindow();
-                    })
-                } else if (result.status.code === "400") {
-                    Swal.fire({
-                        title: 'เกิดข้อผิดพลาด',
-                        text: result.status?.details[0]?.value,
-                        confirmButtonText: 'ตกลง'
-                    }).then(() => {
-                        liff.closeWindow();
-                    })
-                }
-            })
-            .catch(error => console.log('error', error));
+            fetch("https://hpm-backend.onrender.com/v1/bp/createBloodPressure", requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    console.log(result);
+                    if (result.status.code === "200") {
+                        Swal.fire({
+                            title: 'สำเร็จ',
+                            text: result?.status?.details[0]?.value,
+                            confirmButtonText: 'ตกลง'
+                        }).then(() => {
+                            liff.closeWindow();
+                        })
+                    } else if (result.status.code === "400") {
+                        Swal.fire({
+                            title: 'เกิดข้อผิดพลาด',
+                            text: result.status?.details[0]?.value,
+                            confirmButtonText: 'ตกลง'
+                        }).then(() => {
+                            liff.closeWindow();
+                        })
+                    }
+                })
+                .catch(error => console.log('error', error));
+        }
     }
 
     useEffect(() => {
@@ -141,7 +142,7 @@ function SendBP() {
     const sbpPhoto = () => {
         Swal.fire({
             icon: 'success',
-            title:'Yeah!!!!',
+            title: 'Yeah!!!!',
             confirmButtonText: 'ตกลง'
         }).then(() => {
             liff.closeWindow()
