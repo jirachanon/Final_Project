@@ -99,14 +99,14 @@ function Login() {
               Cookies.set("user_name", result?.name)
               window.location.href = "https://liff.line.me/2004489610-dq14p1vw"
             });
-          } else if (result?.status?.code === "400") {
+          } 
+          if (result?.status?.code === "400") {
             Swal.fire({
               title: "เกิดข้อผิดพลาด",
               text: result?.status?.details[0]?.value,
               confirmButtonText: "ตกลง",
             });
           }
-          return result;
         })
         .catch((error) => console.error(error));
     }

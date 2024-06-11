@@ -104,7 +104,8 @@ function Register() {
                         }).then(() => {
                             liff.closeWindow();
                         })
-                    } else if (result?.status?.code === '400') {
+                    } 
+                    if (result?.status?.code === '400') {
                         Swal.fire({
                             title: 'เกิดข้อผิดพลาด',
                             text: result?.status?.details[0]?.value,
