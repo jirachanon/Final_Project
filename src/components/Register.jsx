@@ -52,7 +52,7 @@ function Register() {
         if (Object.keys(formErrors).length === 0 && isSubmit) {
             console.log(formErrors);
         }
-    }, [liffID])
+    }, [liffID, formErrors])
 
     const handleChange = (event) => {
         const { name, value } = event.target;
