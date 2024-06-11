@@ -48,9 +48,17 @@ function Register() {
             }
         })
 
-        if (Object.keys(formErrors).length === 0 && Object.keys(formValues).length != 0) {
+        if (
+            Object.keys(formErrors).length === 0 &&
+            Object.keys(formValues.email).length != 0 &&
+            Object.keys(formValues.pws).length != 0 &&
+            Object.keys(formValues.HN).length != 0 &&
+            Object.keys(formValues.tel).length != 0 &&
+            Object.keys(formValues.name).length != 0 &&
+            Object.keys(formValues.surname).length != 0 
+          ) {
             setisSubmit(true)
-        }
+          }
     }, [liffID, formErrors, formValues])
 
     const handleChange = (event) => {

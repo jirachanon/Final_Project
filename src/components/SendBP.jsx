@@ -98,9 +98,14 @@ function SendBP() {
             }
         });
 
-        if (Object.keys(formErrors).length === 0 && Object.keys(formValues).length != 0) {
+        if (
+            Object.keys(formErrors).length === 0 &&
+            Object.keys(formValues.sys).length != 0 &&
+            Object.keys(formValues.dia).length != 0 &&
+            Object.keys(formValues.pul).length != 0 
+          ) {
             setisSubmit(true)
-        }
+          }
     }, [Cookies.get('user_token'), formErrors])
 
     const onSelectedFile = (e) => {
