@@ -56,7 +56,7 @@ function LoginSBP() {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       setisSubmit(true)
     }
-  }, [liffID, formErrors]);
+  }, [liffID]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
