@@ -50,7 +50,7 @@ function Register() {
         })
 
         if (Object.keys(formErrors).length === 0 && isSubmit) {
-            setisSubmit(false);
+            console.log(formErrors);
         }
     }, [liffID])
 
