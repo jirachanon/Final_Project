@@ -77,7 +77,7 @@ function Home() {
       })
       .catch((error) => console.log("error", error));
 
-  }, [Cookies.get("user_token")]);
+  }, [Cookies.get("user_token"),liffID]);
 
   return (
     <>
