@@ -49,7 +49,10 @@ function Register() {
             }
         })
 
-    }, [liffID])
+        if (Object.keys(formErrors).length === 0) {
+            setisSubmit(true)
+        }
+    }, [liffID, formErrors])
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -59,7 +62,6 @@ function Register() {
     const handleSubmit = (event) => {
         event.preventDefault();
         setFormErrors(validation(formValues));
-        setisSubmit(true);
 
         if (isSubmit === true) {
             const myHeaders = new Headers();
@@ -87,7 +89,6 @@ function Register() {
             fetch("https://hpm-backend.onrender.com/v1/system/signUp", requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
-                    console.log(result?.firstName);
                     if (result?.status?.code === '200') {
                         Swal.fire({
                             title: 'สำเร็จ',
