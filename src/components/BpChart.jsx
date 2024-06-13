@@ -35,16 +35,15 @@ const BpChart = () => {
     };
 
     const options = {
-        indexAxis: 'y',
         aspectRatio: "1/4",
         scales: {
-            y: {
+            x: {
                 title: {
                     display: true,
                     text: "วัน/เดือน/ปี",
                 },
             },
-            x: {
+            y: {
                 title: {
                     display: true,
                     text: "ผลวัดความดัน",
