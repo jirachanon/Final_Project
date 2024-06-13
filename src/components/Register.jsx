@@ -22,6 +22,7 @@ function Register() {
     const [formValues, setFormValues] = useState(initValues);
     const [formErrors, setFormErrors] = useState({});
     const [type, setType] = useState("password");
+    const [isSubmit, setIsSubmit] = useState(false);
     const [eyeIcon, setEyeIcon] = useState(closeEye)
     const liffID = '2004489610-01vWBvVK'
 
@@ -62,7 +63,9 @@ function Register() {
         const Error = validation()
         if (Object.keys(Error).length > 0) {
             setFormErrors(Error)
+            setIsSubmit(false)
         } else {
+            setIsSubmit(true)
             const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
             myHeaders.append("Accept", "*/*");
@@ -98,6 +101,7 @@ function Register() {
                         })
                     }
                     if (result?.status?.code === '400') {
+                        setIsSubmit(false)
                         Swal.fire({
                             title: 'เกิดข้อผิดพลาด',
                             text: result?.status?.details[0]?.value,
@@ -234,7 +238,9 @@ function Register() {
                         </div>
 
                         <div className='w-[13.563rem] mx-auto mt-[2.33rem]'>
-                            <button className='btn btn-block bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px]' >สมัครสมาชิก</button>
+                            <button className='btn btn-block bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px]' >
+                                {isSubmit? <span className="loading loading-spinner loading-md"></span> : <span>สมัครสมาชิก</span>}
+                            </button>
                             <div className="label place-content-center">
                                 <a href="/" className='label-text text-gray-500 underline'>เข้าสู่ระบบ</a>
                             </div>

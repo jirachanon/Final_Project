@@ -16,6 +16,8 @@ function Login() {
 
   const [formValues, setFormValues] = useState(initValues);
   const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [lineIsSubmit, setLineIsSubmit] = useState(false);
   const [type, setType] = useState("password");
   const [eyeIcon, setEyeIcon] = useState(closeEye);
   const dispatch = useDispatch();
@@ -63,7 +65,9 @@ function Login() {
     const Error = validation
     if (Object.keys(Error) > 0) {
       setFormErrors(Error)
+      setIsSubmit(false)
     } else {
+      setIsSubmit(true)
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("Accept", "*/*");
@@ -86,7 +90,6 @@ function Login() {
       fetch("https://hpm-backend.onrender.com/v1/system/signIn", requestOptions)
         .then((response) => response.json())
         .then((result) => {
-          console.log(result?.status?.code === "400");
           if (result?.token) {
             Swal.fire({
               title: "เข้าสู่ระบบสำเร็จ",
@@ -100,6 +103,7 @@ function Login() {
             });
           }
           if (result?.status?.code === "400") {
+            setIsSubmit(false)
             Swal.fire({
               title: "เกิดข้อผิดพลาด",
               text: result?.status?.details[0]?.value,
@@ -113,6 +117,7 @@ function Login() {
 
   const lineHandleSubmit = async (event) => {
     event.preventDefault();
+    setLineIsSubmit(true)
 
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -150,6 +155,7 @@ function Login() {
             window.location.href = "https://liff.line.me/2004489610-dq14p1vw"
           });
         } else if (result?.status?.code === "400") {
+          setLineIsSubmit(false)
           Swal.fire({
             title: "เกิดข้อผิดพลาด",
             text: result?.status?.details[0]?.value,
@@ -256,7 +262,7 @@ function Login() {
 
         <div className="w-[13.563rem] mx-auto mt-[6.58rem]">
           <button className="btn btn-block bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px]">
-            เข้าสู่ระบบ
+            { isSubmit? <span className="loading loading-spinner loading-md"></span> : <span>เข้าสู่ระบบ</span>}
           </button>
           <div className="label place-content-center">
             <a href="/Register" className="label-text text-gray-500 underline">
@@ -272,7 +278,7 @@ function Login() {
             className="btn btn-block bg-[#06C755] text-white pl-[3rem] font-normal text-[18px]"
             onClick={lineHandleSubmit}
           >
-            เข้าสู่ระบบด้วย Line
+            {lineIsSubmit? <span className="loading loading-spinner loading-md"></span> : <span>เข้าสู่ระบบด้วย Line</span>}
           </button>
           <img src={Line} alt="Line" className="absolute w-[2.5rem] ml-1" />
         </div>

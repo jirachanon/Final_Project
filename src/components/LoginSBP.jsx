@@ -16,6 +16,8 @@ function LoginSBP() {
 
   const [formValues, setFormValues] = useState(initValues);
   const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [lineIsSubmit, setLineIsSubmit] = useState(false);
   const [type, setType] = useState("password");
   const [eyeIcon, setEyeIcon] = useState(closeEye);
   const dispatch = useDispatch();
@@ -62,7 +64,9 @@ function LoginSBP() {
     const Error = validation()
     if (Object.keys(Error).length > 0) {
       setFormErrors(Error)
+      setIsSubmit(false)
     } else {
+      setIsSubmit(true)
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("Accept", "*/*");
@@ -98,6 +102,7 @@ function LoginSBP() {
             });
           }
           if (result?.status?.code === "400") {
+            setIsSubmit(false)
             Swal.fire({
               title: "เกิดข้อผิดพลาด",
               text: result?.status?.details[0]?.value,
@@ -111,6 +116,7 @@ function LoginSBP() {
 
   const lineHandleSubmit = async (event) => {
     event.preventDefault();
+    setLineIsSubmit(true)
 
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -144,6 +150,7 @@ function LoginSBP() {
             window.location.href = "https://liff.line.me/2004489610-MOpXKpry"
           });
         } else if (result?.status?.code === "400") {
+          setLineIsSubmit(false)
           Swal.fire({
             title: "เกิดข้อผิดพลาด",
             text: result?.status?.details[0]?.value,
@@ -249,7 +256,7 @@ function LoginSBP() {
 
         <div className="w-[13.563rem] mx-auto mt-[6.58rem]">
           <button className="btn btn-block bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px]">
-            เข้าสู่ระบบ
+            {isSubmit? <span className="loading loading-spinner loading-md"></span> : <span>เข้าสู่ระบบ</span>}
           </button>
           <div className="label place-content-center">
             <a href="/Register" className="label-text text-gray-500 underline">
@@ -265,7 +272,7 @@ function LoginSBP() {
             className="btn btn-block bg-[#06C755] text-white pl-[3rem] font-normal text-[18px]"
             onClick={lineHandleSubmit}
           >
-            เข้าสู่ระบบด้วย Line
+            {lineIsSubmit? <span className="loading loading-spinner loading-md"></span> : <span>เข้าสู่ระบบด้วย Line</span>}
           </button>
           <img src={Line} alt="Line" className="absolute w-[2.5rem] ml-1" />
         </div>

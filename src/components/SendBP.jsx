@@ -20,6 +20,7 @@ function SendBP() {
 
     const [formValues, setFormValues] = useState(initValues);
     const [formErrors, setFormErrors] = useState({});
+    const [isSubmit, setIsSubmit] = useState(false);
     const [imgSrc, setImgSrc] = useState('')
     const [showModal, setShowModal] = useState(false)
     const [crop, setCrop] = useState()
@@ -40,7 +41,9 @@ function SendBP() {
         const Error = validation()
         if (Object.keys(Error).length > 0) {
             setFormErrors(Error)
+            setIsSubmit(false)
         } else {
+            setIsSubmit(true)
             var myHeaders = new Headers();
             myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
             myHeaders.append("Content-Type", "application/json");
@@ -71,6 +74,7 @@ function SendBP() {
                             liff.closeWindow();
                         })
                     } else if (result.status.code === "400") {
+                        setIsSubmit(false)
                         Swal.fire({
                             title: 'เกิดข้อผิดพลาด',
                             text: result.status?.details[0]?.value,
@@ -211,7 +215,9 @@ function SendBP() {
                 </div>
 
                 <div className='w-[13.625rem] mx-auto mt-[3rem]'>
-                    <button className='btn btn-block bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px]'>ส่งผลตรวจ</button>
+                    <button className='btn btn-block bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px]'>
+                        {isSubmit? <span className="loading loading-spinner loading-md"></span> : <span>ส่งผลตรวจ</span>}
+                    </button>
                 </div>
 
             </form>
