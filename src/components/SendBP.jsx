@@ -20,7 +20,6 @@ function SendBP() {
 
     const [formValues, setFormValues] = useState(initValues);
     const [formErrors, setFormErrors] = useState({});
-    const [isSubmit, setisSubmit] = useState(false);
     const [imgSrc, setImgSrc] = useState('')
     const [showModal, setShowModal] = useState(false)
     const [crop, setCrop] = useState()
@@ -29,13 +28,19 @@ function SendBP() {
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormValues({ ...formValues, [name]: value });
-    }
 
+        if (!!formErrors[name]) {
+            setFormErrors({...formErrors, [name]: null})
+        }
+    }
+    
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setFormErrors(validation(formValues));
 
-        if (isSubmit) {
+        const Error = validation()
+        if (Object.keys(Error).length > 0) {
+            setFormErrors(Error)
+        } else {
             var myHeaders = new Headers();
             myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
             myHeaders.append("Content-Type", "application/json");
@@ -97,16 +102,7 @@ function SendBP() {
                 })
             }
         });
-
-        if (
-            Object.keys(formErrors).length === 0 &&
-            Object.keys(formValues.sys).length != 0 &&
-            Object.keys(formValues.dia).length != 0 &&
-            Object.keys(formValues.pul).length != 0 
-          ) {
-            setisSubmit(true)
-          }
-    }, [Cookies.get('user_token'), formErrors])
+    }, [Cookies.get('user_token'), formErrors, formValues,])
 
     const onSelectedFile = (e) => {
         const file = e.target.files?.[0]
@@ -153,24 +149,22 @@ function SendBP() {
         })
     }
 
-    const validation = (validate) => {
+    const validation = () => {
+        const {sys, dia, pul } = formValues
         const error = {};
-        if (!validate.sys) {
+        if (!sys || sys === " ") {
             error.sys = "กรุณากรอกข้อมูล!";
-            setisSubmit(false)
         }
-        if (!validate.dia) {
+        if (!dia || dia === " ") {
             error.dia = "กรุณากรอกข้อมูล!";
-            setisSubmit(false)
         }
-        if (!validate.pul) {
+        if (!pul || pul === " ") {
             error.pul = "กรุณากรอกข้อมูล!";
-            setisSubmit(false)
         }
         return error;
     }
     return (
-        <div className='w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-auto lg:h-screen min-h-screen'>
+        <div className='w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-auto lg:h-screen min-h-screen pb-4'>
 
             <div className='w-[7.6rem] mx-auto'>
                 <div className='Logo'>
@@ -185,7 +179,7 @@ function SendBP() {
                         <div className="label">
                             <span className="label-text text-gray-500">ค่าความดันขณะหัวใจบีบตัว (SYS)</span>
                         </div>
-                        <input type="text" placeholder="120" name='sys' className="input input-bordered w-full max-w-xs" value={formValues.sys} onChange={handleChange} />
+                        <input type="text" placeholder="120" name='sys' className="input input-bordered w-full max-w-xs" value={formValues.sys} onChange={handleChange}/>
                         <div className='label'>
                             <span className='label-text text-red-700'>{formErrors.sys}</span>
                         </div>

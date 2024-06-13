@@ -16,7 +16,6 @@ function LoginSBP() {
 
   const [formValues, setFormValues] = useState(initValues);
   const [formErrors, setFormErrors] = useState({});
-  const [isSubmit, setisSubmit] = useState(false);
   const [type, setType] = useState("password");
   const [eyeIcon, setEyeIcon] = useState(closeEye);
   const dispatch = useDispatch();
@@ -35,6 +34,10 @@ function LoginSBP() {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormValues({ ...formValues, [name]: value });
+
+    if (!!formErrors[name]) {
+      setFormErrors({ ...formErrors, [name]: null })
+    }
   };
 
   useEffect(() => {
@@ -51,20 +54,15 @@ function LoginSBP() {
     }
     liffInit();
 
-    if (
-      Object.keys(formErrors).length === 0 &&
-      Object.keys(formValues.email).length != 0 &&
-      Object.keys(formValues.password).length != 0
-    ) {
-      setisSubmit(true)
-    }
   }, [liffID, formErrors, formValues]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setFormErrors(validation(formValues));
 
-    if (isSubmit) {
+    const Error = validation()
+    if (Object.keys(Error).length > 0) {
+      setFormErrors(Error)
+    } else {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("Accept", "*/*");
@@ -98,7 +96,7 @@ function LoginSBP() {
               Cookies.set("userName", result?.name, { expires: 7 })
               window.location.href = "https://liff.line.me/2004489610-MOpXKpry"
             });
-          } 
+          }
           if (result?.status?.code === "400") {
             Swal.fire({
               title: "เกิดข้อผิดพลาด",
@@ -156,29 +154,22 @@ function LoginSBP() {
       .catch((error) => console.error(error));
   };
 
-  const validation = (validate) => {
+  const validation = () => {
+    const { email, password } = formValues
     const error = {};
     const regex =
       /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
-    if (!validate.email) {
+    if (!email || email === " ") {
       error.email = "กรุณากรอก ' อีเมล ' ของท่าน!";
-      setisSubmit(false)
-    } else if (!regex.test(validate.email)) {
+    } else if (!regex.test(email)) {
       error.email = "ข้อมูลที่กรอกไม่ใช่ ' อีเมล '!";
-      setisSubmit(false)
-
     }
-    if (!validate.password) {
+    if (!password) {
       error.password = "กรุณากรอก ' รหัสผ่าน ' ของท่าน!";
-      setisSubmit(false)
-
-    } else if (validate.password.length < 9) {
+    } else if (password.length < 9) {
       error.password = "รหัสผ่านสั้นเกินไป!";
-      setisSubmit(false)
-
     }
-
     return error;
   };
 

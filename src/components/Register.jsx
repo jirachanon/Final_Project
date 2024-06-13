@@ -7,7 +7,6 @@ import vector from '../assets/icons/Vector.svg'
 import phone from '../assets/icons/phone.svg'
 import liff from '@line/liff'
 import Swal from 'sweetalert2'
-import { useNavigate } from 'react-router-dom'
 
 function Register() {
 
@@ -22,7 +21,6 @@ function Register() {
 
     const [formValues, setFormValues] = useState(initValues);
     const [formErrors, setFormErrors] = useState({});
-    const [isSubmit, setisSubmit] = useState(false);
     const [type, setType] = useState("password");
     const [eyeIcon, setEyeIcon] = useState(closeEye)
     const liffID = '2004489610-01vWBvVK'
@@ -47,30 +45,24 @@ function Register() {
                 liff.login();
             }
         })
-
-        if (
-            Object.keys(formErrors).length === 0 &&
-            Object.keys(formValues.email).length != 0 &&
-            Object.keys(formValues.pws).length != 0 &&
-            Object.keys(formValues.HN).length != 0 &&
-            Object.keys(formValues.tel).length != 0 &&
-            Object.keys(formValues.name).length != 0 &&
-            Object.keys(formValues.surname).length != 0 
-          ) {
-            setisSubmit(true)
-          }
     }, [liffID, formErrors, formValues])
 
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormValues({ ...formValues, [name]: value });
+
+        if (!!formErrors[name]) {
+            setFormErrors({ ...formErrors, [name]: null })
+        }
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        setFormErrors(validation(formValues));
 
-        if (isSubmit) {
+        const Error = validation()
+        if (Object.keys(Error).length > 0) {
+            setFormErrors(Error)
+        } else {
             const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
             myHeaders.append("Accept", "*/*");
@@ -104,7 +96,7 @@ function Register() {
                         }).then(() => {
                             liff.closeWindow();
                         })
-                    } 
+                    }
                     if (result?.status?.code === '400') {
                         Swal.fire({
                             title: 'เกิดข้อผิดพลาด',
@@ -117,42 +109,33 @@ function Register() {
         }
     }
 
-    const validation = (validate) => {
+    const validation = () => {
+        const { email, pws, HN, tel, name, surname } = formValues
         const error = {};
         const regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-        if (!validate.email) {
+        if (!email) {
             error.email = "กรุณากรอก ' อีเมล ' ของท่าน!";
-            setisSubmit(false);
-        } else if (!regex.test(validate.email)) {
+        } else if (!regex.test(email)) {
             error.email = "ข้อมูลที่กรอกไม่ใช่ ' อีเมล '!"
-            setisSubmit(false);
         }
-        if (!validate.pws) {
+        if (!pws) {
             error.pws = "กรุณากรอก ' รหัสผ่าน ' ของท่าน!";
-            setisSubmit(false);
-        } else if (validate.pws.length < 9) {
+        } else if (pws.length < 9) {
             error.pws = "รหัสผ่านสั้นเกินไป!"
-            setisSubmit(false);
         }
-        if (!validate.HN) {
+        if (!HN) {
             error.HN = "กรุณากรอก ' หมายเลข ' ของท่าน!";
-            setisSubmit(false);
         }
-        if (!validate.tel) {
+        if (!tel) {
             error.tel = "กรุณากรอก ' เบอร์โทร ' ของท่าน!";
-            setisSubmit(false);
-        } else if (validate.tel.length < 10) {
+        } else if (tel.length < 10) {
             error.tel = "กรุณากรอก ' เบอร์โทร ' ให้ครบ!"
-            setisSubmit(false);
         }
-        if (!validate.name) {
+        if (!name) {
             error.name = "กรุณากรอก ' ชื่อ ' หรือ ' นามสกุล ' ของท่าน!";
-            setisSubmit(false);
-        } else if (!validate.surname) {
+        } else if (!surname) {
             error.name = "กรุณากรอก ' ชื่อ ' หรือ ' นามสกุล ' ของท่าน!";
-            setisSubmit(false);
         }
-
         return error;
     }
 
