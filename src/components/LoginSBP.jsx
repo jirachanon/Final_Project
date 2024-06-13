@@ -90,6 +90,7 @@ function LoginSBP() {
         .then((response) => response.json())
         .then((result) => {
           if (result?.token) {
+            setIsSubmit(false)
             Swal.fire({
               title: "เข้าสู่ระบบสำเร็จ",
               text: "สวัสดีคุณ " + result?.name,
@@ -139,6 +140,7 @@ function LoginSBP() {
       .then((response) => response.json())
       .then((result) => {
         if (result?.token) {
+          setLineIsSubmit(false)
           Swal.fire({
             title: "เข้าสู่ระบบสำเร็จ",
             text: "สวัสดีคุณ " + result?.name,

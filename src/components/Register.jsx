@@ -92,6 +92,7 @@ function Register() {
                 .then((response) => response.json())
                 .then((result) => {
                     if (result?.status?.code === '200') {
+                        setIsSubmit(false)
                         Swal.fire({
                             title: 'สำเร็จ',
                             text: result?.status?.details[0]?.value,

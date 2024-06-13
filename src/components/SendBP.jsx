@@ -66,6 +66,7 @@ function SendBP() {
                 .then(result => {
                     console.log(result);
                     if (result.status.code === "200") {
+                        setIsSubmit(false)
                         Swal.fire({
                             title: 'สำเร็จ',
                             text: result?.status?.details[0]?.value,

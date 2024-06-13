@@ -91,6 +91,7 @@ function Login() {
         .then((response) => response.json())
         .then((result) => {
           if (result?.token) {
+            setIsSubmit(false)
             Swal.fire({
               title: "เข้าสู่ระบบสำเร็จ",
               text: "สวัสดีคุณ " + result?.name,
@@ -142,8 +143,8 @@ function Login() {
     )
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
         if (result?.token) {
+          setLineIsSubmit(false)
           Swal.fire({
             title: "เข้าสู่ระบบสำเร็จ",
             text: "สวัสดีคุณ " + result?.name,
