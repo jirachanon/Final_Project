@@ -232,7 +232,7 @@ function SendBP() {
                 >
                     คำแนะนำการส่งผลวัดด้วยรูปถ่าย
                 </span>
-                <dialog id="my_modal_1" className="modal modal-bottom sm:modal-middle">
+                <dialog id="my_modal_1" className="modal">
                     <div className="modal-box">
                         <h3 className="font-bold text-lg">รูปถ่ายต้องเห็นตัวเลข ค่าบน ค่าล่าง และ ชีพจร อย่างชัดเจน และ ไม่ควรมีภาพสะท้อนหรือแสงสะท้อน ในรูปถ่ายจอเครื่องวัดความดัน ดังตัวอย่างภาพที่แสดง</h3>
                         <div className="modal-action">
