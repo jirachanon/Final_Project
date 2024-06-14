@@ -34,7 +34,7 @@ function Home() {
 
       if (!Cookies.get("user_token")) {
         Swal.fire({
-          title: "กรุณาเข้าสู่ระบบอีกครั้ง",
+          title: "กรุณาเข้าสู่ระบบ",
           confirmButtonText: "ตกลง",
         }).then(() => {
           window.location.href = 'https://liff.line.me/2004489610-aP6ng65X';
@@ -81,7 +81,7 @@ function Home() {
 
   return (
     <>
-      <div className="w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto min-h-screen md:min-h-screen lg:min-h-screen">
+      <div className="w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto min-h-screen md:min-h-screen lg:min-h-screen p-4">
         <Nav />
         <div className="flex justify-end mb-4 mr-5">
           <button className="btn outline outline-1 outline-[#1B3B83] btn-xs sm:btn-sm md:btn-md lg:btn-lg text-[#1B3B83]"

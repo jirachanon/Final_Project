@@ -100,7 +100,7 @@ function SendBP() {
 
             if (!Cookies.get("user_token")) {
                 Swal.fire({
-                    title: 'กรุณาเข้าสู่ระบบอีกครั้ง',
+                    title: 'กรุณาเข้าสู่ระบบ',
                     confirmButtonText: 'ตกลง'
                 }).then(() => {
                     window.location.href = "https://liff.line.me/2004489610-EbYDJY9K"
