@@ -31,10 +31,10 @@ function SendBP() {
         setFormValues({ ...formValues, [name]: value });
 
         if (!!formErrors[name]) {
-            setFormErrors({...formErrors, [name]: null})
+            setFormErrors({ ...formErrors, [name]: null })
         }
     }
-    
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -155,7 +155,7 @@ function SendBP() {
     }
 
     const validation = () => {
-        const {sys, dia, pul } = formValues
+        const { sys, dia, pul } = formValues
         const error = {};
         if (!sys || sys === " ") {
             error.sys = "กรุณากรอกข้อมูล!";
@@ -184,7 +184,7 @@ function SendBP() {
                         <div className="label">
                             <span className="label-text text-gray-500">ค่าความดันขณะหัวใจบีบตัว (SYS)</span>
                         </div>
-                        <input type="text" placeholder="120" name='sys' className="input input-bordered w-full max-w-xs" value={formValues.sys} onChange={handleChange}/>
+                        <input type="text" placeholder="120" name='sys' className="input input-bordered w-full max-w-xs" value={formValues.sys} onChange={handleChange} />
                         <div className='label'>
                             <span className='label-text text-red-700'>{formErrors.sys}</span>
                         </div>
@@ -217,13 +217,35 @@ function SendBP() {
 
                 <div className='w-[13.625rem] mx-auto mt-[3rem]'>
                     <button className='btn btn-block bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px]'>
-                        {isSubmit? <span className="loading loading-spinner loading-md"></span> : <span>ส่งผลตรวจ</span>}
+                        {isSubmit ? <span className="loading loading-spinner loading-md"></span> : <span>ส่งผลตรวจ</span>}
                     </button>
                 </div>
 
             </form>
 
-            <div className='w-[13.625rem] mx-auto mt-[4rem]'>
+            <div className="w-[13.625rem] mx-auto mt-[2rem] divider">หรือ</div>
+
+            <div className="w-[14rem] mx-auto mt-1">
+                <span
+                    className='btn btn-ghost font-normal underline text-red-700'
+                    onClick={() => document.getElementById('my_modal_1').showModal()}
+                >
+                    คำแนะนำการส่งผลวัดด้วยรูปถ่าย
+                </span>
+                <dialog id="my_modal_1" className="modal modal-bottom sm:modal-middle">
+                    <div className="modal-box">
+                        <h3 className="font-bold text-lg">รูปถ่ายต้องเห็นตัวเลข ค่าบน ค่าล่าง และ ชีพจร อย่างชัดเจน และ ไม่ควรมีภาพสะท้อนหรือแสงสะท้อน ในรูปถ่ายจอเครื่องวัดความดัน ดังตัวอย่างภาพที่แสดง</h3>
+                        <div className="modal-action">
+                            <form method="dialog">
+                                {/* if there is a button in form, it will close the modal */}
+                                <button className="btn">ปิด</button>
+                            </form>
+                        </div>
+                    </div>
+                </dialog>
+            </div>
+
+            <div className='w-[13.625rem] mx-auto mt-[1rem]'>
                 <label htmlFor='img_upload' className='btn btn-block bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px]'>ถ่ายรูปเครื่องวัด</label>
                 <input
                     type="file"
