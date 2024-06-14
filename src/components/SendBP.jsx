@@ -238,7 +238,7 @@ function SendBP() {
                         <div className="modal-action">
                             <form method="dialog">
                                 {/* if there is a button in form, it will close the modal */}
-                                <button className="btn bg-red-600 border-0">ปิด</button>
+                                <button className="btn bg-red-600 border-0 text-white">ปิด</button>
                             </form>
                         </div>
                     </div>
