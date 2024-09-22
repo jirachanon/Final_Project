@@ -62,8 +62,8 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const Error = validation
-    if (Object.keys(Error) > 0) {
+    const Error = validation()
+    if (Object.keys(Error).length > 0) {
       setFormErrors(Error)
       setIsSubmit(false)
     } else {
@@ -173,12 +173,12 @@ function Login() {
     const regex =
       /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
-    if (!email || email === " ") {
+    if (!email || email === "") {
       error.email = "กรุณากรอก ' อีเมล ' ของท่าน!";
     } else if (!regex.test(email)) {
       error.email = "ข้อมูลที่กรอกไม่ใช่ ' อีเมล '!";
     }
-    if (!password || password === " ") {
+    if (!password || password === "") {
       error.password = "กรุณากรอก ' รหัสผ่าน ' ของท่าน!";
     } else if (password.length < 9) {
       error.password = "รหัสผ่านสั้นเกินไป!";
