@@ -189,7 +189,7 @@ function Login() {
 
   return (
     <div className="w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto min-h-screen lg:h-screen">
-      <div className="w-[22.875rem] mx-auto">
+      <div className="w-10/12 md:w-[22.875rem] lg:w-[22.875rem] mx-auto pt-4">
         <div className="Logo">
           <img src={Logo} alt="Logo" />
         </div>
