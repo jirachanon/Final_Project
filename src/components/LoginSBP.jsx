@@ -97,8 +97,8 @@ function LoginSBP() {
               confirmButtonText: "ตกลง",
             }).then(() => {
               dispatch(setUser(result || {}));
-              Cookies.set('user_token', result?.token, { expires: 7 })
-              Cookies.set("userName", result?.name, { expires: 7 })
+              Cookies.set('user_token', result?.token, { expires: 365 })
+              Cookies.set("userName", result?.name, { expires: 365 })
               window.location.href = "https://liff.line.me/2004489610-MOpXKpry"
             });
           }
@@ -147,7 +147,7 @@ function LoginSBP() {
             confirmButtonText: "ตกลง",
           }).then(() => {
             dispatch(setUser(result || {}));
-            Cookies.set('user_token', result?.token, { expires: 1 / 48 })
+            Cookies.set('user_token', result?.token, { expires: 365 })
             Cookies.set("userName", result?.name)
             window.location.href = "https://liff.line.me/2004489610-MOpXKpry"
           });
@@ -218,7 +218,7 @@ function LoginSBP() {
           </label>
         </div>
 
-        <div className="w-[16.125rem] mx-auto mt-[2.995rem]">
+        <div className="w-[16.125rem] mx-auto mt-[2.5rem]">
           <label className="form-control w-full max-w-xs">
             <div className="label">
               <span className="label-text text-gray-500">รหัสผ่าน</span>
@@ -244,27 +244,13 @@ function LoginSBP() {
                 {formErrors.password}
               </span>
             </div>
-
-            <div className="label place-content-center">
-              <a
-                href="#"
-                className="label-text text-gray-500 font-normal underline"
-              >
-                ลืมรหัสผ่าน?
-              </a>
-            </div>
           </label>
         </div>
 
-        <div className="w-[13.563rem] mx-auto mt-[6.58rem]">
+        <div className="w-[13.563rem] mx-auto mt-[6rem]">
           <button className="btn btn-block bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px]">
             {isSubmit? <span className="loading loading-spinner loading-md"></span> : <span>เข้าสู่ระบบ</span>}
           </button>
-          <div className="label place-content-center">
-            <a href="/Register" className="label-text text-gray-500 underline">
-              สมัครสมาชิก
-            </a>
-          </div>
         </div>
       </form>
 
