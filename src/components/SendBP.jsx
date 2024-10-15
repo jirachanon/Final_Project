@@ -161,7 +161,9 @@ function SendBP() {
         }
 
         file = await imageCompression(file, compressOptions);
-     
+
+        const fileURL = await imageCompression.getDataUrlFromFile(file)
+
         const myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
         myHeaders.append("Content-Type", "multipart/form-data");
@@ -169,7 +171,7 @@ function SendBP() {
         myHeaders.append("type", "formData");
 
         const formdata = new FormData();
-        formdata.append("file", file, "bp.png");
+        formdata.append("file", fileURL.toString());
 
         const requestOptions = {
             method: "POST",
