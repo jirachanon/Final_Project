@@ -166,17 +166,17 @@ function SendBP() {
 
         const myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
-        myHeaders.append("Content-Type", "multipart/form-data");
+        myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Accept", "*/*");
-        myHeaders.append("type", "formData");
 
-        const formdata = new FormData();
-        formdata.append("file", fileURL.toString());
+        const raw = JSON.stringify({
+            requestId: fileURL.toString(),
+          });
 
         const requestOptions = {
             method: "POST",
             headers: myHeaders,
-            body: formdata,
+            body: raw,
             redirect: "follow"
         };
 
