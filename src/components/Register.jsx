@@ -73,10 +73,10 @@ function Register() {
             const raw = JSON.stringify({
                 "email": formValues.email,
                 "firstName": formValues.name,
-                "hn": formValues.HN,
+                "hospitalNumber": formValues.HN,
                 "lastName": formValues.surname,
                 "password": formValues.pws,
-                "phone": formValues.tel,
+                "phoneNumber": formValues.tel,
                 "requestId": "",
                 "lineToken": liff.getIDToken(),
             });
