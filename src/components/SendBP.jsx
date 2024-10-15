@@ -181,12 +181,15 @@ function SendBP() {
         };
 
         fetch("https://hpm-backend.onrender.com/v1/bp/upload", requestOptions)
-        .then((response) => response.text())
+        .then((response) => response.json())
         .then((result) => {
             if (result.status?.code === "200") {
                 Swal.fire({
                     icon: "success",
-                    title: "ผลวัดของคุณ",
+                    title: result.status?.details[0]?.value,
+                    confirmButtonText: 'ตกลง'
+                }).then(() => {
+                    liff.closeWindow();
                 })
             }
             if (result.status?.code === "400") {
