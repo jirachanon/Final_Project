@@ -160,16 +160,13 @@ function SendBP() {
             useWebWorker: true,
         }
 
-        console.log(file);
-
         file = await imageCompression(file, compressOptions);
-
-        console.log(file);
-        
+     
         const myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
-        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Content-Type", "multipart/form-data");
         myHeaders.append("Accept", "*/*");
+        myHeaders.append("type", "formData");
 
         const formdata = new FormData();
         formdata.append("file", file, "bp.png");
