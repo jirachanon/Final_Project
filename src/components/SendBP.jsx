@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import circleLogo from '../assets/IMG/circleLogo.png'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
 import liff from '@line/liff'
 import Cookies from 'js-cookie'
-import ReactCrop, { centerCrop, makeAspectCrop } from 'react-image-crop'
+import ReactCrop, { centerCrop, convertToPixelCrop, makeAspectCrop } from 'react-image-crop'
 import Modal from 'react-modal'
 import cross from '../assets/icons/cross.svg'
+import setCanvasPreview from './setCanvasPreview'
 
 Modal.setAppElement('#root');
 
@@ -17,6 +18,9 @@ function SendBP() {
         pul: "",
     }
     var id = Math.floor(Math.random() * 10)
+
+    const imgRef = useRef(null)
+    const canvasPreviewRef = useRef(null)
 
     const [formValues, setFormValues] = useState(initValues);
     const [formErrors, setFormErrors] = useState({});
@@ -107,6 +111,7 @@ function SendBP() {
                 })
             }
         });
+        Cookies.get('user_token')
     }, [Cookies.get('user_token'), formErrors, formValues,])
 
     const onSelectedFile = (e) => {
@@ -144,14 +149,26 @@ function SendBP() {
         setCrop(crop);
     }
 
-    const sbpPhoto = () => {
-        Swal.fire({
-            icon: 'success',
-            title: 'Yeah!!!!',
-            confirmButtonText: 'ตกลง'
-        }).then(() => {
-            liff.closeWindow()
-        })
+    const sbpPhoto = (file) => {
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Accept", "*/*");
+
+        const formdata = new FormData();
+        formdata.append("file", file, "bp.png");
+
+        const requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: formdata,
+            redirect: "follow"
+        };
+
+        fetch("https://hpm-backend.onrender.com/v1/bp/upload", requestOptions)
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.error(error));
     }
 
     const validation = () => {
@@ -168,6 +185,27 @@ function SendBP() {
         }
         return error;
     }
+
+    function base64ToFile(base64String, fileName) {
+        // Split the base64 string to get the mime type and the actual base64 data
+        const arr = base64String.split(',');
+        const mime = arr[0].match(/:(.*?);/)[1];
+        const bstr = atob(arr[1]); // Decode the base64 string
+        let n = bstr.length;
+        const u8arr = new Uint8Array(n);
+      
+        // Convert base64 to binary data
+        while (n--) {
+          u8arr[n] = bstr.charCodeAt(n);
+        }
+      
+        // Create a Blob object with the binary data
+        const file = new Blob([u8arr], { type: mime });
+      
+        // Optionally, convert Blob to a File object
+        return new File([file], fileName, { type: mime });
+    }
+
     return (
         <div className='w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-auto lg:h-screen min-h-screen pb-4'>
 
@@ -284,6 +322,7 @@ function SendBP() {
                             minWidth={150}
                         >
                             <img
+                                ref={imgRef}
                                 src={imgSrc}
                                 alt="404_NOT_FOUND"
                                 onLoad={onImageLoad}
@@ -292,7 +331,28 @@ function SendBP() {
                         </ReactCrop>
                     </div>
                     <div className='flex justify-center mt-2'>
-                        <button className='btn bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px] mr-1' onClick={sbpPhoto}>ตกลง</button>
+                        <button 
+                            className='btn bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px] mr-1' 
+                            onClick={() => {
+                                setCanvasPreview(
+                                    imgRef.current,
+                                    canvasPreviewRef.current,
+                                    convertToPixelCrop(
+                                        crop,
+                                        imgRef.current.width,
+                                        imgRef.current.height
+                                    )
+                                )
+                                sbpPhoto(
+                                    base64ToFile(
+                                        canvasPreviewRef.current.toDataURL(), 
+                                        'bp.png'
+                                    )
+                                )
+                            }}
+                        >
+                            ตกลง
+                        </button>
                         <label htmlFor='img_upload_retry' className='btn bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px] ml-1'>ถ่ายอีกครั้ง</label>
                         <input
                             type="file"
@@ -304,6 +364,17 @@ function SendBP() {
                         />
                     </div>
                 </div>
+                {crop && (
+                    <canvas 
+                        ref={canvasPreviewRef}
+                        style={{
+                            display: 'none',
+                            objectFit: 'contain',
+                            width: imgRef.current.width,
+                            height: imgRef.current.height,
+                        }}
+                    />
+                )}
             </Modal>
         </div>
     )
