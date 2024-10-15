@@ -8,6 +8,7 @@ import ReactCrop, { centerCrop, convertToPixelCrop, makeAspectCrop } from 'react
 import Modal from 'react-modal'
 import cross from '../assets/icons/cross.svg'
 import setCanvasPreview from './setCanvasPreview'
+import imageCompression from 'browser-image-compression';
 
 Modal.setAppElement('#root');
 
@@ -29,6 +30,8 @@ function SendBP() {
     const [showModal, setShowModal] = useState(false)
     const [crop, setCrop] = useState()
     const liffID = '2004489610-MOpXKpry'
+    const MIN_DIMENSION = 150;
+    const ASPECT_RATIO = 1;
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -93,26 +96,25 @@ function SendBP() {
         }
     }
 
-    useEffect(() => {
-        const liffInit = async () => {
-            await liff.init({ liffId: liffID })
-        }
-        liffInit().then(() => {
-            if (!liff.isLoggedIn()) {
-                liff.login();
-            }
+    // useEffect(() => {
+    //     const liffInit = async () => {
+    //         await liff.init({ liffId: liffID })
+    //     }
+    //     liffInit().then(() => {
+    //         if (!liff.isLoggedIn()) {
+    //             liff.login();
+    //         }
 
-            if (!Cookies.get("user_token")) {
-                Swal.fire({
-                    title: 'กรุณาเข้าสู่ระบบ',
-                    confirmButtonText: 'ตกลง'
-                }).then(() => {
-                    window.location.href = "https://liff.line.me/2004489610-EbYDJY9K"
-                })
-            }
-        });
-        Cookies.get('user_token')
-    }, [Cookies.get('user_token'), formErrors, formValues,])
+    //         if (!Cookies.get("user_token")) {
+    //             Swal.fire({
+    //                 title: 'กรุณาเข้าสู่ระบบ',
+    //                 confirmButtonText: 'ตกลง'
+    //             }).then(() => {
+    //                 window.location.href = "https://liff.line.me/2004489610-EbYDJY9K"
+    //             })
+    //         }
+    //     });
+    // }, [Cookies.get('user_token'), formErrors, formValues,])
 
     const onSelectedFile = (e) => {
         const file = e.target.files?.[0]
@@ -133,13 +135,15 @@ function SendBP() {
 
     const onImageLoad = (e) => {
         const { width, height } = e.currentTarget;
+        const cropWidthInPercent = (MIN_DIMENSION / width) * 100
+
         const crop = centerCrop(
             makeAspectCrop(
                 {
                     unit: "%",
-                    width: 50
+                    width: cropWidthInPercent
                 },
-                1,
+                ASPECT_RATIO,
                 width,
                 height
             ),
@@ -149,7 +153,19 @@ function SendBP() {
         setCrop(crop);
     }
 
-    const sbpPhoto = (file) => {
+    const sbpPhoto = async (file) => {
+        const compressOptions = {
+            maxSizeMB: 1,
+            maxWidthOrHeight: 512,
+            useWebWorker: true,
+        }
+
+        console.log(file);
+
+        file = await imageCompression(file, compressOptions);
+
+        console.log(file);
+        
         const myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
         myHeaders.append("Content-Type", "application/json");
@@ -318,8 +334,8 @@ function SendBP() {
                             onChange={
                                 (pixelCrop, percentCrop) => setCrop(percentCrop)
                             }
-                            aspect={1}
-                            minWidth={150}
+                            aspect={ASPECT_RATIO}
+                            minWidth={MIN_DIMENSION}
                         >
                             <img
                                 ref={imgRef}
@@ -370,8 +386,8 @@ function SendBP() {
                         style={{
                             display: 'none',
                             objectFit: 'contain',
-                            width: imgRef.current.width,
-                            height: imgRef.current.height,
+                            width: 150,
+                            height: 150,
                         }}
                     />
                 )}
