@@ -165,47 +165,7 @@ function SendBP() {
 
         const fileURL = await imageCompression.getDataUrlFromFile(file)
 
-        const myHeaders = new Headers();
-        myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Accept", "*/*");
-
-        const raw = JSON.stringify({
-            requestId: fileURL.toString(),
-          });
-
-        const requestOptions = {
-            method: "POST",
-            headers: myHeaders,
-            body: raw,
-            redirect: "follow"
-        };
-
-        fetch("https://hpm-backend.onrender.com/v1/bp/upload", requestOptions)
-        .then((response) => response.json())
-        .then((result) => {
-            if (result.status?.code === "200") {
-                setIsSubmit(false)
-                Swal.fire({
-                    icon: "success",
-                    title: result.status?.details[0]?.value,
-                    confirmButtonText: 'ตกลง'
-                }).then(() => {
-                    liff.closeWindow();
-                })
-            }
-            if (result.status?.code === "400") {
-                setIsSubmit(false)
-                Swal.fire({
-                    title: 'เกิดข้อผิดพลาด',
-                    text: result.status?.details[0]?.value,
-                    confirmButtonText: 'ตกลง'
-                }).then(() => {
-                    liff.closeWindow();
-                })
-            }
-        })
-        .catch((error) => console.error(error));
+        return fileURL.toString()
     }
 
     const validation = () => {
@@ -384,12 +344,54 @@ function SendBP() {
                                         imgRef.current.height
                                     )
                                 )
-                                await sbpPhoto(
+                                const imageURL = await sbpPhoto(
                                     base64ToFile(
                                         canvasPreviewRef.current.toDataURL(), 
                                         'bp.png'
                                     )
                                 )
+
+                                const myHeaders = new Headers();
+                                myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
+                                myHeaders.append("Content-Type", "application/json");
+                                myHeaders.append("Accept", "*/*");
+                        
+                                const raw = JSON.stringify({
+                                    requestId: imageURL,
+                                  });
+                        
+                                const requestOptions = {
+                                    method: "POST",
+                                    headers: myHeaders,
+                                    body: raw,
+                                    redirect: "follow"
+                                };
+                        
+                                fetch("https://hpm-backend.onrender.com/v1/bp/upload", requestOptions)
+                                .then((response) => response.json())
+                                .then((result) => {
+                                    if (result.status?.code === "200") {
+                                        setIsSubmit(false)
+                                        Swal.fire({
+                                            icon: "success",
+                                            title: result.status?.details[0]?.value,
+                                            confirmButtonText: 'ตกลง'
+                                        }).then(() => {
+                                            liff.closeWindow();
+                                        })
+                                    }
+                                    if (result.status?.code === "400") {
+                                        setIsSubmit(false)
+                                        Swal.fire({
+                                            title: 'เกิดข้อผิดพลาด',
+                                            text: result.status?.details[0]?.value,
+                                            confirmButtonText: 'ตกลง'
+                                        }).then(() => {
+                                            liff.closeWindow();
+                                        })
+                                    }
+                                })
+                                .catch((error) => console.error(error));
                             }}
                         >
                             {isSubmit ? <span className="loading loading-spinner loading-md"></span> : <span>ตกลง</span>}
