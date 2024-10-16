@@ -154,17 +154,16 @@ function SendBP() {
         setCrop(crop);
     }
 
-    const sbpPhoto = (file) => {
-        setIsSubmit(true)
+    const sbpPhoto = async (file) => {
         const compressOptions = {
             maxSizeMB: 1,
             maxWidthOrHeight: 512,
             useWebWorker: true,
         }
 
-        file = imageCompression(file, compressOptions);
+        file = await imageCompression(file, compressOptions);
 
-        const fileURL = imageCompression.getDataUrlFromFile(file)
+        const fileURL = await imageCompression.getDataUrlFromFile(file)
 
         const myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
@@ -375,6 +374,7 @@ function SendBP() {
                         <button 
                             className='btn bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px] mr-1' 
                             onClick={() => {
+                                setIsSubmit(true)
                                 setCanvasPreview(
                                     imgRef.current,
                                     canvasPreviewRef.current,
