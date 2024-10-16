@@ -259,7 +259,14 @@ function Login() {
         </div>
       </form>
 
-      <div className="w-[13.563rem] mx-auto mt-[2.5rem]">
+      <div className="w-[13.563rem] mx-auto text-center mt-4">
+        <div class="inline-flex items-center justify-center w-full">
+          <hr class="w-64 h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
+          <span class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 left-1/2 bg-[#F2F1EC]">หรือ</span>
+        </div>
+      </div>
+
+      <div className="w-[13.563rem] mx-auto mt-4">
         <div className="flex justify-start items-center relative">
           <button
             className="btn btn-block bg-[#06C755] text-white pl-[3rem] font-normal text-[18px]"
