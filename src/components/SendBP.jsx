@@ -155,8 +155,6 @@ function SendBP() {
     }
 
     const sbpPhoto = async (file) => {
-        let resultToResponse = null
-
         const compressOptions = {
             maxSizeMB: 1,
             maxWidthOrHeight: 512,
@@ -186,11 +184,28 @@ function SendBP() {
         fetch("https://hpm-backend.onrender.com/v1/bp/upload", requestOptions)
         .then((response) => response.json())
         .then((result) => {
-            resultToResponse = result
+            if (result.status?.code === "200") {
+                setIsSubmit(false)
+                Swal.fire({
+                    icon: "success",
+                    title: result.status?.details[0]?.value,
+                    confirmButtonText: 'ตกลง'
+                }).then(() => {
+                    liff.closeWindow();
+                })
+            }
+            if (result.status?.code === "400") {
+                setIsSubmit(false)
+                Swal.fire({
+                    title: 'เกิดข้อผิดพลาด',
+                    text: result.status?.details[0]?.value,
+                    confirmButtonText: 'ตกลง'
+                }).then(() => {
+                    liff.closeWindow();
+                })
+            }
         })
         .catch((error) => console.error(error));
-
-        return resultToResponse;
     }
 
     const validation = () => {
@@ -369,32 +384,12 @@ function SendBP() {
                                         imgRef.current.height
                                     )
                                 )
-                                let result = await sbpPhoto(
+                                await sbpPhoto(
                                     base64ToFile(
                                         canvasPreviewRef.current.toDataURL(), 
                                         'bp.png'
                                     )
                                 )
-                                if (result.status?.code === "200") {
-                                    setIsSubmit(false)
-                                    Swal.fire({
-                                        icon: "success",
-                                        title: result.status?.details[0]?.value,
-                                        confirmButtonText: 'ตกลง'
-                                    }).then(() => {
-                                        liff.closeWindow();
-                                    })
-                                }
-                                if (result.status?.code === "400") {
-                                    setIsSubmit(false)
-                                    Swal.fire({
-                                        title: 'เกิดข้อผิดพลาด',
-                                        text: result.status?.details[0]?.value,
-                                        confirmButtonText: 'ตกลง'
-                                    }).then(() => {
-                                        liff.closeWindow();
-                                    })
-                                }
                             }}
                         >
                             {isSubmit ? <span className="loading loading-spinner loading-md"></span> : <span>ตกลง</span>}
