@@ -370,6 +370,7 @@ function SendBP() {
                                 fetch("https://hpm-backend.onrender.com/v1/bp/upload", requestOptions)
                                 .then((response) => response.json())
                                 .then((result) => {
+                                    closeModal();
                                     if (result.status?.code === "200") {
                                         setIsSubmit(false)
                                         Swal.fire({
@@ -383,6 +384,7 @@ function SendBP() {
                                     if (result.status?.code === "400") {
                                         setIsSubmit(false)
                                         Swal.fire({
+                                            icon: "error",
                                             title: 'เกิดข้อผิดพลาด',
                                             text: result.status?.details[0]?.value,
                                             confirmButtonText: 'ตกลง'
