@@ -31,7 +31,7 @@ function SendBP() {
     const [showModal, setShowModal] = useState(false)
     const [crop, setCrop] = useState()
     const liffID = '2004489610-MOpXKpry'
-    const MIN_DIMENSION = 150;
+    const MIN_DIMENSION = 224;
     const ASPECT_RATIO = 1;
 
     const handleChange = (event) => {
@@ -154,7 +154,7 @@ function SendBP() {
         setCrop(crop);
     }
 
-    const sbpPhoto = async (file) => {
+    const sbpPhoto = (file) => {
         setIsSubmit(true)
         const compressOptions = {
             maxSizeMB: 1,
@@ -162,9 +162,9 @@ function SendBP() {
             useWebWorker: true,
         }
 
-        file = await imageCompression(file, compressOptions);
+        file = imageCompression(file, compressOptions);
 
-        const fileURL = await imageCompression.getDataUrlFromFile(file)
+        const fileURL = imageCompression.getDataUrlFromFile(file)
 
         const myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
