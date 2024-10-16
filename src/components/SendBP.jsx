@@ -9,6 +9,7 @@ import Modal from 'react-modal'
 import cross from '../assets/icons/cross.svg'
 import setCanvasPreview from './setCanvasPreview'
 import imageCompression from 'browser-image-compression';
+import ex1 from '../assets/IMG/ex1.jpg'
 
 Modal.setAppElement('#root');
 
@@ -97,23 +98,23 @@ function SendBP() {
     }
 
     useEffect(() => {
-        const liffInit = async () => {
-            await liff.init({ liffId: liffID })
-        }
-        liffInit().then(() => {
-            if (!liff.isLoggedIn()) {
-                liff.login();
-            }
+        // const liffInit = async () => {
+        //     await liff.init({ liffId: liffID })
+        // }
+        // liffInit().then(() => {
+        //     if (!liff.isLoggedIn()) {
+        //         liff.login();
+        //     }
 
-            if (!Cookies.get("user_token")) {
-                Swal.fire({
-                    title: 'กรุณาเข้าสู่ระบบ',
-                    confirmButtonText: 'ตกลง'
-                }).then(() => {
-                    window.location.href = "https://liff.line.me/2004489610-EbYDJY9K"
-                })
-            }
-        });
+        //     if (!Cookies.get("user_token")) {
+        //         Swal.fire({
+        //             title: 'กรุณาเข้าสู่ระบบ',
+        //             confirmButtonText: 'ตกลง'
+        //         }).then(() => {
+        //             window.location.href = "https://liff.line.me/2004489610-EbYDJY9K"
+        //         })
+        //     }
+        // });
     }, [Cookies.get('user_token'), formErrors, formValues,])
 
     const onSelectedFile = (e) => {
@@ -154,6 +155,7 @@ function SendBP() {
     }
 
     const sbpPhoto = async (file) => {
+        setIsSubmit(true)
         const compressOptions = {
             maxSizeMB: 1,
             maxWidthOrHeight: 512,
@@ -184,6 +186,7 @@ function SendBP() {
         .then((response) => response.json())
         .then((result) => {
             if (result.status?.code === "200") {
+                setIsSubmit(false)
                 Swal.fire({
                     icon: "success",
                     title: result.status?.details[0]?.value,
@@ -193,13 +196,14 @@ function SendBP() {
                 })
             }
             if (result.status?.code === "400") {
-                    Swal.fire({
-                        title: 'เกิดข้อผิดพลาด',
-                        text: result.status?.details[0]?.value,
-                        confirmButtonText: 'ตกลง'
-                    }).then(() => {
-                        liff.closeWindow();
-                    })
+                setIsSubmit(false)
+                Swal.fire({
+                    title: 'เกิดข้อผิดพลาด',
+                    text: result.status?.details[0]?.value,
+                    confirmButtonText: 'ตกลง'
+                }).then(() => {
+                    liff.closeWindow();
+                })
             }
         })
         .catch((error) => console.error(error));
@@ -241,7 +245,7 @@ function SendBP() {
     }
 
     return (
-        <div className='w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-auto lg:h-screen min-h-screen pb-4'>
+        <div className='w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-auto lg:h-auto min-h-screen pb-4'>
 
             <div className='w-[7.6rem] mx-auto'>
                 <div className='Logo'>
@@ -307,6 +311,9 @@ function SendBP() {
                 <dialog id="my_modal_1" className="modal">
                     <div className="modal-box">
                         <h3 className="font-bold text-lg">รูปถ่ายต้องเห็นตัวเลข ค่าบน ค่าล่าง และ ชีพจร อย่างชัดเจน และ ไม่ควรมีภาพสะท้อนหรือแสงสะท้อน ในรูปถ่ายจอเครื่องวัดความดัน ดังตัวอย่างภาพที่แสดง</h3>
+                        <div>
+                            <img src={ex1} alt="" />
+                        </div>
                         <div className="modal-action">
                             <form method="dialog">
                                 {/* if there is a button in form, it will close the modal */}
@@ -385,7 +392,7 @@ function SendBP() {
                                 )
                             }}
                         >
-                            ตกลง
+                            {isSubmit ? <span className="loading loading-spinner loading-md"></span> : <span>ตกลง</span>}
                         </button>
                         <label htmlFor='img_upload_retry' className='btn bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px] ml-1'>ถ่ายอีกครั้ง</label>
                         <input

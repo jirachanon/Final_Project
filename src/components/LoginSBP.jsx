@@ -254,12 +254,7 @@ function LoginSBP() {
         </div>
       </form>
 
-      <div className="w-[13.563rem] mx-auto text-center mt-4">
-        <div class="inline-flex items-center justify-center w-full">
-          <hr class="w-64 h-px my-8 bg-gray-700 border-0"/>
-          <span class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 left-1/2 bg-[#F2F1EC]">หรือ</span>
-        </div>
-      </div>
+      <div className="w-[13.563rem] mx-auto mt-4 divider">หรือ</div>
 
       <div className="w-[13.563rem] mx-auto mt-4">
         <div className="flex justify-start items-center relative">
