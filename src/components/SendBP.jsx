@@ -155,17 +155,6 @@ function SendBP() {
     }
 
     const sbpPhoto = async (file) => {
-        setIsSubmit(true)
-        setCanvasPreview(
-            imgRef.current,
-            canvasPreviewRef.current,
-            convertToPixelCrop(
-                crop,
-                imgRef.current.width,
-                imgRef.current.height
-            )
-        )
-
         const compressOptions = {
             maxSizeMB: 1,
             maxWidthOrHeight: 512,
@@ -384,14 +373,24 @@ function SendBP() {
                     <div className='flex justify-center mt-2'>
                         <button 
                             className='btn bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px] mr-1' 
-                            onClick={
-                                sbpPhoto(
+                            onClick={async () => {
+                                setIsSubmit(true)
+                                setCanvasPreview(
+                                    imgRef.current,
+                                    canvasPreviewRef.current,
+                                    convertToPixelCrop(
+                                        crop,
+                                        imgRef.current.width,
+                                        imgRef.current.height
+                                    )
+                                )
+                                await sbpPhoto(
                                     base64ToFile(
                                         canvasPreviewRef.current.toDataURL(), 
                                         'bp.png'
                                     )
                                 )
-                            }
+                            }}
                         >
                             {isSubmit ? <span className="loading loading-spinner loading-md"></span> : <span>ตกลง</span>}
                         </button>
