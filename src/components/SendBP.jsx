@@ -370,7 +370,7 @@ function SendBP() {
                                 fetch("https://hpm-backend.onrender.com/v1/bp/upload", requestOptions)
                                 .then((response) => response.json())
                                 .then((result) => {
-                                    closeModal();
+                                    liff.closeWindow();
                                     if (result.status?.code === "200") {
                                         setIsSubmit(false)
                                         Swal.fire({
