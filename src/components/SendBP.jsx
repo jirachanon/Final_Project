@@ -155,6 +155,8 @@ function SendBP() {
     }
 
     const sbpPhoto = async (file) => {
+        const resultToResponse = null
+
         const compressOptions = {
             maxSizeMB: 1,
             maxWidthOrHeight: 512,
@@ -184,28 +186,11 @@ function SendBP() {
         fetch("https://hpm-backend.onrender.com/v1/bp/upload", requestOptions)
         .then((response) => response.json())
         .then((result) => {
-            if (result.status?.code === "200") {
-                setIsSubmit(false)
-                Swal.fire({
-                    icon: "success",
-                    title: result.status?.details[0]?.value,
-                    confirmButtonText: 'ตกลง'
-                }).then(() => {
-                    liff.closeWindow();
-                })
-            }
-            if (result.status?.code === "400") {
-                setIsSubmit(false)
-                Swal.fire({
-                    title: 'เกิดข้อผิดพลาด',
-                    text: result.status?.details[0]?.value,
-                    confirmButtonText: 'ตกลง'
-                }).then(() => {
-                    liff.closeWindow();
-                })
-            }
+            resultToResponse = result
         })
         .catch((error) => console.error(error));
+
+        return resultToResponse;
     }
 
     const validation = () => {
@@ -373,7 +358,7 @@ function SendBP() {
                     <div className='flex justify-center mt-2'>
                         <button 
                             className='btn bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px] mr-1' 
-                            onClick={() => {
+                            onClick={async () => {
                                 setIsSubmit(true)
                                 setCanvasPreview(
                                     imgRef.current,
@@ -384,12 +369,32 @@ function SendBP() {
                                         imgRef.current.height
                                     )
                                 )
-                                sbpPhoto(
+                                const result = await sbpPhoto(
                                     base64ToFile(
                                         canvasPreviewRef.current.toDataURL(), 
                                         'bp.png'
                                     )
                                 )
+                                if (result.status?.code === "200") {
+                                    setIsSubmit(false)
+                                    Swal.fire({
+                                        icon: "success",
+                                        title: result.status?.details[0]?.value,
+                                        confirmButtonText: 'ตกลง'
+                                    }).then(() => {
+                                        liff.closeWindow();
+                                    })
+                                }
+                                if (result.status?.code === "400") {
+                                    setIsSubmit(false)
+                                    Swal.fire({
+                                        title: 'เกิดข้อผิดพลาด',
+                                        text: result.status?.details[0]?.value,
+                                        confirmButtonText: 'ตกลง'
+                                    }).then(() => {
+                                        liff.closeWindow();
+                                    })
+                                }
                             }}
                         >
                             {isSubmit ? <span className="loading loading-spinner loading-md"></span> : <span>ตกลง</span>}
