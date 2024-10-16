@@ -155,7 +155,7 @@ function SendBP() {
     }
 
     const sbpPhoto = async (file) => {
-        const resultToResponse = null
+        let resultToResponse = null
 
         const compressOptions = {
             maxSizeMB: 1,
@@ -369,7 +369,7 @@ function SendBP() {
                                         imgRef.current.height
                                     )
                                 )
-                                const result = await sbpPhoto(
+                                let result = await sbpPhoto(
                                     base64ToFile(
                                         canvasPreviewRef.current.toDataURL(), 
                                         'bp.png'
