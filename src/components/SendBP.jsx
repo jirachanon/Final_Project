@@ -31,7 +31,7 @@ function SendBP() {
     const [showModal, setShowModal] = useState(false)
     const [crop, setCrop] = useState()
     const liffID = '2004489610-MOpXKpry'
-    const MIN_DIMENSION = 224;
+    const MIN_DIMENSION = 150;
     const ASPECT_RATIO = 1;
 
     const handleChange = (event) => {
@@ -155,6 +155,17 @@ function SendBP() {
     }
 
     const sbpPhoto = async (file) => {
+        setIsSubmit(true)
+        setCanvasPreview(
+            imgRef.current,
+            canvasPreviewRef.current,
+            convertToPixelCrop(
+                crop,
+                imgRef.current.width,
+                imgRef.current.height
+            )
+        )
+
         const compressOptions = {
             maxSizeMB: 1,
             maxWidthOrHeight: 512,
@@ -373,24 +384,14 @@ function SendBP() {
                     <div className='flex justify-center mt-2'>
                         <button 
                             className='btn bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px] mr-1' 
-                            onClick={async () => {
-                                setIsSubmit(true)
-                                setCanvasPreview(
-                                    imgRef.current,
-                                    canvasPreviewRef.current,
-                                    convertToPixelCrop(
-                                        crop,
-                                        imgRef.current.width,
-                                        imgRef.current.height
-                                    )
-                                )
-                                await sbpPhoto(
+                            onClick={
+                                sbpPhoto(
                                     base64ToFile(
                                         canvasPreviewRef.current.toDataURL(), 
                                         'bp.png'
                                     )
                                 )
-                            }}
+                            }
                         >
                             {isSubmit ? <span className="loading loading-spinner loading-md"></span> : <span>ตกลง</span>}
                         </button>
