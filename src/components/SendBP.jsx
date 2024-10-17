@@ -168,21 +168,21 @@ function SendBP() {
             )
         )
 
-        const file = base64ToFile(
-            canvasPreviewRef.current.toDataURL(),
-            'bp.png'
-        )
+        // const file = base64ToFile(
+        //     canvasPreviewRef.current.toDataURL(),
+        //     'bp.png'
+        // )
 
-        const compressOptions = {
-            maxSizeMB: 1,
-            maxWidthOrHeight: 512,
-            useWebWorker: true,
-        }
+        // const compressOptions = {
+        //     maxSizeMB: 1,
+        //     maxWidthOrHeight: 512,
+        //     useWebWorker: true,
+        // }
 
-        const compressedFile = imageCompression(file, compressOptions);
+        // const compressedFile = imageCompression(file, compressOptions);
 
         Swal.fire({
-            text: compressedFile.toString()
+            text: canvasPreviewRef.current.toDataURL(),
         })
 
         // const myHeaders = new Headers();
