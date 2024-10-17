@@ -155,18 +155,17 @@ function SendBP() {
     }
 
     const sbpPhoto = () => {
-        console.log('hi')
-        // setIsSubmit(true)
+        setIsSubmit(true)
 
-        // setCanvasPreview(
-        //     imgRef.current,
-        //     canvasPreviewRef.current,
-        //     convertToPixelCrop(
-        //         crop,
-        //         imgRef.current.width,
-        //         imgRef.current.height
-        //     )
-        // )
+        setCanvasPreview(
+            imgRef.current,
+            canvasPreviewRef.current,
+            convertToPixelCrop(
+                crop,
+                imgRef.current.width,
+                imgRef.current.height
+            )
+        )
 
         // const file = base64ToFile(
         //     canvasPreviewRef.current.toDataURL(),
@@ -179,7 +178,7 @@ function SendBP() {
         //     useWebWorker: true,
         // }
 
-        // file = await imageCompression(file, compressOptions);
+        // file = imageCompression(file, compressOptions);
 
         Swal.fire({
             text: 'hi'
