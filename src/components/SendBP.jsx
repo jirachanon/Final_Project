@@ -98,23 +98,23 @@ function SendBP() {
     }
 
     useEffect(() => {
-        // const liffInit = async () => {
-        //     await liff.init({ liffId: liffID })
-        // }
-        // liffInit().then(() => {
-        //     if (!liff.isLoggedIn()) {
-        //         liff.login();
-        //     }
+        const liffInit = async () => {
+            await liff.init({ liffId: liffID })
+        }
+        liffInit().then(() => {
+            if (!liff.isLoggedIn()) {
+                liff.login();
+            }
 
-        //     if (!Cookies.get("user_token")) {
-        //         Swal.fire({
-        //             title: 'กรุณาเข้าสู่ระบบ',
-        //             confirmButtonText: 'ตกลง'
-        //         }).then(() => {
-        //             window.location.href = "https://liff.line.me/2004489610-EbYDJY9K"
-        //         })
-        //     }
-        // });
+            if (!Cookies.get("user_token")) {
+                Swal.fire({
+                    title: 'กรุณาเข้าสู่ระบบ',
+                    confirmButtonText: 'ตกลง'
+                }).then(() => {
+                    window.location.href = "https://liff.line.me/2004489610-EbYDJY9K"
+                })
+            }
+        });
     }, [Cookies.get('user_token'), formErrors, formValues,])
 
     const onSelectedFile = (e) => {
@@ -183,53 +183,53 @@ function SendBP() {
 
         const imgURL = canvasPreviewRef.current.toDataURL()
 
-        Swal.fire({
-            text: imgURL,
-        })
+        // Swal.fire({
+        //     text: imgURL,
+        // })
 
-        // const myHeaders = new Headers();
-        // myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
-        // myHeaders.append("Content-Type", "application/json");
-        // myHeaders.append("Accept", "*/*");
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Accept", "*/*");
 
-        // const raw = JSON.stringify({
-        //     requestId: file.toString(),
-        // });
+        const raw = JSON.stringify({
+            requestId: imgURL,
+        });
 
-        // const requestOptions = {
-        //     method: "POST",
-        //     headers: myHeaders,
-        //     body: raw,
-        //     redirect: "follow"
-        // };
+        const requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow"
+        };
 
-        // fetch("https://hpm-backend.onrender.com/v1/bp/upload", requestOptions)
-        //     .then((response) => response.json())
-        //     .then((result) => {
-        //         liff.closeWindow();
-        //         if (result.status?.code === "200") {
-        //             setIsSubmit(false)
-        //             Swal.fire({
-        //                 icon: "success",
-        //                 title: result.status?.details[0]?.value,
-        //                 confirmButtonText: 'ตกลง'
-        //             }).then(() => {
-        //                 liff.closeWindow();
-        //             })
-        //         }
-        //         if (result.status?.code === "400") {
-        //             setIsSubmit(false)
-        //             Swal.fire({
-        //                 icon: "error",
-        //                 title: 'เกิดข้อผิดพลาด',
-        //                 text: result.status?.details[0]?.value,
-        //                 confirmButtonText: 'ตกลง'
-        //             }).then(() => {
-        //                 liff.closeWindow();
-        //             })
-        //         }
-        //     })
-        //     .catch((error) => console.error(error));
+        fetch("https://hpm-backend.onrender.com/v1/bp/upload", requestOptions)
+            .then((response) => response.json())
+            .then((result) => {
+                liff.closeWindow();
+                if (result.status?.code === "200") {
+                    setIsSubmit(false)
+                    Swal.fire({
+                        icon: "success",
+                        title: result.status?.details[0]?.value,
+                        confirmButtonText: 'ตกลง'
+                    }).then(() => {
+                        liff.closeWindow();
+                    })
+                }
+                if (result.status?.code === "400") {
+                    setIsSubmit(false)
+                    Swal.fire({
+                        icon: "error",
+                        title: 'เกิดข้อผิดพลาด',
+                        text: result.status?.details[0]?.value,
+                        confirmButtonText: 'ตกลง'
+                    }).then(() => {
+                        liff.closeWindow();
+                    })
+                }
+            })
+            .catch((error) => console.error(error));
     }
 
     const validation = () => {
