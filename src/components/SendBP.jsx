@@ -182,7 +182,7 @@ function SendBP() {
         // const compressedFile = imageCompression(file, compressOptions);
 
         Swal.fire({
-            text: canvasPreviewRef.current.toDataURL(),
+            text: imgRef.current.toDataURL(),
         })
 
         // const myHeaders = new Headers();
