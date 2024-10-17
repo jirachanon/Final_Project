@@ -55,9 +55,9 @@ function SendBP() {
             myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
             myHeaders.append("Content-Type", "application/json");
             var raw = JSON.stringify({
-                "dia": parseInt(formValues.dia),
-                "pul": parseInt(formValues.pul),
-                "sys": parseInt(formValues.pul),
+                "diastolicPressure": parseInt(formValues.dia),
+                "pulseRate": parseInt(formValues.pul),
+                "systolicPressure": parseInt(formValues.pul),
                 "requestId": id
             });
 
