@@ -154,7 +154,24 @@ function SendBP() {
         setCrop(crop);
     }
 
-    const sbpPhoto = async (file) => {
+    const sbpPhoto = async () => {
+        setIsSubmit(true)
+
+        setCanvasPreview(
+            imgRef.current,
+            canvasPreviewRef.current,
+            convertToPixelCrop(
+                crop,
+                imgRef.current.width,
+                imgRef.current.height
+            )
+        )
+
+        const file = base64ToFile(
+            canvasPreviewRef.current.toDataURL(),
+            'bp.png'
+        )
+
         const compressOptions = {
             maxSizeMB: 1,
             maxWidthOrHeight: 512,
@@ -163,9 +180,49 @@ function SendBP() {
 
         file = await imageCompression(file, compressOptions);
 
-        const fileURL = await imageCompression.getDataUrlFromFile(file)
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Accept", "*/*");
 
-        return fileURL.toString()
+        const raw = JSON.stringify({
+            requestId: imageURL,
+        });
+
+        const requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow"
+        };
+
+        fetch("https://hpm-backend.onrender.com/v1/bp/upload", requestOptions)
+            .then((response) => response.json())
+            .then((result) => {
+                liff.closeWindow();
+                if (result.status?.code === "200") {
+                    setIsSubmit(false)
+                    Swal.fire({
+                        icon: "success",
+                        title: result.status?.details[0]?.value,
+                        confirmButtonText: 'ตกลง'
+                    }).then(() => {
+                        liff.closeWindow();
+                    })
+                }
+                if (result.status?.code === "400") {
+                    setIsSubmit(false)
+                    Swal.fire({
+                        icon: "error",
+                        title: 'เกิดข้อผิดพลาด',
+                        text: result.status?.details[0]?.value,
+                        confirmButtonText: 'ตกลง'
+                    }).then(() => {
+                        liff.closeWindow();
+                    })
+                }
+            })
+            .catch((error) => console.error(error));
     }
 
     const validation = () => {
@@ -190,15 +247,15 @@ function SendBP() {
         const bstr = atob(arr[1]); // Decode the base64 string
         let n = bstr.length;
         const u8arr = new Uint8Array(n);
-      
+
         // Convert base64 to binary data
         while (n--) {
-          u8arr[n] = bstr.charCodeAt(n);
+            u8arr[n] = bstr.charCodeAt(n);
         }
-      
+
         // Create a Blob object with the binary data
         const file = new Blob([u8arr], { type: mime });
-      
+
         // Optionally, convert Blob to a File object
         return new File([file], fileName, { type: mime });
     }
@@ -331,78 +388,73 @@ function SendBP() {
                         </ReactCrop>
                     </div>
                     <div className='flex justify-center mt-2'>
-                        <button 
-                            className='btn bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px] mr-1' 
-                            onClick={async () => {
-                                setIsSubmit(true)
-                                setCanvasPreview(
-                                    imgRef.current,
-                                    canvasPreviewRef.current,
-                                    convertToPixelCrop(
-                                        crop,
-                                        imgRef.current.width,
-                                        imgRef.current.height
-                                    )
-                                )
-                                const imageURL = await sbpPhoto(
-                                    base64ToFile(
-                                        canvasPreviewRef.current.toDataURL(), 
-                                        'bp.png'
-                                    )
-                                )
+                        <button
+                            className='btn bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px] mr-1'
+                            onClick={
+                                sbpPhoto
+                            //     async () => {
+                            //     setIsSubmit(true)
+                            //     setCanvasPreview(
+                            //         imgRef.current,
+                            //         canvasPreviewRef.current,
+                            //         convertToPixelCrop(
+                            //             crop,
+                            //             imgRef.current.width,
+                            //             imgRef.current.height
+                            //         )
+                            //     )
+                            //     const imageURL = await sbpPhoto(
+                            //         base64ToFile(
+                            //             canvasPreviewRef.current.toDataURL(),
+                            //             'bp.png'
+                            //         )
+                            //     )
 
-                                const myHeaders = new Headers();
-                                myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
-                                myHeaders.append("Content-Type", "application/json");
-                                myHeaders.append("Accept", "*/*");
-                        
-                                const raw = JSON.stringify({
-                                    requestId: imageURL,
-                                  });
-                        
-                                const requestOptions = {
-                                    method: "POST",
-                                    headers: myHeaders,
-                                    body: raw,
-                                    redirect: "follow"
-                                };
+                            //     const myHeaders = new Headers();
+                            //     myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
+                            //     myHeaders.append("Content-Type", "application/json");
+                            //     myHeaders.append("Accept", "*/*");
 
-                                Swal.fire({
-                                    icon: "success",
-                                    title: 'เย้',
-                                    confirmButtonText: 'ตกลง'
-                                }).then(() => {
-                                    liff.closeWindow();
-                                })
-                        
-                                // fetch("https://hpm-backend.onrender.com/v1/bp/upload", requestOptions)
-                                // .then((response) => response.json())
-                                // .then((result) => {
-                                //     liff.closeWindow();
-                                //     if (result.status?.code === "200") {
-                                //         setIsSubmit(false)
-                                //         Swal.fire({
-                                //             icon: "success",
-                                //             title: result.status?.details[0]?.value,
-                                //             confirmButtonText: 'ตกลง'
-                                //         }).then(() => {
-                                //             liff.closeWindow();
-                                //         })
-                                //     }
-                                //     if (result.status?.code === "400") {
-                                //         setIsSubmit(false)
-                                //         Swal.fire({
-                                //             icon: "error",
-                                //             title: 'เกิดข้อผิดพลาด',
-                                //             text: result.status?.details[0]?.value,
-                                //             confirmButtonText: 'ตกลง'
-                                //         }).then(() => {
-                                //             liff.closeWindow();
-                                //         })
-                                //     }
-                                // })
-                                // .catch((error) => console.error(error));
-                            }}
+                            //     const raw = JSON.stringify({
+                            //         requestId: imageURL,
+                            //     });
+
+                            //     const requestOptions = {
+                            //         method: "POST",
+                            //         headers: myHeaders,
+                            //         body: raw,
+                            //         redirect: "follow"
+                            //     };
+
+                            //     fetch("https://hpm-backend.onrender.com/v1/bp/upload", requestOptions)
+                            //         .then((response) => response.json())
+                            //         .then((result) => {
+                            //             liff.closeWindow();
+                            //             if (result.status?.code === "200") {
+                            //                 setIsSubmit(false)
+                            //                 Swal.fire({
+                            //                     icon: "success",
+                            //                     title: result.status?.details[0]?.value,
+                            //                     confirmButtonText: 'ตกลง'
+                            //                 }).then(() => {
+                            //                     liff.closeWindow();
+                            //                 })
+                            //             }
+                            //             if (result.status?.code === "400") {
+                            //                 setIsSubmit(false)
+                            //                 Swal.fire({
+                            //                     icon: "error",
+                            //                     title: 'เกิดข้อผิดพลาด',
+                            //                     text: result.status?.details[0]?.value,
+                            //                     confirmButtonText: 'ตกลง'
+                            //                 }).then(() => {
+                            //                     liff.closeWindow();
+                            //                 })
+                            //             }
+                            //         })
+                            //         .catch((error) => console.error(error));
+                            // }
+                        }
                         >
                             {isSubmit ? <span className="loading loading-spinner loading-md"></span> : <span>ตกลง</span>}
                         </button>
@@ -418,7 +470,7 @@ function SendBP() {
                     </div>
                 </div>
                 {crop && (
-                    <canvas 
+                    <canvas
                         ref={canvasPreviewRef}
                         style={{
                             display: 'none',
