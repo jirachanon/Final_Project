@@ -167,10 +167,10 @@ function SendBP() {
             )
         )
 
-        const file = base64ToFile(
-            canvasPreviewRef.current.toDataURL(),
-            'bp.png'
-        )
+        // const file = base64ToFile(
+        //     canvasPreviewRef.current.toDataURL(),
+        //     'bp.png'
+        // )
 
         // const compressOptions = {
         //     maxSizeMB: 1,
