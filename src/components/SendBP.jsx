@@ -155,33 +155,33 @@ function SendBP() {
     }
 
     const sbpPhoto = async () => {
-        setIsSubmit(true)
+        // setIsSubmit(true)
 
-        setCanvasPreview(
-            imgRef.current,
-            canvasPreviewRef.current,
-            convertToPixelCrop(
-                crop,
-                imgRef.current.width,
-                imgRef.current.height
-            )
-        )
+        // setCanvasPreview(
+        //     imgRef.current,
+        //     canvasPreviewRef.current,
+        //     convertToPixelCrop(
+        //         crop,
+        //         imgRef.current.width,
+        //         imgRef.current.height
+        //     )
+        // )
 
-        const file = base64ToFile(
-            canvasPreviewRef.current.toDataURL(),
-            'bp.png'
-        )
+        // const file = base64ToFile(
+        //     canvasPreviewRef.current.toDataURL(),
+        //     'bp.png'
+        // )
 
-        const compressOptions = {
-            maxSizeMB: 1,
-            maxWidthOrHeight: 512,
-            useWebWorker: true,
-        }
+        // const compressOptions = {
+        //     maxSizeMB: 1,
+        //     maxWidthOrHeight: 512,
+        //     useWebWorker: true,
+        // }
 
         // file = await imageCompression(file, compressOptions);
 
         Swal.fire({
-            text: file.toString()
+            text: file.toDataURL()
         })
 
         // const myHeaders = new Headers();
