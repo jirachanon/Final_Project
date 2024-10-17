@@ -8,16 +8,15 @@ import ReactCrop, { centerCrop, convertToPixelCrop, makeAspectCrop } from 'react
 import Modal from 'react-modal'
 import cross from '../assets/icons/cross.svg'
 import setCanvasPreview from './setCanvasPreview'
-import imageCompression from 'browser-image-compression';
 import ex1 from '../assets/IMG/ex1.jpg'
 
 Modal.setAppElement('#root');
 
 function SendBP() {
     const initValues = {
-        sys: "",
-        dia: "",
-        pul: "",
+        sys: '',
+        dia: '',
+        pul: '',
     }
     var id = Math.floor(Math.random() * 10)
 
@@ -56,9 +55,9 @@ function SendBP() {
             myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
             myHeaders.append("Content-Type", "application/json");
             var raw = JSON.stringify({
-                "dia": formValues.dia,
-                "pul": formValues.pul,
-                "sys": formValues.sys,
+                "dia": parseInt(formValues.dia),
+                "pul": parseInt(formValues.pul),
+                "sys": parseInt(formValues.pul),
                 "requestId": id
             });
 
@@ -168,24 +167,7 @@ function SendBP() {
             )
         )
 
-        // const file = base64ToFile(
-        //     canvasPreviewRef.current.toDataURL(),
-        //     'bp.png'
-        // )
-
-        // const compressOptions = {
-        //     maxSizeMB: 1,
-        //     maxWidthOrHeight: 512,
-        //     useWebWorker: true,
-        // }
-
-        // const compressedFile = imageCompression(file, compressOptions);
-
         const imgURL = canvasPreviewRef.current.toDataURL()
-
-        // Swal.fire({
-        //     text: imgURL,
-        // })
 
         const myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
@@ -244,26 +226,6 @@ function SendBP() {
             error.pul = "กรุณากรอกข้อมูล!";
         }
         return error;
-    }
-
-    function base64ToFile(base64String, fileName) {
-        // Split the base64 string to get the mime type and the actual base64 data
-        const arr = base64String.split(',');
-        const mime = arr[0].match(/:(.*?);/)[1];
-        const bstr = atob(arr[1]); // Decode the base64 string
-        let n = bstr.length;
-        const u8arr = new Uint8Array(n);
-
-        // Convert base64 to binary data
-        while (n--) {
-            u8arr[n] = bstr.charCodeAt(n);
-        }
-
-        // Create a Blob object with the binary data
-        const file = new Blob([u8arr], { type: mime });
-
-        // Optionally, convert Blob to a File object
-        return new File([file], fileName, { type: mime });
     }
 
     return (
@@ -396,26 +358,7 @@ function SendBP() {
                     <div className='flex justify-center mt-2'>
                         <button
                             className='btn bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px] mr-1'
-                            onClick={
-                                sbpPhoto
-                            //     async () => {
-                            //     setIsSubmit(true)
-                            //     setCanvasPreview(
-                            //         imgRef.current,
-                            //         canvasPreviewRef.current,
-                            //         convertToPixelCrop(
-                            //             crop,
-                            //             imgRef.current.width,
-                            //             imgRef.current.height
-                            //         )
-                            //     )
-                            //     const imageURL = await sbpPhoto(
-                            //         base64ToFile(
-                            //             canvasPreviewRef.current.toDataURL(),
-                            //             'bp.png'
-                            //         )
-                            //     )
-                        }
+                            onClick={sbpPhoto}
                         >
                             {isSubmit ? <span className="loading loading-spinner loading-md"></span> : <span>ตกลง</span>}
                         </button>
