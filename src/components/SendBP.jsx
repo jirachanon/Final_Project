@@ -154,7 +154,7 @@ function SendBP() {
         setCrop(crop);
     }
 
-    const sbpPhoto = async () => {
+    const sbpPhoto = () => {
         // setIsSubmit(true)
 
         // setCanvasPreview(
