@@ -132,6 +132,7 @@ function SendBP() {
 
     function closeModal() {
         setShowModal(false)
+        setIsSubmit(false)
     }
 
     const onImageLoad = (e) => {
@@ -167,21 +168,21 @@ function SendBP() {
             )
         )
 
-        // const file = base64ToFile(
-        //     canvasPreviewRef.current.toDataURL(),
-        //     'bp.png'
-        // )
+        const file = base64ToFile(
+            canvasPreviewRef.current.toDataURL(),
+            'bp.png'
+        )
 
-        // const compressOptions = {
-        //     maxSizeMB: 1,
-        //     maxWidthOrHeight: 512,
-        //     useWebWorker: true,
-        // }
+        const compressOptions = {
+            maxSizeMB: 1,
+            maxWidthOrHeight: 512,
+            useWebWorker: true,
+        }
 
-        // file = imageCompression(file, compressOptions);
+        const compressedFile = imageCompression(file, compressOptions);
 
         Swal.fire({
-            text: file.toString()
+            text: compressedFile.toString()
         })
 
         // const myHeaders = new Headers();
