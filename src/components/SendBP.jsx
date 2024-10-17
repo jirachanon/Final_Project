@@ -167,10 +167,10 @@ function SendBP() {
             )
         )
 
-        // const file = base64ToFile(
-        //     canvasPreviewRef.current.toDataURL(),
-        //     'bp.png'
-        // )
+        const file = base64ToFile(
+            canvasPreviewRef.current.toDataURL(),
+            'bp.png'
+        )
 
         const compressOptions = {
             maxSizeMB: 1,
@@ -178,7 +178,7 @@ function SendBP() {
             useWebWorker: true,
         }
 
-        file = await imageCompression(file, compressOptions);
+        // file = await imageCompression(file, compressOptions);
 
         Swal.fire({
             text: file.toString()
