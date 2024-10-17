@@ -155,6 +155,7 @@ function SendBP() {
     }
 
     const sbpPhoto = () => {
+        console.log('hi')
         // setIsSubmit(true)
 
         // setCanvasPreview(
@@ -181,7 +182,7 @@ function SendBP() {
         // file = await imageCompression(file, compressOptions);
 
         Swal.fire({
-            text: file.toDataURL()
+            text: 'hi'
         })
 
         // const myHeaders = new Headers();
