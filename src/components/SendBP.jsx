@@ -167,7 +167,7 @@ function SendBP() {
             )
         )
 
-        const imgURL = canvasPreviewRef.current.toDataURL("image/jpeg", 0.4)
+        const imgURL = canvasPreviewRef.current.toDataURL("image/jpeg", 0.3)
 
         const myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
