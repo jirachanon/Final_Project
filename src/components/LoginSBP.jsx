@@ -98,7 +98,7 @@ function LoginSBP() {
             }).then(() => {
               dispatch(setUser(result || {}));
               Cookies.set('user_token', result?.token, { expires: 365 })
-              Cookies.set("userName", result?.name, { expires: 365 })
+              Cookies.set("user_name", result?.name, { expires: 365 })
               window.location.href = "https://liff.line.me/2004489610-MOpXKpry"
             });
           }
