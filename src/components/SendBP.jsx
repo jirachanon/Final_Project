@@ -351,7 +351,7 @@ function SendBP() {
                                 src={imgSrc}
                                 alt="404_NOT_FOUND"
                                 onLoad={onImageLoad}
-                                className='mx-auto'
+                                className='mx-auto w-[512px] h-[512px]'
                             />
                         </ReactCrop>
                     </div>
