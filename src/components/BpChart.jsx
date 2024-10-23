@@ -6,28 +6,28 @@ import Loading from "./Loading";
 const BpChart = () => {
     const {bp} = useSelector((state) => state.slices)
 
-    if (!bp || !bp.bps) {
+    if (!bp || !bp.content) {
         return <div className="text-center"><Loading /></div>;
     }
 
     const data = {
-        labels: bp.bps.map(item => (moment(item.createDate).add(543, 'YEAR').format('DD/MM/YY'))),
+        labels: bp.content.map(item => (moment(item.createDate).add(543, 'YEAR').format('DD/MM/YY'))),
         datasets: [
             {
                 label: "ค่าบน",
-                data: bp.bps.map(item => parseInt(item.sys)),
+                data: bp.content.map(item => parseInt(item.systolicPressure)),
                 borderColor: "rgb(255, 99, 132)",
                 tension: 0.1,
             },
             {
                 label: "ค่าล่าง",
-                data: bp.bps.map(item => parseInt(item.dia)),
+                data: bp.content.map(item => parseInt(item.diastolicPressure)),
                 borderColor: "rgb(54, 162, 235)",
                 tension: 0.1,
             },
             {
                 label: "ชีพจร",
-                data: bp.bps.map(item => parseInt(item.pul)),
+                data: bp.content.map(item => parseInt(item.pulseRate)),
                 borderColor: "rgb(75, 192, 192)",
                 tension: 0.1,
             },
