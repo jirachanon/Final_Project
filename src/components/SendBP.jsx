@@ -167,7 +167,7 @@ function SendBP() {
             )
         )
 
-        const imgURL = canvasPreviewRef.current.toDataURL()
+        const imgURL = canvasPreviewRef.current.toDataURL("image/jpeg", 0.4)
 
         const myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
@@ -351,7 +351,7 @@ function SendBP() {
                                 src={imgSrc}
                                 alt="404_NOT_FOUND"
                                 onLoad={onImageLoad}
-                                className='mx-auto w-[512px] h-[512px]'
+                                className='mx-auto'
                             />
                         </ReactCrop>
                     </div>
