@@ -57,7 +57,7 @@ function SendBP() {
             var raw = JSON.stringify({
                 "diastolicPressure": parseInt(formValues.dia),
                 "pulseRate": parseInt(formValues.pul),
-                "systolicPressure": parseInt(formValues.pul),
+                "systolicPressure": parseInt(formValues.sys),
                 "requestId": id
             });
 
