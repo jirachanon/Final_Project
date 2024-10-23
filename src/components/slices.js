@@ -13,7 +13,7 @@ export const slice = createSlice({
         state.user = action.payload;
       },
       setBp: (state, action) => {
-        state.content = action.payload;
+        state.bp = action.payload;
       },
     },
   });

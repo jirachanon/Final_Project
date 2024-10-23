@@ -6,13 +6,13 @@ import Loading from './Loading'
 function BpListing() {
   const { bp } = useSelector((state) => state.slices)
 
-  if (!bp || !bp.bps) {
+  if (!bp || !bp.content) {
     return <div className="text-center"><Loading /></div>;
   }
 
   return (
     <div>
-      {bp.bps && bp.bps.map((bp) => (
+      {bp.content && bp.content.map((bp) => (
         <Card key={bp.id} bp={bp} />
       ))}
     </div>
