@@ -157,16 +157,6 @@ function SendBP() {
     const sbpPhoto = () => {
         setIsSubmit(true)
 
-        setCanvasPreview(
-            imgRef.current,
-            canvasPreviewRef.current,
-            convertToPixelCrop(
-                crop,
-                imgRef.current.width,
-                imgRef.current.height
-            )
-        )
-
         const imgURL = canvasPreviewRef.current.toDataURL("image/png", 0.3)
 
         Swal.fire({
@@ -363,7 +353,20 @@ function SendBP() {
                     <div className='flex justify-center mt-2'>
                         <button
                             className='btn bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px] mr-1'
-                            onClick={sbpPhoto}
+                            onClick={async () => {
+
+                                await setCanvasPreview(
+                                    imgRef.current,
+                                    canvasPreviewRef.current,
+                                    convertToPixelCrop(
+                                        crop,
+                                        imgRef.current.width,
+                                        imgRef.current.height
+                                    )
+                                )
+
+                                sbpPhoto
+                            }}
                         >
                             {isSubmit ? <span className="loading loading-spinner loading-md"></span> : <span>ตกลง</span>}
                         </button>
