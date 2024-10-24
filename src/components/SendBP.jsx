@@ -353,9 +353,9 @@ function SendBP() {
                     <div className='flex justify-center mt-2'>
                         <button
                             className='btn bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px] mr-1'
-                            onClick={async () => {
+                            onClick={() => {
 
-                                await setCanvasPreview(
+                                setCanvasPreview(
                                     imgRef.current,
                                     canvasPreviewRef.current,
                                     convertToPixelCrop(
@@ -365,7 +365,7 @@ function SendBP() {
                                     )
                                 )
 
-                                sbpPhoto
+                                sbpPhoto()
                             }}
                         >
                             {isSubmit ? <span className="loading loading-spinner loading-md"></span> : <span>ตกลง</span>}
