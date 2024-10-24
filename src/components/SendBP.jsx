@@ -382,7 +382,6 @@ function SendBP() {
                     <canvas
                         ref={canvasPreviewRef}
                         style={{
-                            display: 'none',
                             objectFit: 'contain',
                             width: 150,
                             height: 150,
