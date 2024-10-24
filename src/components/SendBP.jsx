@@ -9,6 +9,7 @@ import Modal from 'react-modal'
 import cross from '../assets/icons/cross.svg'
 import setCanvasPreview from './setCanvasPreview'
 import ex1 from '../assets/IMG/ex1.jpg'
+import imageCompression from 'browser-image-compression';
 
 Modal.setAppElement('#root');
 
@@ -116,9 +117,17 @@ function SendBP() {
         });
     }, [Cookies.get('user_token'), formErrors, formValues,])
 
-    const onSelectedFile = (e) => {
+    const onSelectedFile = async (e) => {
         const file = e.target.files?.[0]
         if (!file) return;
+
+        const options = {
+            maxSizeMB: 1,
+            maxWidthOrHeight: 512,
+            useWebWorker: true,
+        }
+
+        const compressedFile = await imageCompression(file, options);
 
         const reader = new FileReader();
         reader.addEventListener("load", () => {
@@ -126,7 +135,7 @@ function SendBP() {
             setImgSrc(imgUrl);
             setShowModal(true)
         })
-        reader.readAsDataURL(file)
+        reader.readAsDataURL(compressedFile)
     }
 
     function closeModal() {
@@ -352,9 +361,9 @@ function SendBP() {
                     <div className='flex justify-center mt-2'>
                         <button
                             className='btn bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px] mr-1'
-                            onClick={async () => {
+                            onClick={() => {
 
-                                await setCanvasPreview(
+                                setCanvasPreview(
                                     imgRef.current,
                                     canvasPreviewRef.current,
                                     convertToPixelCrop(
@@ -365,7 +374,7 @@ function SendBP() {
                                 )
 
                                 Swal.fire({
-                                    text: canvasPreviewRef.current.toDataURL('image/png', 0.3)
+                                    text: canvasPreviewRef.current.toDataURL()
                                 })
 
                                 // sbpPhoto(canvasPreviewRef.current.toDataURL())
@@ -388,7 +397,7 @@ function SendBP() {
                     <canvas
                         ref={canvasPreviewRef}
                         style={{
-                            objectFit: 'contain',
+                            objectFit: 'none',
                             width: 150,
                             height: 150,
                         }}
