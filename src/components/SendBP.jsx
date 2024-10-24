@@ -167,8 +167,9 @@ function SendBP() {
             )
         )
 
-        console.log(imgSrc);
-        
+        Swal.fire({
+            text: imgSrc
+        })       
 
         const imgURL = canvasPreviewRef.current.toDataURL("image/png", 0.3)
 
