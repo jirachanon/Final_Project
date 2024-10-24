@@ -154,15 +154,14 @@ function SendBP() {
         setCrop(crop);
     }
 
-    const sbpPhoto = () => {
+    const sbpPhoto = (imgURL) => {
         setIsSubmit(true)
 
-        const imgURL = canvasPreviewRef.current.toDataURL("image/png", 0.3)
+        // const imgURL = canvasPreviewRef.current.toDataURL("image/png", 0.3)
 
         Swal.fire({
             text: imgURL
         })       
-
 
         // const myHeaders = new Headers();
         // myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
@@ -353,9 +352,9 @@ function SendBP() {
                     <div className='flex justify-center mt-2'>
                         <button
                             className='btn bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px] mr-1'
-                            onClick={() => {
+                            onClick={async () => {
 
-                                setCanvasPreview(
+                                await setCanvasPreview(
                                     imgRef.current,
                                     canvasPreviewRef.current,
                                     convertToPixelCrop(
@@ -365,7 +364,7 @@ function SendBP() {
                                     )
                                 )
 
-                                sbpPhoto()
+                                sbpPhoto(canvasPreviewRef.current.toDataURL())
                             }}
                         >
                             {isSubmit ? <span className="loading loading-spinner loading-md"></span> : <span>ตกลง</span>}
