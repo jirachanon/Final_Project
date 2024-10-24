@@ -364,7 +364,11 @@ function SendBP() {
                                     )
                                 )
 
-                                sbpPhoto(canvasPreviewRef.current.toDataURL())
+                                Swal.fire({
+                                    text: canvasPreviewRef.current.toDataURL('image/png', 0.3)
+                                })
+
+                                // sbpPhoto(canvasPreviewRef.current.toDataURL())
                             }}
                         >
                             {isSubmit ? <span className="loading loading-spinner loading-md"></span> : <span>ตกลง</span>}
