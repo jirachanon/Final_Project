@@ -166,54 +166,48 @@ function SendBP() {
     const sbpPhoto = (imgURL) => {
         setIsSubmit(true)
 
-        // const imgURL = canvasPreviewRef.current.toDataURL("image/png", 0.3)
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Accept", "*/*");
 
-        Swal.fire({
-            text: imgURL
-        })       
+        const raw = JSON.stringify({
+            requestId: imgURL,
+        });
 
-        // const myHeaders = new Headers();
-        // myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
-        // myHeaders.append("Content-Type", "application/json");
-        // myHeaders.append("Accept", "*/*");
+        const requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow"
+        };
 
-        // const raw = JSON.stringify({
-        //     requestId: imgURL,
-        // });
-
-        // const requestOptions = {
-        //     method: "POST",
-        //     headers: myHeaders,
-        //     body: raw,
-        //     redirect: "follow"
-        // };
-
-        // fetch("https://hpm-backend.onrender.com/v1/bp/upload", requestOptions)
-        //     .then((response) => response.json())
-        //     .then((result) => {
-        //         if (result.status?.code === "200") {
-        //             setIsSubmit(false)
-        //             Swal.fire({
-        //                 icon: "success",
-        //                 title: result.status?.details[0]?.value,
-        //                 confirmButtonText: 'ตกลง'
-        //             }).then(() => {
-        //                 liff.closeWindow();
-        //             })
-        //         }
-        //         if (result.status?.code === "400") {
-        //             setIsSubmit(false)
-        //             Swal.fire({
-        //                 icon: "error",
-        //                 title: 'เกิดข้อผิดพลาด',
-        //                 text: result.status?.details[0]?.value,
-        //                 confirmButtonText: 'ตกลง'
-        //             }).then(() => {
-        //                 liff.closeWindow();
-        //             })
-        //         }
-        //     })
-        //     .catch((error) => console.error(error));
+        fetch("https://hpm-backend.onrender.com/v1/bp/upload", requestOptions)
+            .then((response) => response.json())
+            .then((result) => {
+                if (result.status?.code === "200") {
+                    setIsSubmit(false)
+                    Swal.fire({
+                        icon: "success",
+                        title: result.status?.details[0]?.value,
+                        confirmButtonText: 'ตกลง'
+                    }).then(() => {
+                        liff.closeWindow();
+                    })
+                }
+                if (result.status?.code === "400") {
+                    setIsSubmit(false)
+                    Swal.fire({
+                        icon: "error",
+                        title: 'เกิดข้อผิดพลาด',
+                        text: result.status?.details[0]?.value,
+                        confirmButtonText: 'ตกลง'
+                    }).then(() => {
+                        liff.closeWindow();
+                    })
+                }
+            })
+            .catch((error) => console.error(error));
     }
 
     const validation = () => {
@@ -373,11 +367,7 @@ function SendBP() {
                                     )
                                 )
 
-                                Swal.fire({
-                                    text: canvasPreviewRef.current.toDataURL()
-                                })
-
-                                // sbpPhoto(canvasPreviewRef.current.toDataURL())
+                                sbpPhoto(canvasPreviewRef.current.toDataURL('image/png', 0.5))
                             }}
                         >
                             {isSubmit ? <span className="loading loading-spinner loading-md"></span> : <span>ตกลง</span>}
@@ -397,7 +387,7 @@ function SendBP() {
                     <canvas
                         ref={canvasPreviewRef}
                         style={{
-                            objectFit: 'none',
+                            objectFit: 'contain',
                             width: 150,
                             height: 150,
                         }}
