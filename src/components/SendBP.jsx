@@ -167,11 +167,12 @@ function SendBP() {
             )
         )
 
+        const imgURL = canvasPreviewRef.current.toDataURL("image/png", 0.3)
+
         Swal.fire({
-            text: imgSrc
+            text: imgURL
         })       
 
-        const imgURL = canvasPreviewRef.current.toDataURL("image/png", 0.3)
 
         // const myHeaders = new Headers();
         // myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
