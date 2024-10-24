@@ -353,34 +353,58 @@ function SendBP() {
                         </ReactCrop>
                     </div>
                     <div className='flex justify-center mt-2'>
-                        <button
-                            className='btn bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px] mr-1'
-                            onClick={() => {
+                        {
+                            isSubmit?
+                                <button
+                                    className='btn bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px] mr-1'
+                                    disabled
+                                >
+                                    {isSubmit ? <span className="loading loading-spinner loading-md"></span> : <span>ตกลง</span>}
+                                </button>
+                                :
+                                <button
+                                    className='btn bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px] mr-1'
+                                    onClick={() => {
 
-                                setCanvasPreview(
-                                    imgRef.current,
-                                    canvasPreviewRef.current,
-                                    convertToPixelCrop(
-                                        crop,
-                                        imgRef.current.width,
-                                        imgRef.current.height
-                                    )
-                                )
+                                        setCanvasPreview(
+                                        imgRef.current,
+                                        canvasPreviewRef.current,
+                                            convertToPixelCrop(
+                                                crop,
+                                                imgRef.current.width,
+                                                imgRef.current.height
+                                            )
+                                        )
 
-                                sbpPhoto(canvasPreviewRef.current.toDataURL('image/png', 0.5))
-                            }}
-                        >
-                            {isSubmit ? <span className="loading loading-spinner loading-md"></span> : <span>ตกลง</span>}
-                        </button>
+                                        sbpPhoto(canvasPreviewRef.current.toDataURL('image/png', 0.5))
+                                    }}
+                                >
+                                    {isSubmit ? <span className="loading loading-spinner loading-md"></span> : <span>ตกลง</span>}
+                                </button>
+
+                        }
                         <label htmlFor='img_upload_retry' className='btn bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px] ml-1'>ถ่ายอีกครั้ง</label>
-                        <input
-                            type="file"
-                            accept="image/*,video/*"
-                            capture
-                            hidden
-                            id='img_upload_retry'
-                            onChange={onSelectedFile}
-                        />
+                        {
+                            isSubmit?
+                                <input
+                                    type="file"
+                                    accept="image/*,video/*"
+                                    capture
+                                    hidden
+                                    id='img_upload_retry'
+                                    onChange={onSelectedFile}
+                                    disabled
+                                />
+                            :
+                                <input
+                                    type="file"
+                                    accept="image/*,video/*"
+                                    capture
+                                    hidden
+                                    id='img_upload_retry'
+                                    onChange={onSelectedFile}
+                                />
+                        }
                     </div>
                 </div>
                 {crop && (
