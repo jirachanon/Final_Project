@@ -12,6 +12,8 @@ const BpChart = () => {
 
     const dates = bp.content.map(item => moment(item.createDate));
 
+    dates.sort((a,b) => a-b)
+
     const data = {
         labels: dates.map(date => (moment(date).add(543, 'YEAR').utcOffset('+0700').format('DD/MM/YY'))),
         datasets: [
