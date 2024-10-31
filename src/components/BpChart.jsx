@@ -10,7 +10,7 @@ const BpChart = () => {
         return <div className="text-center"><Loading /></div>;
     }
 
-    console.log(bp.content.foreach(item => item.createDate));
+    console.log(bp.content.map(item => item.createDate));
 
     const data = {
         labels: bp.content.map(item => (moment(item.createDate).add(543, 'YEAR').format('DD/MM/YY'))),
