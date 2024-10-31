@@ -10,12 +10,12 @@ const BpChart = () => {
         return <div className="text-center"><Loading /></div>;
     }
 
-    const dates = bp.content.map(item => item.createDate);
+    const dates = bp.content.map(item => moment(item.createDate));
 
-    console.log(dates.sort((a,b) => b-a));
+    console.log(dates.sort((a,b) => a-b));
 
     const data = {
-        labels: bp.content.map(item => (moment(item.createDate).add(543, 'YEAR').format('DD/MM/YY'))),
+        labels: bp.content.map(item => (moment(item.createDate).add(543, 'YEAR').utcOffset('+0700').format('DD/MM/YY'))),
         datasets: [
             {
                 label: "ค่าบน",
