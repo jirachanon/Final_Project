@@ -1,7 +1,7 @@
 import React from "react";
 import moment from 'moment'
 function Card({ bp }) {
-  const formattedDate = moment(bp.createDate).add(543, 'YEAR').format('วันที่ DD/MM/YYYY')
+  const formattedDate = moment(bp.createDate).add(543, 'YEAR').utcOffset('+0700').format('วันที่ DD/MM/YYYY')
   const formattedTime = moment.utc(bp.createDate).utcOffset('+0700').format('kk นาฬิกา mm นาที')
 
   return (

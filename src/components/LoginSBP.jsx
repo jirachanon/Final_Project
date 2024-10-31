@@ -147,8 +147,8 @@ function LoginSBP() {
             confirmButtonText: "ตกลง",
           }).then(() => {
             dispatch(setUser(result || {}));
-            Cookies.set('user_token', result?.token, { expires: 365 })
-            Cookies.set("user_name", result?.name, {expires: 365})
+            Cookies.set('user_token', result?.token)
+            Cookies.set("user_name", result?.name)
             window.location.href = "https://liff.line.me/2004489610-MOpXKpry"
           });
         } else if (result?.status?.code === "400") {
