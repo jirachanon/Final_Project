@@ -13,7 +13,7 @@ const BpChart = () => {
     const dates = bp.content.map(item => moment(item.createDate));
 
     const data = {
-        labels: dates.map(item => (moment(item.createDate).add(543, 'YEAR').utcOffset('+0700').format('DD/MM/YY'))),
+        labels: dates.map(date => (moment(date).add(543, 'YEAR').utcOffset('+0700').format('DD/MM/YY'))),
         datasets: [
             {
                 label: "ค่าบน",
