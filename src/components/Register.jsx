@@ -17,6 +17,8 @@ function Register() {
         tel: "",
         name: "",
         surname: "",
+        gender: "",
+        age: ""
     }
 
     const [formValues, setFormValues] = useState(initValues);
@@ -79,6 +81,8 @@ function Register() {
                 "phoneNumber": formValues.tel,
                 "requestId": "",
                 "lineToken": liff.getIDToken(),
+                "age": formValues.age,
+                "gender": formValues.gender
             });
 
             const requestOptions = {
@@ -115,7 +119,7 @@ function Register() {
     }
 
     const validation = () => {
-        const { email, pws, HN, tel, name, surname } = formValues
+        const { email, pws, HN, tel, name, surname, gender, age } = formValues
         const error = {};
         const regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
         if (!email) {
@@ -141,6 +145,14 @@ function Register() {
         } else if (!surname) {
             error.name = "กรุณากรอก ' ชื่อ ' หรือ ' นามสกุล ' ของท่าน!";
         }
+        if (!gender) {
+            error.gender = "กรุณาเลือก ' เพศ ' ของท่าน!"
+        }
+        if (!age) {
+            error.age = "กรุณากรอก ' อายุ ' ของท่าน!"
+        } else if (age < 1 || age > 150 ) {
+            error.age = "กรุณาตรวจสอบความถูกต้อง"
+        }
         return error;
     }
 
@@ -159,14 +171,14 @@ function Register() {
                         <div className='w-[16.125rem] mx-auto mt-[1rem]'>
                             <label htmlFor="" className='form-control w-full max-w-xs'>
                                 <div className='label'>
-                                    <span className='label-text text-gray-500'>อีเมล</span>
+                                    <span className='label-text text-gray-500 text-xl'>อีเมล</span>
                                 </div>
                                 <div className='flex justify-end items-center relative'>
                                     <input type="text" name='email' placeholder='me@me.com' className='input input-bordered w-full max-w-xs' value={formValues.email} onChange={handleChange} />
                                     <img src={person} className="absolute mr-2 w-[1.3rem]" alt="email" />
                                 </div>
                                 <div className='label'>
-                                    <span className='label-text text-red-700'>{formErrors.email}</span>
+                                    <span className='label-text text-red-700 text-lg'>{formErrors.email}</span>
                                 </div>
                             </label>
                         </div>
@@ -174,14 +186,14 @@ function Register() {
                         <div className='w-[16.125rem] mx-auto mt-[1rem]'>
                             <label htmlFor="" className='form-control w-full max-w-xs'>
                                 <div className='label'>
-                                    <span className='label-text text-gray-500'>รหัสผ่าน</span>
+                                    <span className='label-text text-gray-500 text-xl'>รหัสผ่าน</span>
                                 </div>
                                 <div className='flex justify-end items-center relative'>
                                     <input type={type} name='pws' placeholder='ความยาว 9 ตัวขึ้นไป' className='input input-bordered w-full max-w-xs' value={formValues.pws} onChange={handleChange} />
                                     <img src={eyeIcon} onClick={showPassword} className="absolute mr-2 w-[1.6rem]" alt="password" />
                                 </div>
                                 <div className='label'>
-                                    <span className='label-text text-red-700'>{formErrors.pws}</span>
+                                    <span className='label-text text-red-700 text-lg'>{formErrors.pws}</span>
                                 </div>
                             </label>
                         </div>
@@ -189,14 +201,14 @@ function Register() {
                         <div className='w-[16.125rem] mx-auto mt-[1rem]'>
                             <label htmlFor="" className='form-control w-full max-w-xs'>
                                 <div className='label'>
-                                    <span className='label-text text-gray-500'>Hospital Number</span>
+                                    <span className='label-text text-gray-500 text-xl'>หมายเลขผู้ป่วย</span>
                                 </div>
                                 <div className='flex justify-end items-center relative'>
-                                    <input type="text" name='HN' placeholder='Hospital Number' className='input input-bordered w-full max-w-xs' value={formValues.HN} onChange={handleChange} />
-                                    <img src={vector} className="absolute mr-2 w-[1.3rem]" alt="Hospital Number" />
+                                    <input type="text" name='HN' placeholder='หมายเลขผู้ป่วย' className='input input-bordered w-full max-w-xs' value={formValues.HN} onChange={handleChange} />
+                                    <img src={vector} className="absolute mr-2 w-[1.3rem]" alt="หมายเลขผู้ป่วย" />
                                 </div>
                                 <div className='label'>
-                                    <span className='label-text text-red-700'>{formErrors.HN}</span>
+                                    <span className='label-text text-red-700 text-lg'>{formErrors.HN}</span>
                                 </div>
                             </label>
                         </div>
@@ -204,14 +216,14 @@ function Register() {
                         <div className='w-[16.125rem] mx-auto mt-[1rem]'>
                             <label htmlFor="" className='form-control w-full max-w-xs'>
                                 <div className='label'>
-                                    <span className='label-text text-gray-500'>เบอร์โทรศัพท์</span>
+                                    <span className='label-text text-gray-500 text-xl'>เบอร์โทรศัพท์</span>
                                 </div>
                                 <div className='flex justify-end items-center relative'>
                                     <input type="text" name='tel' placeholder='0xx-xxx-xxxx' className='input input-bordered w-full max-w-xs' value={formValues.tel} onChange={handleChange} />
                                     <img src={phone} className="absolute mr-2 w-[1.3rem]" alt="email" />
                                 </div>
                                 <div className='label'>
-                                    <span className='label-text text-red-700'>{formErrors.tel}</span>
+                                    <span className='label-text text-red-700 text-lg'>{formErrors.tel}</span>
                                 </div>
                             </label>
                         </div>
@@ -220,7 +232,7 @@ function Register() {
                             <div className='w-[8rem]'>
                                 <label htmlFor="" className='form-control w-full max-w-xs'>
                                     <div className='label'>
-                                        <span className='label-text text-gray-500'>ชื่อ</span>
+                                        <span className='label-text text-gray-500 text-xl'>ชื่อ</span>
                                     </div>
                                     <input type="text" name='name' placeholder='ถมทราย' className='input input-bordered w-full max-w-xs' value={formValues.name} onChange={handleChange} />
                                 </label>
@@ -228,19 +240,50 @@ function Register() {
                             <div className='w-[8rem] ml-4'>
                                 <label htmlFor="" className='form-control w-full max-w-xs'>
                                     <div className='label'>
-                                        <span className='label-text text-gray-500'>สกุล</span>
+                                        <span className='label-text text-gray-500 text-xl'>สกุล</span>
                                     </div>
                                     <input type="text" name='surname' placeholder='เข็มหมุด' className='input input-bordered w-full max-w-xs' value={formValues.surname} onChange={handleChange} />
                                 </label>
                             </div>
                         </div>
                         <div className='w-[17rem] mx-auto'>
-                            <p className='label-text text-red-700 text-center'>{formErrors.name}</p>
+                            <p className='label-text text-red-700 text-center text-lg'>{formErrors.name}</p>
+                        </div>
+
+                        <div className='w-[16.5rem] mx-auto flex justify-start mt-3'>
+                            <div className='w-[8rem]'>
+                                <label htmlFor="" className='form-control w-full max-w-xs'>
+                                    <div className='label'>
+                                        <span className='label-text text-gray-500 text-xl'>เพศ</span>
+                                    </div>
+                                    <select className='select' name='gender' value={formValues.gender} onChange={handleChange}>
+                                        <option>เลือก</option>
+                                        <option value="'male'" className='text-lg'>ชาย</option>
+                                        <option value="'female'" className='text-lg'>หญิง</option>
+                                    </select>
+                                    <div className='w-[8rem] mx-auto'>
+                                        <p className='label-text text-red-700 text-center text-lg mt-3'>{formErrors.gender}</p>
+                                    </div>
+                                </label>
+                            </div>
+                            <div className='w-[8rem] ml-4'>
+                                <label htmlFor="" className='form-control w-full max-w-xs'>
+                                    <div className='label'>
+                                        <span className='label-text text-gray-500 text-xl'>อายุ</span>
+                                    </div>
+                                    <input type="number" placeholder='อายุ' name='age' className='input input-bordered w-full max-w-xs'
+                                        value={formValues.age} onChange={handleChange}
+                                    />
+                                    <div className='w-[8rem] mx-auto mt-3'>
+                                        <p className='label-text text-red-700 text-center text-lg'>{formErrors.age}</p>
+                                    </div>
+                                </label>
+                            </div>
                         </div>
 
                         <div className='w-[13.563rem] mx-auto mt-[2.33rem]'>
                             <button className='btn btn-block bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px]' >
-                                {isSubmit? <span className="loading loading-spinner loading-md"></span> : <span>สมัครสมาชิก</span>}
+                                {isSubmit ? <span className="loading loading-spinner loading-md"></span> : <span>สมัครสมาชิก</span>}
                             </button>
                         </div>
                     </div>
