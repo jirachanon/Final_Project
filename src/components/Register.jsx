@@ -81,6 +81,8 @@ function Register() {
                 "phoneNumber": formValues.tel,
                 "requestId": "",
                 "lineToken": liff.getIDToken(),
+                "age": formValues.age,
+                "gender": formValues.gender
             });
 
             const requestOptions = {
@@ -148,6 +150,8 @@ function Register() {
         }
         if (!age) {
             error.age = "กรุณากรอก ' อายุ ' ของท่าน!"
+        } else if (age < 1 || age > 150 ) {
+            error.age = "กรุณาตรวจสอบความถูกต้อง"
         }
         return error;
     }
