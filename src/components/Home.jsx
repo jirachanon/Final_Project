@@ -15,6 +15,7 @@ function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [showGraph, setShowGraph] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const userName = Cookies.get('user_name')
   const liffID = '2004489610-dq14p1vw'
 
@@ -41,8 +42,6 @@ function Home() {
         });
       }
     })
-
-    
 
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));

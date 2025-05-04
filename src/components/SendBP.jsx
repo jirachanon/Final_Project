@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import circleLogo from '../assets/IMG/circleLogo.png'
 import Swal from 'sweetalert2'
-import { useNavigate } from 'react-router-dom'
 import liff from '@line/liff'
 import Cookies from 'js-cookie'
 import ReactCrop, { centerCrop, convertToPixelCrop, makeAspectCrop } from 'react-image-crop'
@@ -72,7 +71,6 @@ function SendBP() {
             fetch("https://hpm-backend.onrender.com/v1/bp/createBloodPressure", requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    console.log(result);
                     if (result.status.code === "200") {
                         setIsSubmit(false)
                         Swal.fire({
@@ -101,6 +99,16 @@ function SendBP() {
         const liffInit = async () => {
             await liff.init({ liffId: liffID })
         }
+
+        if (!Cookies.get("user_token")) {
+            Swal.fire({
+                title: 'กรุณาเข้าสู่ระบบ',
+                confirmButtonText: 'ตกลง'
+            }).then(() => {
+                navigate('/login/home/')
+            })
+        }
+
         liffInit().then(() => {
             if (!liff.isLoggedIn()) {
                 liff.login();
@@ -163,8 +171,49 @@ function SendBP() {
         setCrop(crop);
     }
 
+    function submit(sys, dia, pul) {
+        console.log(sys, dia, pul);
+        setIsSubmit(true)
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
+        myHeaders.append("Content-Type", "application/json");
+        var raw = JSON.stringify({
+            "diastolicPressure": parseInt(dia),
+            "pulseRate": parseInt(pul),
+            "systolicPressure": parseInt(sys),
+            "requestId": id
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("https://hpm-backend.onrender.com/v1/bp/createBloodPressure", requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                if (result.status.code === "200") {
+                    setIsSubmit(false)
+                    liff.closeWindow()
+                } else if (result.status.code === "400") {
+                    setIsSubmit(false)
+                    Swal.fire({
+                        title: 'เกิดข้อผิดพลาด',
+                        text: result.status?.details[0]?.value,
+                        confirmButtonText: 'ตกลง'
+                    }).then(() => {
+                        Swal.close()
+                    })
+                }
+            })
+            .catch(error => console.log('error', error));
+    }
+
     const sbpPhoto = (imgURL) => {
         setIsSubmit(true)
+        setFormErrors({})
 
         const myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
@@ -187,12 +236,30 @@ function SendBP() {
             .then((result) => {
                 if (result.status?.code === "200") {
                     setIsSubmit(false)
+                    setShowModal(false)
                     Swal.fire({
                         icon: "success",
-                        title: result.status?.details[0]?.value,
-                        confirmButtonText: 'ตกลง'
-                    }).then(() => {
-                        liff.closeWindow();
+                        title: 'ผลวัดความดันโลหิตของท่าน',
+                        html: `
+                            <p>ค่าตัวบน: ${result.sys}</p>
+                            <p>ค่าตัวล่าง: ${result.dia}</p>
+                            <p>ค่าตัวชีพจร: ${result.pul}</p>
+                        `,
+                        confirmButtonText: 'ส่งค่า',
+                        cancelButtonText: 'แก้ไขค่า',
+                        confirmButtonColor: '#28a745',
+                        cancelButtonColor: '#3085d6',
+                        showCancelButton: true,
+                    }).then((res) => {
+                        if (res.isConfirmed) {
+                            setFormValues({
+                                sys: result.sys,
+                                dia: result.dia,
+                                pul: result.pul,
+                            })
+                            submit(result.sys, result.dia, result.pul);
+                            liff.closeWindow();
+                        }
                     })
                 }
                 if (result.status?.code === "400") {
@@ -203,7 +270,7 @@ function SendBP() {
                         text: result.status?.details[0]?.value,
                         confirmButtonText: 'ตกลง'
                     }).then(() => {
-                        liff.closeWindow();
+                        setShowModal(false)
                     })
                 }
             })
@@ -354,7 +421,7 @@ function SendBP() {
                     </div>
                     <div className='flex justify-center mt-2'>
                         {
-                            isSubmit?
+                            isSubmit ?
                                 <button
                                     className='btn bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px] mr-1'
                                     disabled
@@ -367,8 +434,8 @@ function SendBP() {
                                     onClick={() => {
 
                                         setCanvasPreview(
-                                        imgRef.current,
-                                        canvasPreviewRef.current,
+                                            imgRef.current,
+                                            canvasPreviewRef.current,
                                             convertToPixelCrop(
                                                 crop,
                                                 imgRef.current.width,
@@ -385,7 +452,7 @@ function SendBP() {
                         }
                         <label htmlFor='img_upload_retry' className='btn bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px] ml-1'>ถ่ายอีกครั้ง</label>
                         {
-                            isSubmit?
+                            isSubmit ?
                                 <input
                                     type="file"
                                     accept="image/*,video/*"
@@ -395,7 +462,7 @@ function SendBP() {
                                     onChange={onSelectedFile}
                                     disabled
                                 />
-                            :
+                                :
                                 <input
                                     type="file"
                                     accept="image/*,video/*"
