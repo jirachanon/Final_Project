@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import Logo from '../assets/IMG/Logo.png'
+import circleLogo from '../assets/IMG/circleLogo.png'
 import person from '../assets/icons/person.svg'
 import Eye from '../assets/icons/Eye.svg'
 import closeEye from '../assets/icons/closeEye.svg'
@@ -161,9 +161,9 @@ function Register() {
     return (
         <div className="sm:contianer">
             <div className='w-auto md:w-full lg:w-full bg-[#F2F1EC] mx-auto h-auto lg:h-screen min-h-screen'>
-                <div className='w-4/5 md:w-[22.875rem] lg:w-[22.875rem] mx-auto'>
+                <div className='w-[80px] md:w-[10rem] lg:w-[22.875rem] mx-auto pt-5'>
                     <div className='Logo'>
-                        <img src={Logo} alt="Logo" />
+                        <img src={circleLogo} alt="Logo"/>
                     </div>
                 </div>
                 <form onSubmit={handleSubmit}>
@@ -258,8 +258,8 @@ function Register() {
                                     </div>
                                     <select className='select' name='gender' value={formValues.gender} onChange={handleChange}>
                                         <option>เลือก</option>
-                                        <option value="'male'" className='text-lg'>ชาย</option>
-                                        <option value="'female'" className='text-lg'>หญิง</option>
+                                        <option value="male" className='text-lg'>ชาย</option>
+                                        <option value="female" className='text-lg'>หญิง</option>
                                     </select>
                                     <div className='w-[8rem] mx-auto'>
                                         <p className='label-text text-red-700 text-center text-lg mt-3'>{formErrors.gender}</p>
@@ -281,7 +281,7 @@ function Register() {
                             </div>
                         </div>
 
-                        <div className='w-[13.563rem] mx-auto mt-[2.33rem]'>
+                        <div className='w-[13.563rem] mx-auto mt-[2.33rem] pb-[2rem]'>
                             <button className='btn btn-block bg-[#1B3B83] border-[#AC8218] text-white font-normal text-[18px]' >
                                 {isSubmit ? <span className="loading loading-spinner loading-md"></span> : <span>สมัครสมาชิก</span>}
                             </button>
