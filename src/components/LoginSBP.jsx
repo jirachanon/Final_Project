@@ -54,7 +54,7 @@ function LoginSBP() {
           }
         });
     }
-    liffInit();
+    // liffInit();
 
   }, [liffID, formErrors, formValues]);
 
@@ -76,7 +76,7 @@ function LoginSBP() {
         requestId: id,
         email: formValues.email,
         password: formValues.password,
-        lineToken: liff.getIDToken(),
+        lineToken: /*liff.getIDToken()*/ '',
       });
 
       const requestOptions = {

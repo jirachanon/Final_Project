@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { setUser } from "./slices";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const initValues = { email: "", password: "" };
@@ -21,6 +22,7 @@ function Login() {
   const [type, setType] = useState("password");
   const [eyeIcon, setEyeIcon] = useState(closeEye);
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const liffID = '2004489610-aP6ng65X'
 
   const showPassword = () => {
@@ -55,7 +57,7 @@ function Login() {
         });
     }
 
-    liffInit();
+    // liffInit();
 
   }, [liffID, formErrors, formValues]);
 
@@ -77,7 +79,7 @@ function Login() {
         requestId: id,
         email: formValues.email,
         password: formValues.password,
-        lineToken: liff.getIDToken(),
+        lineToken: /*liff.getIDToken()*/ null,
       });
 
       const requestOptions = {
@@ -100,7 +102,8 @@ function Login() {
               dispatch(setUser(result || {}));
               Cookies.set('user_token', result?.token, { expires: 365 })
               Cookies.set("user_name", result?.name, {expires: 365})
-              window.location.href = "https://liff.line.me/2004489610-dq14p1vw"
+              //window.location.href = "https://liff.line.me/2004489610-dq14p1vw"
+              navigate('/')
             });
           }
           if (result?.status?.code === "400") {

@@ -15,6 +15,7 @@ function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [showGraph, setShowGraph] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const userName = Cookies.get('user_name')
   const liffID = '2004489610-dq14p1vw'
 
@@ -23,26 +24,35 @@ function Home() {
   }
 
   useEffect(() => {
-    const liffInit = async () => {
-      await liff.init({ liffId: liffID })
+    // const liffInit = async () => {
+    //   await liff.init({ liffId: liffID })
+    // }
+
+    if (!Cookies.get("user_token")) {
+      Swal.fire({
+        title: 'กรุณาเข้าสู่ระบบ',
+        confirmButtonText: 'ตกลง'
+      }).then(() => {
+        navigate('/login/home/')
+      })
     }
 
-    liffInit().then(() => {
-      if (!liff.isLoggedIn()) {
-        liff.login();
-      }
+    // liffInit().then(() => {
+    //   if (!liff.isLoggedIn()) {
+    //     liff.login();
+    //   }
 
-      if (!Cookies.get("user_token")) {
-        Swal.fire({
-          title: "กรุณาเข้าสู่ระบบ",
-          confirmButtonText: "ตกลง",
-        }).then(() => {
-          window.location.href = 'https://liff.line.me/2004489610-aP6ng65X';
-        });
-      }
-    })
+    //   if (!Cookies.get("user_token")) {
+    //     Swal.fire({
+    //       title: "กรุณาเข้าสู่ระบบ",
+    //       confirmButtonText: "ตกลง",
+    //     }).then(() => {
+    //       window.location.href = 'https://liff.line.me/2004489610-aP6ng65X';
+    //     });
+    //   }
+    // })
 
-    
+
 
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
