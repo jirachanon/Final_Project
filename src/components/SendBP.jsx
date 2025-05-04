@@ -172,7 +172,6 @@ function SendBP() {
     }
 
     function submit(sys, dia, pul) {
-        console.log(sys, dia, pul);
         setIsSubmit(true)
         var myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + Cookies.get('user_token'));
@@ -204,7 +203,7 @@ function SendBP() {
                         text: result.status?.details[0]?.value,
                         confirmButtonText: 'ตกลง'
                     }).then(() => {
-                        Swal.close()
+                        liff.closeWindow();
                     })
                 }
             })
@@ -251,12 +250,12 @@ function SendBP() {
                         cancelButtonColor: '#3085d6',
                         showCancelButton: true,
                     }).then((res) => {
+                        setFormValues({
+                            sys: result.sys,
+                            dia: result.dia,
+                            pul: result.pul,
+                        })
                         if (res.isConfirmed) {
-                            setFormValues({
-                                sys: result.sys,
-                                dia: result.dia,
-                                pul: result.pul,
-                            })
                             submit(result.sys, result.dia, result.pul);
                             liff.closeWindow();
                         }
