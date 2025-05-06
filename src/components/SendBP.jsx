@@ -195,6 +195,7 @@ function SendBP() {
             .then(result => {
                 if (result.status.code === "200") {
                     setIsSubmit(false)
+                    setShowModal(false)
                     liff.closeWindow()
                 } else if (result.status.code === "400") {
                     setIsSubmit(false)
@@ -203,7 +204,7 @@ function SendBP() {
                         text: result.status?.details[0]?.value,
                         confirmButtonText: 'ตกลง'
                     }).then(() => {
-                        liff.closeWindow();
+                        Swal.close()
                     })
                 }
             })
@@ -235,7 +236,6 @@ function SendBP() {
             .then((result) => {
                 if (result.status?.code === "200") {
                     setIsSubmit(false)
-                    setShowModal(false)
                     Swal.fire({
                         icon: "success",
                         title: 'ผลวัดความดันโลหิตของท่าน',
@@ -257,7 +257,6 @@ function SendBP() {
                         })
                         if (res.isConfirmed) {
                             submit(result.sys, result.dia, result.pul);
-                            liff.closeWindow();
                         }
                     })
                 }
